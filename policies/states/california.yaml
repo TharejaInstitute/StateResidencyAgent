@@ -1,0 +1,318 @@
+# California Medical School Admissions Residency
+# Last Verified: 2026-01-06
+
+meta:
+  state: california
+  abbreviation: CA
+  last_verified: 2026-01-06
+  complexity: very_high
+
+sources:
+  - id: 1
+    name: "UCSF Registrar - California Residency"
+    url: "https://registrar.ucsf.edu/registration/residency"
+  - id: 2
+    name: "UC Residency Requirements (UCOP)"
+    url: "https://www.ucop.edu/residency/residency-requirements.html"
+  - id: 3
+    name: "UC Riverside Medical School - Undocumented Students"
+    url: "https://somsa.ucr.edu/admissionsundocumented"
+  - id: 4
+    name: "UC Davis Medical School - Undocumented Applicants"
+    url: "https://health.ucdavis.edu/mdprogram/admissions/undocumented-applicants.html"
+  - id: 5
+    name: "UCSF Admissions Data"
+    url: "https://meded.ucsf.edu/about-us/program-statistics/admissions-data"
+  - id: 6
+    name: "UCLA DGSOM Admissions - Preparing to Apply"
+    url: "https://medschool.ucla.edu/education/md-education/admissions/preparing-to-apply"
+  - id: 7
+    name: "UC Irvine School of Medicine - By the Numbers"
+    url: "https://medschool.uci.edu/about/numbers"
+  - id: 8
+    name: "CUSM Requirements for Admission"
+    url: "https://cusm.edu/academics/md/requirements-for-admission/index.php"
+
+# California uses 366-day domicile rule for classification
+admissions_residency:
+  type: domicile_based
+  determination_by: school  # Each UC school handles residency
+  required_months: 12  # 366 days
+  education_counts: false  # Educational presence does NOT count
+  continuous: true
+  timing: "Intent actions must be completed more than 1 year before enrollment"
+  sources: [1, 2]
+
+financial_independence:
+  grad_students_presumed_independent: true
+  dependent_inherits_parent: false  # Unlike undergrads
+  notes:
+    - "Graduate/professional students are evaluated on THEIR residency, not parents'"
+    - "Parent's CA residence does not automatically transfer to grad students"
+  sources: [2]
+
+intent:
+  timing: "more_than_one_year_before"
+  required_docs:
+    - drivers_license
+    - voter_registration
+    - vehicle_registration
+  supporting_docs:
+    - state_tax_returns
+    - bank_accounts
+    - lease_or_property
+  relinquish_other_state_license: true
+  sources: [1, 2]
+
+schools:
+  # UC Schools (5 public with preference)
+  - name: UCSF School of Medicine
+    degree: MD
+    type: public
+    application_system: AMCAS
+    class_size: 161
+    total_applications: 10300
+    overall_acceptance_rate: "1.6%"
+    resident_percentage: 77  # Range 71-77%
+    regional_preference: california_statewide
+    acceptance_rates:
+      in_state: "3.1-3.2%"
+      out_of_state: "0.8-1.0%"
+    mission_focus: "Health equity, underserved populations, PRIME-US track"
+    citizenship:
+      eligible: [us_citizen, permanent_resident, daca]
+      ineligible: [f1_visa, j1_visa, international]
+    notes:
+      - "Strong CA preference (77% of class)"
+      - "In-state applicants 4x more likely to be admitted"
+      - "71% CA residents in Fall 2025 class"
+    sources: [5]
+
+  - name: UCLA David Geffen School of Medicine
+    degree: MD
+    type: public
+    application_system: AMCAS
+    class_size: 175
+    total_applications: 12474
+    overall_acceptance_rate: "1.40%"
+    resident_percentage: 59.4
+    regional_preference: none_stated
+    eligibility_requirement: "Must be US citizen, permanent resident, DACA recipient, OR California resident"
+    acceptance_rates:
+      in_state: "2.17%"
+      out_of_state: "1.03%"
+      international: "1.86%"
+    citizenship:
+      eligible: [us_citizen, permanent_resident, daca, california_resident]
+      ineligible: [f1_visa, j1_visa, international]  # Unless CA resident
+      notes:
+        - "CA residency is alternative eligibility criterion if not citizen/PR/DACA"
+        - "International students NOT eligible unless they are CA residents"
+    notes:
+      - "All applicants reviewed without consideration of state of residence"
+      - "But eligibility requires US citizen/PR/DACA OR CA resident"
+      - "59.4% of matriculants are California residents"
+    sources: [6]
+
+  - name: UC Davis School of Medicine
+    degree: MD
+    type: public
+    application_system: AMCAS
+    resident_percentage: 96
+    regional_preference: northern_central_california
+    secondary_questions:
+      - text: "Do you have a connection to Northern or Central California? If 'yes', please explain"
+        max_chars: 500
+        focus: "Northern/Central California connection - KEY QUESTION"
+    advantage_factors:
+      - "Northern/Central California ties"
+      - "Rural or medically underserved area origin"
+      - "Geographic origin from Sacramento area"
+    special_programs:
+      - name: Rural-PRIME
+        focus: "Rural California communities"
+        target_specialties: [Primary Care, Family Medicine, Pediatrics, OB/GYN, General Surgery, Emergency Medicine]
+        benefits:
+          - "Weekly seminars and leadership training"
+          - "Rural physician mentorship"
+          - "Clinical rotations in rural communities"
+    citizenship:
+      daca_eligible: true
+      undocumented_eligible: true
+      notes:
+        - "Welcomes undocumented and DACA students"
+    notes:
+      - "96% CA residents"
+      - "Out-of-state may not receive secondary application"
+      - "80%+ of graduates remain in CA"
+    sources: [4]
+
+  - name: UC Irvine School of Medicine
+    degree: MD
+    type: public
+    application_system: AMCAS
+    class_size: 114
+    total_applications: 7440
+    overall_acceptance_rate: "3.6%"
+    resident_percentage: 88.6
+    regional_preference: none_explicit
+    mission_focus: "Orange County's multicultural communities"
+    notes:
+      - "Officially claims no state preference"
+      - "But 88.6% of matriculants are CA residents"
+      - "Serves Orange County - one of most medically underserved yet demographically rich regions"
+    sources: [7]
+
+  - name: UC Riverside School of Medicine
+    degree: MD
+    type: public
+    application_system: AMCAS
+    resident_percentage: 90
+    acceptance_rate: "1.35%"
+    regional_preference: inland_southern_california
+    mission_focus: "Inland Southern California, medically underserved communities"
+    special_programs:
+      - name: Thomas Haider Program
+        eligibility: "Deep local ties to Inland Empire"
+        benefit: "Scholarship with 5-year Inland Empire practice commitment"
+    citizenship:
+      daca_eligible: true
+      undocumented_eligible: true
+      notes:
+        - "Explicitly welcomes undocumented and DACA students"
+    notes:
+      - "90% have ties to Inland SoCal"
+      - "Only considers out-of-state with significant CA relationship"
+      - "Community-based education from Year 1"
+      - "Students embedded in San Bernardino and Riverside from Year 1"
+    sources: [3]
+
+  # Private school with strong regional preference
+  - name: California University of Science and Medicine (CUSM)
+    degree: MD
+    type: private
+    application_system: AMCAS
+    class_size: 130
+    total_applications: 4630
+    overall_acceptance_rate: "2.81%"
+    resident_percentage: 97.7
+    regional_preference: inland_empire
+    mission_focus: "Inland Empire physician shortage, underserved areas"
+    citizenship:
+      eligible: [us_citizen, permanent_resident, daca]
+      ineligible: [f1_visa, j1_visa, international, canadian_citizen]
+      notes:
+        - "Must be US citizen or permanent resident"
+        - "DACA students may apply under specific policy"
+        - "Does not accept international students including Canadian"
+    notes:
+      - "Private school with strong Inland Empire preference"
+      - "97.7% CA residents"
+      - "100% match rate since first graduating class in 2022"
+      - "Founded to address <35 PCPs per 100k in Inland Empire"
+    sources: [8]
+
+regional_preferences:
+  summary:
+    - school: UC Davis
+      region: "Northern/Central California"
+      strength: strong
+      evidence: "Secondary asks about N/Central CA connection"
+    - school: UC Riverside
+      region: "Inland Southern California"
+      strength: strong
+      evidence: "90% have Inland SoCal ties"
+    - school: CUSM
+      region: "Inland Empire"
+      strength: strong
+      evidence: "98% CA, 31% Inland Empire specifically"
+    - school: UCSF
+      region: "Statewide CA"
+      strength: moderate
+      evidence: "77% CA, PRIME-US for underserved"
+    - school: UCLA
+      region: "None stated"
+      strength: weak
+      evidence: "Claims no preference, but CA eligibility criterion"
+    - school: UCI
+      region: "None explicit"
+      strength: weak
+      evidence: "83% CA but claims no preference"
+
+citizenship:
+  eligible:
+    - us_citizen
+    - permanent_resident
+    - refugee
+    - asylee
+    - daca_ab540
+  ineligible:
+    - f1_visa
+    - f2_visa
+    - j1_visa
+    - j2_visa
+    - b1_visa
+    - b2_visa
+    - h2_visa
+    - h3_visa
+    - m_visa
+    - tn_visa
+    - td_visa
+  ab540_requirements:
+    - "Attended California high school for 3+ years"
+    - "Graduated from California high school or obtained GED in California"
+    - "Filed affidavit stating intent to legalize status when eligible"
+  notes:
+    - "F-1/J-1 cannot establish domicile"
+    - "F-1/J-1 CAN apply but cannot establish CA residency"
+    - "AB540 provides exemption for qualifying undocumented students"
+    - "UC schools explicitly welcome DACA/undocumented students"
+  sources: [1, 3, 4]
+
+military:
+  active_duty_qualifies: true
+  spouse_qualifies: true
+  dependents_qualify: true
+  veterans_gi_bill: true
+  notes:
+    - "Active duty stationed in CA = resident classification"
+    - "Spouses and dependents of active duty in CA = resident"
+    - "Veterans using VA benefits = resident"
+  sources: [2]
+
+notes:
+  - "366 days required - must be continuous, immediately prior to enrollment"
+  - "School attendance does NOT count - biggest trap for applicants"
+  - "Grad students are independent - evaluated on own residency, not parents'"
+  - "F-1 can apply but can't be resident - always classified as non-resident"
+  - "DACA/undocumented welcome at UC schools"
+  - "77% in-state at UCSF - strong practical advantage for CA residents"
+  - "Intent must be 1+ year before - documentation required early"
+  - "Regional preferences matter - UC Davis (Northern CA), UC Riverside (Inland SoCal), CUSM (Inland Empire)"
+  - "Secondary questions reveal preferences - UC Davis asks about N/Central CA connection"
+
+examples:
+  - scenario: "4 years undergrad in California"
+    situation: "Attended UCLA for undergrad, now applying to UC medical schools"
+    classification: "NON-RESIDENT"
+    reason: "Educational presence doesn't count, regardless of duration"
+    path_to_resident: "Need 366 days of working/living in CA NOT for school"
+  - scenario: "Parents in California"
+    situation: "Parents live in CA, applicant went to college out of state"
+    classification: "Evaluated on YOUR residency (grad students are independent)"
+    note: "Parent's CA residence doesn't automatically transfer to grad students"
+  - scenario: "Gap year in California"
+    situation: "Took gap year working in CA before medical school"
+    classification: "Potentially RESIDENT if 366+ days with proper intent documentation"
+    key: "Must not be 'primarily for educational purposes'"
+  - scenario: "F-1 student"
+    situation: "International student on F-1 visa"
+    classification: "Can APPLY but CANNOT establish CA residency"
+    result: "Will be classified as non-resident regardless of time in California"
+
+research_gaps:
+  - "Does part-time enrollment count as educational presence?"
+  - "How strictly is the 1-year intent timing enforced?"
+  - "What happens if intent documentation is completed exactly 1 year before?"
+  - "Can F-1 students who adjust to green card during application cycle become residents?"
+  - "How do UC schools verify domicile vs educational presence?"

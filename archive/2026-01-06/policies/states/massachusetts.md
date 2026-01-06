@@ -36,8 +36,14 @@ schools:
     type: public
     application_system: AMCAS
     class_size: 142
-    resident_percentage: 64
-    nonresident_percentage: 36
+    resident_percentage: 70  # Updated: ~70% MA residents
+    nonresident_percentage: 30
+    secondary_process: prescreened  # Not all applicants receive secondary
+    secondary_focus:
+      - "Diversity contribution"
+      - "Competencies (leadership, teamwork, empathy, communication, inquiry)"
+      - "Why UMass Chan"
+      - "Health equity experience"
     citizenship:
       eligible:
         - us_citizen
@@ -54,6 +60,8 @@ schools:
     notes:
       - "F-1/J-1 CANNOT APPLY - citizenship requirement for admission"
       - "MD-PhD has no residency requirement"
+      - "Pre-screens applicants before sending secondaries"
+      - "Rolling admissions - interviews Sept through March"
 
   # Private MD schools - no residency preference (listed for reference)
   - name: Harvard Medical School

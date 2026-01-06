@@ -5,8 +5,9 @@
 # SCOPE: Admissions classification only (which applicant pool you compete in)
 # NOT covered: Tuition residency (what you pay after admission)
 
-version: 2
+version: 3
 last_updated: 2026-01-06
+changelog: "v3: Added school-specific regional preferences for TX, CA, WA, WV; new flags regional_pref, rural_pref, mission_screen"
 
 # =============================================================================
 # FLAG DEFINITIONS
@@ -46,6 +47,11 @@ flags:
   private_only: "Only private medical schools (no in-state admission preference)"
   public_exists: "Has public medical school(s) with in-state admission preference"
 
+  # School-specific preferences (beyond state residency)
+  regional_pref: "Individual schools have regional preferences within the state"
+  rural_pref: "Schools have explicit preference for rural/underserved backgrounds"
+  mission_screen: "Schools screen for mission fit before sending secondary"
+
 # =============================================================================
 # COMPLEXITY LEVELS
 # =============================================================================
@@ -56,10 +62,11 @@ complexity:
   vh: "very_high - Highly complex, many exceptions, unique systems"
 
 # =============================================================================
-# STATES
+# STATES (Single Source of Truth for school counts)
 # Format: md=schools with preference (total/public), do=same for DO
 # Duration: d=days, m=months, y=years
 # ONLY counts schools that give residency-based admission preference
+# NOTE: These counts are NOT duplicated in state files - this is the SSOT
 # =============================================================================
 states:
   california:
@@ -68,18 +75,20 @@ states:
     md: 6/5                # 5 UC public + CUSM (regional preference)
     do: 0/0                # Private DO schools have no residency preference
     cx: vh
-    f: [no_school, grad_indep, daca_all, f1_no_res]
+    f: [no_school, grad_indep, daca_all, f1_no_res, regional_pref]
     prg: []
+    note: "UC Davis (N/Central CA), UC Riverside (Inland SoCal), CUSM (Inland Empire) have regional preferences"
 
   texas:
     abbr: TX
     dur: 12m
     md: 13/11              # 11 public + Baylor (private) + TCU (private); 90% rule for TMDSAS
     do: 2/2                # UNT TCOM, Sam Houston (TMDSAS); UIW uses AACOMAS (no preference)
-    cx: m
-    f: [dep_inherit, hs_pathway, marriage, daca_some, centralized]
+    cx: h                  # Updated: high complexity due to regional preferences
+    f: [dep_inherit, hs_pathway, marriage, daca_some, centralized, regional_pref, mission_screen]
     prg: []
     sys: TMDSAS
+    note: "Schools have regional preferences: East TX (UT Tyler), West TX (Tech), Border (Foster), RGV (UTRGV), South TX (Long), Houston/Primary Care (UH Fertitta)"
 
   hawaii:
     abbr: HI
@@ -115,9 +124,9 @@ states:
     md: 2/2                # UW, WSU Elson Floyd (both public)
     do: 1/0                # PNWU-COM (private, regional preference for AK/ID/MT/OR/WA)
     cx: h
-    f: [no_school, credit_limit, ties_screen, daca_some, f1_ban]
+    f: [no_school, credit_limit, ties_screen, daca_some, f1_ban, rural_pref]
     prg: [wwami]
-    note: "WWAMI lead state"
+    note: "WWAMI lead state; WSU has rural/underserved preference (secondary asks about rural experience)"
 
   west_virginia:
     abbr: WV
@@ -125,8 +134,9 @@ states:
     md: 2/1                # WVU (public), Marshall (state-assisted)
     do: 1/1                # WVSOM (public)
     cx: m
-    f: [no_school, dep_inherit, daca_some, border_pref, service_opt]
+    f: [no_school, dep_inherit, daca_some, border_pref, service_opt, rural_pref]
     prg: []
+    note: "Marshall prefers bordering states (KY, MD, OH, PA, VA); WVSOM has strong rural preference"
 
   # ---------------------------------------------------------------------------
   # PLACEHOLDER ENTRIES - To be researched

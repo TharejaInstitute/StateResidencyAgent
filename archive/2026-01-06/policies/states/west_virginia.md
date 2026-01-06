@@ -92,21 +92,12 @@ schools:
     type: public
     application_system: AACOMAS
     regional_preference: rural_primary_care
-    mission_focus: "West Virginia and rural areas, primary care"
-    secondary_questions:
-      - "Why do you want to be an osteopathic physician? (500 char)"
-      - "What advantage do you see in attending WVSOM over other medical schools? (500 char)"
-      - "What experiences (living, working or visiting) have you had in rural areas? (500 char)"
-      - "Describe an ethically challenging situation you have been in, and how you responded (500 char)"
-    screening_criteria:
-      minimum_science_gpa: 3.0
-      minimum_mcat: 490
-      competitive_science_gpa: 3.2
-      competitive_mcat: 495
-    secondary_fee: 0
-    interview_fee:
-      in_state: 0
-      out_of_state: 80
+    screening_minimums:
+      science_gpa: 3.0
+      mcat: 490
+    competitive_stats:
+      science_gpa: 3.2
+      mcat: 495
     citizenship:
       eligible:
         - us_citizen
@@ -118,16 +109,14 @@ schools:
         criteria: West Virginia residents
       - tier: 2
         criteria: Rural background or experience
-    selection_criteria:
-      - "Motivation for osteopathic medicine"
-      - "Motivation to serve in rural communities in primary care fields"
-      - "Health-related experiences"
-      - "Scholastic achievement"
+    advantage_factors:
+      - "Rural community background"
+      - "Rural service/volunteer experience"
+      - "Primary care interest"
+      - "WV ties"
     notes:
-      - "Participates in Choose WV Practice Program"
-      - "Public osteopathic medical school in Lewisburg, WV"
-      - "Very mission-oriented - wants students from rural communities or with rural service experience"
-      - "WV ties can be beneficial in admissions"
+      - "Very mission-oriented - rural background or experience gives significant advantage"
+      - "Secondary asks about rural area experience (living, working, visiting)"
 
 citizenship:
   notes:
@@ -426,6 +415,32 @@ A tuition waiver program for OUT-OF-STATE medical students who commit to practic
 
 ---
 
+---
+
+# SCHOOL 3: West Virginia School of Osteopathic Medicine (WVSOM)
+
+## Who Has an Advantage
+
+WVSOM is **very mission-oriented**. You have an advantage if you:
+- Are from a rural community
+- Have rural service/volunteer/work experience
+- Show motivation to serve in rural areas and primary care
+
+## Screening Minimums
+
+| Criterion | Minimum | Competitive |
+|-----------|---------|-------------|
+| Science GPA | 3.0 | 3.2+ |
+| MCAT | 490 | 495+ |
+
+## Key Secondary Focus
+
+The secondary asks about your **rural area experience** (living, working, or visiting). This is the key mission-fit question.
+
+**Note**: Applicants without WV ties or rural background may be at a disadvantage.
+
+---
+
 ## Comparison Table
 
 | Factor | Marshall (MD) | WVU (MD) | WVSOM (DO) |
@@ -434,9 +449,10 @@ A tuition waiver program for OUT-OF-STATE medical students who commit to practic
 | Application System | AMCAS | AMCAS | AACOMAS |
 | WV resident preference | Yes — [2] | Yes — [3] | Yes |
 | Bordering state preference | Yes (KY, MD, OH, PA, VA) — [2] | Not explicitly tiered | Not documented |
+| Rural preference | Not explicit | Not explicit | **Strong** (secondary asks about rural experience) |
 | DACA accepted | No — [2] | Yes — [3] | Verify with school |
 | International accepted | No — [2] | Yes — [3] | Verify with school |
-| MCAT average | 506 — [6] | Not specified | Not specified |
+| MCAT average | 506 — [6] | Not specified | 495+ competitive |
 | OOS % of class | 42.7% — [8] | ~50% — [3] | Not specified |
 | Choose WV eligible | Yes — [5] | Yes — [5] | Yes — [5] |
 
@@ -458,9 +474,8 @@ A tuition waiver program for OUT-OF-STATE medical students who commit to practic
 
 1. **Three schools: 2 MD + 1 DO** - WVU and Marshall (MD via AMCAS), WVSOM (DO via AACOMAS)
 2. **Different citizenship rules** - WVU accepts DACA/international; Marshall does not; WVSOM TBD
-3. **Marshall: Bordering states advantage** - KY, MD, OH, PA, VA automatically get secondaries
+3. **Marshall: Bordering states advantage** - KY, MD, OH, PA, VA get preference
 4. **WVU: 50% out-of-state** - More open to non-WV residents than many state schools
-5. **Choose WV program** - Up to $120K savings for OOS students (all 3 schools eligible)
-6. **Service commitment is real** - 1 year practice per year of Choose WV funding
-7. **12 months for residency** - Standard requirement, school attendance doesn't count
-8. **No international coursework at WVU** - Despite accepting international students
+5. **Choose WV program** - Out-of-state tuition waiver in exchange for practice commitment
+6. **12 months for residency** - Standard requirement, school attendance doesn't count
+7. **WVSOM: Rural preference** - Rural background or experience gives significant advantage

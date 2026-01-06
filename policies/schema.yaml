@@ -1,0 +1,379 @@
+# Schema for State Policy Files
+# All state files are pure YAML (policies/states/{state}.yaml)
+
+description: |
+  This schema defines the structure for state residency policy files.
+  Focus: Admissions classification - how applicants are classified as resident/nonresident.
+  NOT covered: Tuition classification (what you pay after admission).
+
+file_structure:
+  policies:
+    - index.yaml         # Compact routing index (always loaded)
+    - schema.yaml        # This file
+    - states/*.yaml      # State policy files (pure YAML)
+    - regional_programs/*.yaml  # Regional program data
+
+# =============================================================================
+# REQUIRED SECTIONS
+# =============================================================================
+
+meta:
+  description: "Basic state information"
+  fields:
+    state: {type: string, description: "Full state name (lowercase)"}
+    abbreviation: {type: string, description: "Two-letter code"}
+    last_verified: {type: date, description: "YYYY-MM-DD format"}
+    complexity: {type: enum, values: [low, medium, high, very_high]}
+  notes:
+    - "School counts are in index.yaml (SSOT) - do not duplicate here"
+    - "School details are in the schools: array"
+
+sources:
+  description: "Source URLs for provenance"
+  format: array
+  item_fields:
+    id: {type: integer, description: "Reference ID for citations"}
+    name: {type: string, description: "Source name"}
+    url: {type: string, description: "Source URL"}
+  example:
+    - id: 1
+      name: "UCSF Registrar - California Residency"
+      url: "https://registrar.ucsf.edu/registration/residency"
+
+admissions_residency:
+  description: "Core residency rules"
+  fields:
+    type: {type: enum, values: [state_level, school_specific, domicile_based, ties_screening, hybrid]}
+    determination_by: {type: string, description: "Who determines: state, school, or system name"}
+    centralized_system: {type: string, optional: true, description: "System name if centralized (e.g., TMDSAS)"}
+    required_months: {type: integer, description: "Duration requirement in months"}
+    education_counts: {type: boolean, description: "Does educational presence count toward requirement?"}
+    continuous: {type: boolean, description: "Must be continuous?"}
+    sources: {type: array, description: "Source IDs that support this rule"}
+  nested_options:
+    physical_presence:
+      required_months: integer
+      education_counts: boolean
+      continuous: boolean
+      deadline: string
+    pathways:
+      description: "Multiple routes to establish residency"
+      format: array
+      item_fields:
+        type: string
+        requirements: object
+
+schools:
+  description: "Medical schools in the state"
+  format: array
+  item_fields:
+    name: {type: string, required: true}
+    degree: {type: enum, values: [MD, DO], required: true}
+    type: {type: enum, values: [public, private, state_assisted], required: true}
+    application_system: {type: enum, values: [AMCAS, AACOMAS, TMDSAS]}
+    class_size: {type: integer}
+    resident_percentage: {type: number}
+    regional_preference: {type: string, description: "none, statewide, or specific region name"}
+    acceptance_rates:
+      in_state: string
+      out_of_state: string
+    secondary_questions:
+      description: "Key secondary application questions"
+      format: array
+      item_fields:
+        text: {type: string, description: "Actual question text"}
+        max_chars: {type: integer, optional: true}
+    advantage_factors:
+      description: "What gives applicants an advantage"
+      format: array
+      item_type: string
+    special_programs:
+      format: array
+      item_fields:
+        name: string
+        focus: string
+        eligibility: string
+        benefit: string
+    preferences:
+      description: "Tiered admission preferences"
+      format: array
+      item_fields:
+        tier: integer
+        criteria: string
+        states: {type: array, optional: true}
+    citizenship:
+      description: "School-specific citizenship rules (overrides state default)"
+      fields:
+        eligible: array
+        ineligible: array
+        daca_eligible: boolean
+        undocumented_eligible: boolean
+        notes: array
+    notes:
+      description: "Important school-specific information"
+      format: array
+      item_type: string
+    sources: {type: array, description: "Source IDs"}
+
+citizenship:
+  description: "State-level citizenship defaults"
+  fields:
+    eligible: {type: array, description: "Eligible statuses"}
+    ineligible: {type: array, description: "Ineligible statuses"}
+    admission_citizenship_required: {type: boolean}
+    notes: {type: array}
+  common_values:
+    - us_citizen
+    - permanent_resident
+    - daca
+    - daca_ab540
+    - undocumented
+    - refugee
+    - asylee
+    - canadian_citizen
+    - canadian_permanent_resident
+    - cofa_citizen
+    - f1_visa
+    - j1_visa
+    - h1b_visa
+    - tn_visa
+    - international
+
+military:
+  description: "Military exemptions and benefits"
+  fields:
+    active_duty_qualifies: {type: boolean}
+    spouse_qualifies: {type: boolean}
+    dependents_qualify: {type: boolean}
+    veterans_gi_bill: {type: boolean}
+    national_guard_qualifies: {type: boolean, optional: true}
+    notes: {type: array, optional: true}
+
+research_gaps:
+  description: "Unresolved questions requiring further research"
+  format: array
+  item_type: string
+  example:
+    - "Does part-time enrollment count as educational presence?"
+    - "How strictly is the 1-year intent timing enforced?"
+
+# =============================================================================
+# OPTIONAL SECTIONS
+# =============================================================================
+
+financial_independence:
+  description: "Rules for dependent vs independent students"
+  optional: true
+  fields:
+    grad_students_presumed_independent: boolean
+    dependent_inherits_parent: boolean
+    can_establish_own_while_dependent: boolean
+
+marriage_transfer:
+  description: "Residency transfer through marriage"
+  optional: true
+  fields:
+    enabled: boolean
+    spouse_domicile_required_months: integer
+    marriage_duration_required_months: integer
+
+ties_screening:
+  description: "Criteria-based classification (not duration-based)"
+  optional: true
+  fields:
+    criteria: {type: array, description: "List of criteria names"}
+    minimum_required: {type: integer, description: "How many must be met"}
+    equivalent_regions: {type: array, description: "Regions treated as equivalent"}
+
+family_derivation:
+  description: "Extended family eligibility"
+  optional: true
+  fields:
+    enabled: boolean
+    eligible_relationships: array  # e.g., [parent, spouse, sibling]
+    required_duration_years: integer
+
+service_obligation:
+  description: "Mandatory or optional practice commitment"
+  optional: true
+  fields:
+    required: boolean
+    years: integer
+    location: string
+    alternative: string
+    penalty_interest_rate: number
+
+regional_program:
+  description: "Regional program participation (WWAMI, SREB, etc.)"
+  optional: true
+  fields:
+    name: string
+    role: {type: enum, values: [lead, member]}
+    member_states: array
+    certification_required: boolean
+    certification_deadline: string
+    seats_per_year: integer
+
+special_programs:
+  description: "State-specific programs"
+  optional: true
+  format: array
+  item_fields:
+    name: string
+    type: string
+    eligibility: string
+    benefit: string
+    obligation: string
+
+intent:
+  description: "Intent documentation requirements"
+  optional: true
+  fields:
+    timing: string
+    required_docs: array
+    supporting_docs: array
+    relinquish_other_state_license: boolean
+
+nonresident_cap:
+  description: "Legal cap on non-resident admissions"
+  optional: true
+  fields:
+    percentage: integer
+    enforced_by: {type: enum, values: [law, policy]}
+    note: string
+
+documentation:
+  description: "Required documentation for verification"
+  optional: true
+  fields:
+    primary: array
+    supporting: array
+
+deadlines:
+  description: "Key dates"
+  optional: true
+  fields:
+    application: string
+    residency_certification: string
+    mcat_latest: string
+
+# =============================================================================
+# FIELD STANDARDIZATION
+# =============================================================================
+
+standardization:
+  duration:
+    description: "Always use required_months"
+    format: "required_months: 12"
+    note: "Convert days to months (366 days = 12 months)"
+
+  education_rule:
+    description: "Always include education_counts field"
+    format: "education_counts: false"
+    note: "true = school attendance counts, false = it doesn't"
+
+  regional_preference:
+    description: "Controlled vocabulary for regional preferences"
+    values:
+      - none             # No regional preference
+      - statewide        # Prefers in-state broadly
+      - "{region_name}"  # Specific region (e.g., northern_central_california)
+
+  preferences:
+    description: "Tiered array format for admission preferences"
+    format: |
+      preferences:
+        - tier: 1
+          criteria: "West Virginia residents"
+        - tier: 2
+          criteria: "Bordering states"
+          states: [ky, md, oh, pa, va]
+
+  military:
+    description: "Standardized military field names"
+    format: |
+      military:
+        active_duty_qualifies: true
+        spouse_qualifies: true
+        dependents_qualify: true
+        veterans_gi_bill: true
+
+# =============================================================================
+# VALIDATION RULES
+# =============================================================================
+
+validation:
+  index_sync:
+    - "md: X/Y in index must match schools in state file's schools[] array"
+    - "do: X/Y in index must match schools in state file's schools[] array"
+    - "index.yaml is SSOT for counts - do not duplicate in state files"
+
+  school_entries:
+    required: [name, degree, type]
+    recommended: [application_system]
+    conditional: "citizenship if differs from state default"
+
+  sources:
+    - "Every source in sources[] must have unique id"
+    - "IDs should be sequential (1, 2, 3...)"
+
+  flags:
+    - "Only use flags defined in index.yaml"
+    - "Add new flag definitions to index.yaml first"
+
+  regional_programs:
+    - "If prg: [program] in index, include regional_program section"
+    - "Member state lists must match across files"
+
+# =============================================================================
+# TEMPLATE
+# =============================================================================
+
+template: |
+  # policies/states/{state}.yaml
+
+  meta:
+    state: {state_name}
+    abbreviation: {XX}
+    last_verified: {YYYY-MM-DD}
+    complexity: {level}
+
+  sources:
+    - id: 1
+      name: "{Source Name}"
+      url: "{URL}"
+
+  admissions_residency:
+    type: domicile_based
+    determination_by: school
+    required_months: 12
+    education_counts: false
+    continuous: true
+    sources: [1]
+
+  schools:
+    - name: "{School Name}"
+      degree: MD
+      type: public
+      application_system: AMCAS
+      resident_percentage: 0
+      regional_preference: statewide
+      secondary_questions:
+        - text: "{Question text}"
+      advantage_factors:
+        - "{Factor}"
+      notes:
+        - "{Important note}"
+
+  citizenship:
+    eligible: [us_citizen, permanent_resident]
+    ineligible: [f1_visa, j1_visa]
+
+  military:
+    active_duty_qualifies: true
+    spouse_qualifies: true
+    dependents_qualify: true
+    veterans_gi_bill: true
+
+  research_gaps:
+    - "{Unresolved question}"

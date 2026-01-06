@@ -1,0 +1,474 @@
+# Texas Medical School Admissions Residency
+# Last Verified: 2026-01-06
+
+meta:
+  state: texas
+  abbreviation: TX
+  last_verified: 2026-01-06
+  complexity: high
+
+sources:
+  - id: 1
+    name: "TMDSAS Residency Application Guide"
+    url: "https://www.tmdsas.com/application-guide/residency.html"
+  - id: 2
+    name: "TMDSAS Residency Determination"
+    url: "https://www.tmdsas.com/explore/residency.html"
+  - id: 3
+    name: "Texas Higher Education Coordinating Board"
+    url: "https://www.highered.texas.gov/texas-residency/"
+  - id: 4
+    name: "Baylor College of Medicine Tuition Status"
+    url: "https://www.bcm.edu/education/registrar/tuition-status-texas-residency"
+  - id: 5
+    name: "THECB Visa Eligibility (PDF)"
+    url: "https://apps.highered.texas.gov/DocID/PDF/0440.PDF"
+  - id: 6
+    name: "University of Houston Visa FAQ"
+    url: "https://gethelp.uh.edu/kb/478"
+  - id: 7
+    name: "Texas A&M Immigration Status"
+    url: "https://aggie.tamu.edu/billing-and-payments/residency-for-in-state-tuition/immigration-status"
+
+# Texas uses TMDSAS for centralized ADMISSIONS residency determination
+admissions_residency:
+  type: domicile_based
+  determination_by: TMDSAS
+  centralized_system: TMDSAS
+  required_months: 12
+  education_counts: false  # Must establish domicile via employment/property/business/marriage
+  continuous: true
+  pathways:
+    - type: high_school_graduation
+      description: "Graduate from Texas HS or obtain GED in Texas"
+      requirements:
+        texas_hs_graduation_or_ged: true
+        months_in_texas_before_graduation: 36
+        months_in_texas_by_deadline: 12
+    - type: domicile_establishment
+      description: "Establish domicile through gainful employment, property, business, or marriage"
+      required_months: 12
+      domicile_methods:
+        - gainful_employment
+        - property_ownership
+        - business_ownership
+        - marriage_to_resident
+  deadline: october_1
+  sources: [1, 2, 3]
+
+financial_independence:
+  dependent_inherits_parent: true
+  can_establish_own_while_dependent: false
+  notes:
+    - "Dependent student's residency based on parent's or legal guardian's residency"
+    - "If parents claim you and live in another state, you cannot establish residency while claimed as dependent"
+  sources: [1]
+
+marriage_transfer:
+  enabled: true
+  spouse_domicile_required_months: 12
+  marriage_duration_required_months: 12
+  documentation: "Texas Marriage Certificate or Declaration of Registration of Informal Marriage"
+  notes:
+    - "Spouse must have established AND maintained domicile in Texas for 12 months prior to deadline"
+    - "Must have been married for at least 12 months"
+  sources: [1, 2]
+
+nonresident_cap:
+  percentage: 10
+  enforced_by: law
+  notes:
+    - "Texas law limits non-residents to maximum 10% of entering class"
+    - "90% of seats reserved for Texas residents"
+  sources: [2]
+
+schools:
+  # MD Schools (TMDSAS unless noted)
+  - name: Baylor College of Medicine
+    degree: MD
+    type: private
+    application_system: TMDSAS
+    daca_accepted: false
+    regional_preference: none
+    acceptance_rates:
+      in_state: "4.9%"
+      out_of_state: "1.8%"
+    notes:
+      - "Private school - same evaluation criteria but in-state acceptance rate higher"
+    sources: [4]
+
+  - name: McGovern Medical School at UTHealth Houston
+    degree: MD
+    type: public
+    application_system: TMDSAS
+    daca_accepted: false
+    regional_preference: none
+    secondary_required: true
+    casper_required: true
+
+  - name: Texas A&M School of Medicine
+    degree: MD
+    type: public
+    application_system: TMDSAS
+    daca_accepted: true
+    regional_preference: rural_underserved
+    mission_focus: "Rural populations, underserved communities, primary care"
+    special_programs:
+      - name: RUP2M (Rural and Underserved Populations to Medicine)
+        eligibility: "Must reside in rural, medically underserved, primary care, or health professional shortage area (HRSA designated)"
+        target: "TAMU system sophomores considering medicine from underserved areas"
+        benefit: "Conditional admission to medical school"
+    sources: [7]
+
+  - name: Texas Tech University Health Sciences Center (Lubbock)
+    degree: MD
+    type: public
+    application_system: TMDSAS
+    daca_accepted: false
+    regional_preference: west_texas
+    secondary_questions:
+      - text: "Do you consider yourself from West Texas or as having West Texas ties?"
+        follow_up: "If yes, describe the town/county and other factors"
+    advantage_factors:
+      - "From West Texas or have ties"
+      - "Interest in rural health care"
+    notes:
+      - "20% of practicing West Texas physicians are TTUHSC alumni"
+
+  - name: Texas Tech Paul L. Foster School of Medicine (El Paso)
+    degree: MD
+    type: public
+    application_system: TMDSAS
+    daca_accepted: false
+    regional_preference: us_mexico_border
+    secondary_questions:
+      - text: "PLFSOM is located on the US/Mexico border, please describe why you are interested..."
+    advantage_factors:
+      - "Experience with Hispanic populations"
+      - "Interest in border health disparities"
+
+  - name: Tilman J. Fertitta Family College of Medicine (UH)
+    degree: MD
+    type: public
+    application_system: TMDSAS
+    daca_accepted: false
+    regional_preference: se_texas_houston
+    class_size: 60
+    mission_fit_screening: true
+    early_decision_available: true
+    advantage_factors:
+      - "Primary care experience/commitment"
+      - "Underserved area service"
+      - "Community/public health experience"
+      - "SE Texas / W Louisiana service interest"
+    notes:
+      - "Screens applications before sending secondaries for mission fit"
+      - "Early Decision available for primary care in Houston area"
+
+  - name: UT Southwestern Medical Center
+    degree: MD
+    type: public
+    application_system: TMDSAS
+    daca_accepted: false
+    regional_preference: none
+    secondary_required: true
+    casper_required: true
+    notes:
+      - "No explicit Dallas regional preference found"
+      - "Serves high-need populations across Dallas and North Texas"
+
+  - name: UT Medical Branch (UTMB)
+    degree: MD
+    type: public
+    application_system: TMDSAS
+    daca_accepted: false
+    regional_preference: galveston_gulf_coast
+    secondary_questions:
+      - text: "Interest in Galveston area"
+
+  - name: UT Rio Grande Valley School of Medicine
+    degree: MD
+    type: public
+    application_system: TMDSAS
+    daca_accepted: false
+    regional_preference: rio_grande_valley
+    class_composition: "96% Texas residents"
+    secondary_questions:
+      - text: "2-minute video selecting 2 of 5 values"
+        values:
+          - "Patient advocacy"
+          - "Community focus"
+          - "Cultural awareness"
+          - "Collaborative leadership"
+          - "Lifelong problem solving"
+    advantage_factors:
+      - "Rio Grande Valley connection"
+      - "Cultural awareness"
+      - "Community engagement"
+
+  - name: UT San Antonio Long School of Medicine
+    degree: MD
+    type: public
+    application_system: TMDSAS
+    daca_accepted: true
+    regional_preference: south_texas
+    advantage_factors:
+      - "South Texas connection"
+
+  - name: UT Austin Dell Medical School
+    degree: MD
+    type: public
+    application_system: TMDSAS
+    daca_accepted: false
+    regional_preference: central_texas
+    advantage_factors:
+      - "Central Texas ties"
+
+  - name: UT Tyler School of Medicine
+    degree: MD
+    type: public
+    application_system: TMDSAS
+    daca_accepted: false
+    regional_preference: east_texas
+    class_size: 40
+    regional_preference_tiers:
+      - tier: 1
+        description: "Direct ties - born there, graduated high school, attended community college or undergrad"
+      - tier: 2
+        description: "Indirect ties - family members, in-laws, visited frequently, attended summer camp"
+      - tier: 3
+        description: "Ties to similar rural region"
+      - tier: 4
+        description: "No ties but want to practice there"
+      - tier: 5
+        description: "No ties"
+    secondary_questions:
+      - text: "East Texas connection level (tiered system)"
+    notes:
+      - "Very small class (40), highly competitive"
+      - "Tip: If you have ANY East Texas connection, document it thoroughly"
+
+  - name: TCU Burnett School of Medicine
+    degree: MD
+    type: private
+    application_system: AMCAS  # Uses AMCAS, not TMDSAS
+    regional_preference: none
+    minimum_hours_required:
+      service: 150
+      leadership: 150
+      physician_patient_interaction: 150
+      personal_excellence: 150
+    notes:
+      - "Uses AMCAS, not TMDSAS"
+      - "Not subject to 90% Texas resident rule"
+
+  # DO Schools
+  - name: UNT Texas College of Osteopathic Medicine
+    degree: DO
+    type: public
+    application_system: TMDSAS
+    daca_accepted: false
+    regional_preference: none
+    notes:
+      - "90% Texas residents required by law"
+      - "No explicit regional preference within Texas"
+
+  - name: Sam Houston State College of Osteopathic Medicine
+    degree: DO
+    type: public
+    application_system: TMDSAS
+    daca_accepted: true
+    regional_preference: eastern_texas
+    mission_focus: "Increase the physician workforce in the eastern region of Texas"
+    secondary_questions:
+      - text: "What do you like/dislike about your hometown area?"
+      - text: "Role of physicians in medically underserved Texas communities?"
+    advantage_factors:
+      - "From underserved or shortage area"
+      - "Eastern Texas connection"
+      - "Primary care/rural practice interest"
+    notes:
+      - "Recruits from areas where applicants would likely return to practice"
+      - "Selection considers: availability of physicians in your region of residence"
+
+  - name: University of the Incarnate Word School of Osteopathic Medicine
+    degree: DO
+    type: private
+    application_system: AACOMAS  # Not TMDSAS - excluded from 90% rule
+    regional_preference: south_texas
+    advantage_factors:
+      - "South Texas connection"
+      - "Bilingual (Spanish)"
+      - "Underserved community interest"
+    notes:
+      - "Uses AACOMAS, not TMDSAS"
+      - "Not subject to 90% Texas resident rule"
+
+daca_acceptance:
+  schools_accepting:
+    - Texas A&M School of Medicine
+    - UT San Antonio Long School of Medicine
+    - Sam Houston State College of Osteopathic Medicine
+  schools_not_accepting:
+    - Baylor College of Medicine
+    - McGovern Medical School at UTHealth Houston
+    - Texas Tech University Health Sciences Center (Lubbock)
+    - Texas Tech Paul L. Foster School of Medicine (El Paso)
+    - Tilman J. Fertitta Family College of Medicine (UH)
+    - UT Southwestern Medical Center
+    - UT Medical Branch (UTMB)
+    - UT Rio Grande Valley School of Medicine
+    - UT Austin Dell Medical School
+    - UT Tyler School of Medicine
+    - UNT Texas College of Osteopathic Medicine
+  application_process:
+    - "Select 'None' for visa type/residency status"
+    - "In Optional Question section, indicate DACA status"
+    - "Complete the Residency Affidavit"
+    - "Documentation required: valid Texas driver's license, EAD, or other DHS documentation"
+  sources: [1]
+
+citizenship:
+  eligible:
+    - us_citizen
+    - permanent_resident
+    - conditional_permanent_resident
+    - pending_i485
+    - refugee
+    - asylee
+    - parolee
+    - temporary_protected_status
+    - daca
+    - h1b_visa
+    - h4_visa
+    - e_visa
+    - l_visa
+    - o1_visa
+    - o3_visa
+    - a_visa
+    - g_visa
+    - i_visa
+    - k_visa
+    - n_visa
+    - nato_visa
+    - r_visa
+    - t_visa
+    - u_visa
+    - v_visa
+  ineligible:
+    - f1_visa
+    - f2_visa
+    - j1_visa
+    - j2_visa
+    - tn_visa
+    - td_visa
+  notes:
+    - "F-1/J-1 visa holders cannot establish permanent domicile"
+    - "H-4 dependents eligible with proper documentation"
+    - "DACA acceptance varies by school (only 3 of 15 accept)"
+  sources: [5, 6]
+
+military:
+  home_of_record_texas: automatic_resident
+  claimed_texas_12_months: "resident_with_les_proof"
+  spouse_qualifies: true
+  dependents_qualify: true
+  temporary_absence_protected: true
+  notes:
+    - "Home of Record = Texas: Presumed Texas resident automatically"
+    - "Home of Record ≠ Texas but claimed Texas: Provide LES showing 12 months claimed Texas"
+    - "Temporary absence for military service does NOT affect domicile status"
+    - "Applies to: US Armed Forces, Public Health Service, DoD, US Department of State"
+  sources: [1, 3]
+
+regional_preferences:
+  summary:
+    - school: UT Tyler
+      region: "East Texas"
+      strength: "Strong (tiered system in secondary)"
+    - school: Texas Tech Lubbock
+      region: "West Texas"
+      strength: "Strong (explicit secondary question)"
+    - school: Texas Tech El Paso
+      region: "US-Mexico Border"
+      strength: "Strong (explicit secondary question)"
+    - school: UTRGV
+      region: "Rio Grande Valley"
+      strength: "Strong (96% TX, video on RGV values)"
+    - school: UT San Antonio Long
+      region: "South Texas"
+      strength: "Moderate (mission statement)"
+    - school: UH Fertitta
+      region: "SE Texas/Houston"
+      strength: "Strong (screens for mission fit)"
+    - school: UTMB
+      region: "Galveston/Gulf Coast"
+      strength: "Moderate (secondary question)"
+    - school: Dell
+      region: "Central Texas"
+      strength: "Moderate (mission focus)"
+    - school: Texas A&M
+      region: "Rural/Underserved"
+      strength: "Moderate (RUP2M program)"
+    - school: SHSU-COM
+      region: "Eastern Texas"
+      strength: "Strong (mission: eastern region workforce)"
+
+deadlines:
+  application: october_1
+  residency_period_start: october_1_prior_year
+  notes:
+    - "All residency requirements must be met by October 1"
+    - "12-month period runs from October 1 of prior year to October 1 of application year"
+  sources: [1, 2]
+
+documentation:
+  primary:
+    - texas_drivers_license_12_months
+    - texas_voter_registration
+    - texas_vehicle_registration
+  supporting:
+    - employment_proof
+    - property_deed_or_mortgage
+    - business_registration
+    - marriage_certificate
+    - les_statements_military
+    - ead_card_daca
+  sources: [1]
+
+notes:
+  - "90% reserved for residents - Texas law caps non-residents at 10%"
+  - "Marriage can transfer residency - Spouse must have 12mo domicile, you must be married 12mo"
+  - "Two pathways - HS graduation route OR domicile establishment"
+  - "Dependents inherit parent's state - Cannot independently establish while claimed as dependent"
+  - "DACA varies by school - Only 3 of 15 schools accept DACA"
+  - "F-1/J-1 cannot establish residency - Not eligible for Texas residency classification"
+  - "TMDSAS centralizes - One system determines residency for all TMDSAS schools"
+  - "Regional preferences exist - Many schools prefer specific Texas regions"
+  - "Mission fit matters - UH Fertitta screens for primary care commitment before sending secondaries"
+  - "Secondary questions reveal preferences - UT Tyler, Texas Tech, UTMB explicitly ask about regional ties"
+
+examples:
+  - scenario: "4 years undergrad in Texas"
+    question: "Am I a Texas resident?"
+    answer: "Not automatically. Depends on: Were you claimed as dependent by out-of-state parents? Did you establish domicile (employment, property, etc.)? Did you graduate from Texas HS?"
+  - scenario: "Parents moved to Texas while I was in college"
+    question: "Am I a resident?"
+    answer: "If still claimed as dependent: YES, may derive residency from parents if they've established Texas domicile for 12 months by deadline"
+  - scenario: "Marrying a Texan"
+    question: "When can I claim residency?"
+    answer: "Need: (1) Spouse to have 12 months established domicile, (2) Be married 12+ months. Both must be true by October 1 deadline"
+  - scenario: "F-1 visa, lived in Texas 4 years"
+    question: "Am I a resident?"
+    answer: "NO. F-1 visa holders cannot establish permanent domicile required for residency classification"
+  - scenario: "DACA just approved"
+    question: "Can I apply to all Texas schools?"
+    answer: "NO. Only 3 schools accept DACA: Texas A&M, UT San Antonio Long, Sam Houston State"
+
+research_gaps:
+  - "What qualifies as 'gainful employment'? Part-time? How many hours?"
+  - "Can online business ownership count for domicile?"
+  - "What if parents are divorced and one lives in Texas, one out of state?"
+  - "Graduate students - are they presumed independent like in California?"
+  - "What happens if marriage ends during medical school?"
+  - "Can gap year before HS graduation count toward 36-month requirement?"

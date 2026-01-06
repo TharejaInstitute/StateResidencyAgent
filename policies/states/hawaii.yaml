@@ -1,0 +1,169 @@
+# Hawaii Medical School Admissions Residency
+# Last Verified: 2026-01-06
+
+meta:
+  state: hawaii
+  abbreviation: HI
+  last_verified: 2026-01-06
+  complexity: high
+
+sources:
+  - id: 1
+    name: "JABSOM Residency Screening"
+    url: "https://admissions.jabsom.hawaii.edu/application-process/residency-screening.html"
+  - id: 2
+    name: "JABSOM FAQs"
+    url: "https://admissions.jabsom.hawaii.edu/faqs/"
+  - id: 3
+    name: "JABSOM Incoming Class Profile"
+    url: "https://admissions.jabsom.hawaii.edu/application-process/2025-incoming-class-profile.html"
+
+# Hawaii uses TIES SCREENING - subjective criteria-based system (not days of residency)
+admissions_residency:
+  type: ties_screening
+  determination_by: school  # JABSOM determines, not state
+  required_months: null  # Not applicable - ties-based, not duration-based
+  education_counts: null  # Not applicable
+  continuous: null  # Not applicable
+  sources: [1]
+
+ties_screening:
+  description: "Subjective ties-based screening - meet 2 of 5 criteria for resident classification"
+  criteria:
+    - applicant_legal_residence
+    - parent_legal_residence
+    - birthplace
+    - high_school_location
+    - college_location
+  minimum_required: 2
+  verification_method: "AMCAS application + JABSOM secondary application"
+  pacific_islands_equivalent: true
+  pacific_islands:
+    - american_samoa
+    - cnmi
+    - cook_islands
+    - fsm
+    - futuna
+    - guam
+    - kiribati
+    - nauru
+    - niue
+    - rapa_nui
+    - palau
+    - marshall_islands
+    - solomon_islands
+    - tokelau
+    - tonga
+    - tuvalu
+    - vanuatu
+    - wallis
+  sources: [1]
+
+schools:
+  - name: John A. Burns School of Medicine (JABSOM)
+    degree: MD
+    type: public
+    application_system: AMCAS
+    class_size: 77
+    resident_seats: 67
+    nonresident_seats: 10
+    resident_percentage: 87
+    nonresident_percentage: 13
+    mission: "Training physicians for Hawaii and the Pacific"
+    citizenship:
+      eligible:
+        - us_citizen
+        - permanent_resident
+        - daca
+        - undocumented
+        - cofa_citizen
+        - f1_visa
+        - j1_visa
+        - international
+      notes:
+        - "No citizenship requirement for admission"
+        - "Applicants considered without regard to country of origin"
+        - "90 semester credits at US/Canadian institution required"
+        - "Pacific Islanders considered part of same group as Native Hawaiians for scholarships/programs"
+        - "F-1/international students with 2+ ties criteria compete for resident seats (67), not nonresident (10)"
+    secondary_questions:
+      - text: "Background and lived experiences contributing to JABSOM mission"
+      - text: "Community contribution"
+      - text: "Hawaii/Pacific connection - explain ties or why applying without ties"
+        focus: "KEY QUESTION - must explain if no personal connection"
+    preferences:
+      - tier: 1
+        criteria: "Resident classification (2+ ties criteria met)"
+        seats: 67
+      - tier: 2
+        criteria: "Nonresident - highly ranked with some ties preferred"
+        seats: 10
+        notes: "Must be highly ranked, preferably with some ties to Hawaii"
+    notes:
+      - "87% resident seats - strong preference for residents"
+      - "Ties-based system, not days of residency"
+      - "Pacific Island ties count equivalently to Hawaii ties"
+      - "Immigration status doesn't affect admissions classification"
+    sources: [1, 2, 3]
+
+citizenship:
+  eligible:
+    - us_citizen
+    - permanent_resident
+    - daca
+    - undocumented
+    - cofa_citizen
+    - f1_visa
+    - j1_visa
+    - international
+  ineligible: []  # No citizenship restrictions
+  admission_citizenship_required: false
+  notes:
+    - "JABSOM is citizenship-blind for admission"
+    - "Applicants considered without regard to country of origin"
+    - "90 semester credits at US/Canadian institution required regardless of citizenship"
+  sources: [2]
+
+military:
+  active_duty_qualifies: true
+  spouse_qualifies: true
+  dependents_qualify: true
+  national_guard_qualifies: true
+  reserves_hawaii_based_qualifies: true
+  notes:
+    - "Active duty stationed in Hawaii = resident classification"
+    - "Spouses and dependents of active duty in Hawaii = resident"
+    - "Hawaii National Guard members = resident"
+    - "Hawaii-based Reserve unit members = resident"
+  sources: [1]
+
+notes:
+  - "Hawaii uses TIES SCREENING, not duration-based residency"
+  - "5 criteria: applicant residence, parent residence, birthplace, high school, college"
+  - "Need 2 of 5 criteria for resident classification"
+  - "17+ Pacific Island nations/territories count same as Hawaii ties"
+  - "Only one medical school: JABSOM (MD)"
+  - "No DO schools in Hawaii"
+
+examples:
+  - scenario: "Born in Hawaii, left as child"
+    birthplace: hawaii  # 1 criterion
+    outcome: "Need at least 1 more criterion (parents still in HI? HS in HI?) - if only 1, classified NONRESIDENT"
+  - scenario: "From Guam, college on mainland"
+    birthplace: guam  # Pacific Island = 1 criterion
+    parent_residence: guam  # 2nd criterion
+    outcome: "RESIDENT classification (2 criteria met)"
+  - scenario: "F-1 student from Japan, all schooling in Hawaii"
+    high_school: hawaii  # 1 criterion
+    college: hawaii  # 2nd criterion
+    outcome: "RESIDENT classification (2 criteria met) - immigration status doesn't affect classification"
+  - scenario: "Mainland US applicant, no Hawaii/Pacific ties"
+    all_criteria: mainland_us
+    outcome: "NONRESIDENT - competes for ~10 nonresident seats"
+
+research_gaps:
+  - "Can applicants appeal ties screening classification?"
+  - "How are split criteria evaluated (e.g., multiple high schools)?"
+  - "What documentation is required to verify Pacific Island ties?"
+  - "How competitive are the 10 nonresident seats?"
+  - "Are COFA citizens from non-listed Pacific nations treated equivalently?"

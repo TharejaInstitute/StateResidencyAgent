@@ -56,6 +56,10 @@ schools:
     resident_seats: 67
     nonresident_seats: 10
     resident_percentage: 87
+    secondary_focus:
+      - "Background and lived experiences contributing to JABSOM mission"
+      - "Community contribution"
+      - "Hawaii/Pacific connection" # KEY - explain ties or why applying without ties
     citizenship:
       eligible:
         - us_citizen
@@ -70,6 +74,7 @@ schools:
         - "No citizenship requirement for admission"
         - "Accepts applicants without regard to country of origin"
         - "90 semester credits at US/Canadian institution required"
+        - "Pacific Islanders considered part of same group as Native Hawaiians for scholarships/programs"
 
 citizenship:
   # State-level defaults (JABSOM is more permissive)
@@ -202,6 +207,16 @@ Information is pulled from:
 2. **JABSOM secondary application**
 
 The secondary application includes an essay where applicants can explain their ties to Hawaii or Pacific Islands.
+
+---
+
+## Secondary Application Focus
+
+The key secondary essay asks about your **Hawaii/Pacific connection**. If you don't have a personal connection, you must explain why you're applying.
+
+### Pacific Island Applicants
+
+If you are from the Pacific Islands (not specifically Hawaiian), JABSOM considers you part of the broader Pacific Islander community and treats your ties equivalently to Hawaii ties.
 
 ---
 

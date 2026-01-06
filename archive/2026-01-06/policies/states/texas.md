@@ -82,9 +82,10 @@ schools:
     application_system: TMDSAS
     daca_accepted: false
     regional_preference: west_texas
-    secondary_question: "Do you consider yourself from West Texas or as having West Texas ties? If yes, what town or county did you reside in, or what other factors would you cite?"
-    mission_focus: "West Texas, rural health care, 108 counties of West Texas"
-    notes: "20% of practicing physicians in West Texas are TTUHSC alumni"
+    secondary_focus: "West Texas ties"
+    advantage_factors:
+      - "From West Texas or have ties"
+      - "Interest in rural health care"
 
   - name: Texas Tech Paul L. Foster School of Medicine (El Paso)
     degree: MD
@@ -92,9 +93,10 @@ schools:
     application_system: TMDSAS
     daca_accepted: false
     regional_preference: us_mexico_border
-    secondary_question: "Recognizing the components of this mission and that PLFSOM is located on the US/Mexico border, please describe why you are interested in applying to our school."
-    mission_focus: "Border health, Hispanic health, underserved border communities"
-    notes: "First four-year medical school on US/Mexico border; experience with Hispanic populations is valuable"
+    secondary_focus: "Border region interest"
+    advantage_factors:
+      - "Experience with Hispanic populations"
+      - "Interest in border health disparities"
 
   - name: Tilman J. Fertitta Family College of Medicine (UH)
     degree: MD
@@ -102,14 +104,13 @@ schools:
     application_system: TMDSAS
     daca_accepted: false
     regional_preference: se_texas_houston
-    mission_fit_screening: true
-    secondary_questions:
-      - "Prior experience in primary care settings (general internal medicine, pediatrics, or family medicine)"
-      - "Experience in medical practice or social service for underserved areas"
-      - "Experience in community or public health"
-      - "Why are you interested in the primary care field(s) and care of the community as a whole?"
-    mission_focus: "Primary care physician shortage, SE Texas, W Louisiana, urban and rural underserved areas"
-    notes: "Screens for mission fit before sending secondary; class size only 60; Early Decision available for applicants committed to primary care in Houston area"
+    mission_fit_screening: true  # Screens before sending secondary
+    class_size: 60
+    advantage_factors:
+      - "Primary care experience/commitment"
+      - "Underserved area service"
+      - "Community/public health experience"
+    notes: "Early Decision available for primary care in Houston area"
 
   - name: UT Southwestern Medical Center
     degree: MD
@@ -127,11 +128,7 @@ schools:
     application_system: TMDSAS
     daca_accepted: false
     regional_preference: galveston_gulf_coast
-    secondary_questions:
-      - "Are there particular characteristics of our school and/or the Galveston area in terms of location, history, or other attributes that make you especially interested in matriculating here?"
-    casper_required: true
-    duet_required: true  # Pilot program
-    mission_focus: "Galveston County, Gulf Coast Region"
+    secondary_focus: "Interest in Galveston area"
 
   - name: UT Rio Grande Valley School of Medicine
     degree: MD
@@ -139,11 +136,11 @@ schools:
     application_system: TMDSAS
     daca_accepted: false
     regional_preference: rio_grande_valley
-    video_requirement:
-      duration: "2 minutes"
-      prompt: "Select 2 of 5 values (patient advocacy, community focus, cultural awareness, collaborative leadership, lifelong problem solving) and discuss what you have done that resonates with them"
     class_composition: "96% Texas residents"
-    mission_focus: "Transform healthcare in Rio Grande Valley, diverse communities of South Texas, social justice, community engagement"
+    advantage_factors:
+      - "Rio Grande Valley connection"
+      - "Cultural awareness"
+      - "Community engagement"
 
   - name: UT San Antonio Long School of Medicine
     degree: MD
@@ -151,19 +148,17 @@ schools:
     application_system: TMDSAS
     daca_accepted: true
     regional_preference: south_texas
-    mission_statement: "Particular sensitivity to and focus on the South Texas region"
-    notes: "Foremost medical educator in South Texas; no secondary application; CASPer and one-way video interview required"
-    casper_required: true
+    advantage_factors:
+      - "South Texas connection"
 
   - name: UT Austin Dell Medical School
     degree: MD
     type: public
     application_system: TMDSAS
     daca_accepted: false
-    regional_preference: central_texas_mission
-    secondary_type: video_response  # Not written, video-based
-    mission_focus: "Central Texas community, person-centered integrated care"
-    notes: "No written secondary; video-response secondary sent to screened applicants"
+    regional_preference: central_texas
+    advantage_factors:
+      - "Central Texas ties"
 
   - name: UT Tyler School of Medicine
     degree: MD
@@ -171,35 +166,30 @@ schools:
     application_system: TMDSAS
     daca_accepted: false
     regional_preference: east_texas
+    class_size: 40  # Very small, highly competitive
     regional_preference_tiers:
       - tier: 1
-        description: "Direct ties to East Texas (born, graduated high school, community college, undergraduate, etc.)"
+        description: "Direct ties (born, attended school in East Texas)"
       - tier: 2
-        description: "Indirect ties to East Texas (family members, in-laws, visited frequently, attended summer camp, etc.)"
+        description: "Indirect ties (family, frequent visits)"
       - tier: 3
-        description: "Ties to a rural region with similar characteristics to East Texas"
+        description: "Ties to similar rural region"
       - tier: 4
-        description: "No ties but interested in practicing in East Texas after graduation"
+        description: "No ties but want to practice there"
       - tier: 5
-        description: "No ties but still interested in attending"
-    secondary_question: "Please indicate your connection to East Texas as outlined in our county map and explain"
-    mission_focus: "East Texas rural and underserved communities, primary care, preventive health"
-    class_size: 40
-    notes: "First medical school in East Texas; very small class makes admission highly competitive"
+        description: "No ties"
+    secondary_focus: "East Texas connection level"
 
   - name: TCU Burnett School of Medicine
     degree: MD
     type: private
-    application_system: AMCAS
+    application_system: AMCAS  # Uses AMCAS, not TMDSAS
     regional_preference: none
     minimum_hours_required:
       service: 150
       leadership: 150
       physician_patient_interaction: 150
       personal_excellence: 150
-    casper_required: true
-    duet_required: true
-    notes: "Uses AMCAS, not TMDSAS; no written secondary (audio-recorded answers); Fort Worth community mission but no explicit regional preference"
 
   # DO Schools
   - name: UNT Texas College of Osteopathic Medicine
@@ -208,8 +198,6 @@ schools:
     application_system: TMDSAS
     daca_accepted: false
     regional_preference: none
-    secondary_required: true
-    secondary_fee: 50
     notes: "90% Texas residents required by law; no explicit regional preference within Texas"
 
   - name: Sam Houston State College of Osteopathic Medicine
@@ -218,22 +206,22 @@ schools:
     application_system: TMDSAS
     daca_accepted: true
     regional_preference: eastern_texas
-    mission_focus: "Increase physician workforce in eastern region of Texas, primary care, rural practice"
-    secondary_questions:
-      - "What do you like or dislike most about the area you are from (your hometown or where you graduated high school)?"
-      - "What do you consider the role of physicians in medically underserved Texas communities?"
-    selection_criteria:
-      - "Availability of physicians in applicant's region of residence (underserved or shortage area)"
-      - "Alignment to SHSU and COM mission statement"
+    advantage_factors:
+      - "From underserved or shortage area"
+      - "Eastern Texas connection"
+      - "Primary care/rural practice interest"
+    secondary_focus: "Hometown area and role of physicians in underserved communities"
     notes: "Recruits from areas where applicants would likely return to practice"
 
   - name: University of the Incarnate Word School of Osteopathic Medicine
     degree: DO
     type: private
-    application_system: AACOMAS
-    regional_preference: inland_empire_south_texas
-    mission_focus: "South Texas, underserved communities, health equity"
-    notes: "Uses AACOMAS - excluded from TMDSAS 90% rule; first faith-based osteopathic school in Texas; bilingual applicants should self-identify"
+    application_system: AACOMAS  # Not TMDSAS - excluded from 90% rule
+    regional_preference: south_texas
+    advantage_factors:
+      - "South Texas connection"
+      - "Bilingual (Spanish)"
+      - "Underserved community interest"
 
 citizenship:
   eligible:

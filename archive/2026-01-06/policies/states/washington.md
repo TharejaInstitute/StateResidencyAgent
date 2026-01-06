@@ -101,8 +101,11 @@ schools:
       legal_residency:
         required_months: 12
         deadline: january_1
-    secondary_question: "What experiences have you had with rural and/or underserved communities? What have you learned? (300 words)"
-    mission_focus: "Rural, underserved, historically marginalized, and vulnerable populations in Washington"
+    secondary_focus: "Rural/underserved community experience"
+    advantage_factors:
+      - "Rural community background"
+      - "Underserved community experience"
+      - "Interest in serving vulnerable populations"
     campus_locations: ["Everett", "Spokane", "Tri-Cities", "Vancouver"]
     citizenship:
       eligible:

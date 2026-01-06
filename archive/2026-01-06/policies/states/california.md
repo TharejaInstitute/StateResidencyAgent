@@ -84,19 +84,17 @@ schools:
     application_system: AMCAS
     regional_preference: northern_central_california
     resident_percentage: 96
-    secondary_question: "Do you have a connection to Northern or Central California? If 'yes', please explain (500 characters)"
+    secondary_focus: "Northern/Central California connection"
     special_programs:
       - name: Rural-PRIME
         focus: "Rural California communities"
         target_specialties: ["Primary Care", "Family Medicine", "Pediatrics", "OB/GYN", "General Surgery", "Emergency Medicine"]
-        features: ["Weekly seminars", "Leadership training", "Rural physician mentorship", "Rural clinical rotations"]
-    mission_focus: "Northern and Central California, rural and medically underserved areas"
+    advantage_factors:
+      - "Northern/Central California ties"
+      - "Rural or medically underserved area origin"
     citizenship:
       notes: "Welcomes undocumented and DACA students"
-    admissions_criteria:
-      - "Geographic origin (rural or medically underserved area)"
-      - "Connection to Northern/Central California"
-    notes: "Strong Northern CA preference; 96% CA residents; out-of-state may not receive secondary; 80%+ of graduates remain in CA"
+    notes: "96% CA residents; out-of-state may not receive secondary; 80%+ of graduates remain in CA"
 
   - name: UC Irvine School of Medicine
     degree: MD
