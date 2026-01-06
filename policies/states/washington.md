@@ -1,9 +1,158 @@
-# Washington Medical School Residency Research (DRAFT)
+---
+meta:
+  state: washington
+  abbreviation: WA
+  last_verified: 2026-01-06
+  complexity: high
+  has_medical_schools: true
+  has_public_schools: true
+  # Matches index: md: 2/2, do: 1/0
+  md_preference_total: 2   # UW, WSU Elson Floyd (both public)
+  md_preference_public: 2
+  do_preference_total: 1   # PNWU-COM (private, regional preference)
+  do_preference_public: 0  # PNWU is private
 
-**Research Date**: 2025-01-05
-**Status**: Draft - verified via browser 2026-01-06
+# Washington has TWO schools with different rules: UW (WWAMI lead) and WSU (WA-only)
+admissions_residency:
+  type: school_specific  # UW and WSU have different rules
+  physical_presence:
+    required_months: 12
+    school_counts: false
+    credit_limit_while_establishing: 6  # Per term limit
+  financial_independence:
+    dependent_inherits_parent: true
+
+regional_program:
+  name: wwami
+  role: lead_state
+  member_states:
+    - washington
+    - wyoming
+    - alaska
+    - montana
+    - idaho
+
+schools:
+  # MD Schools
+  - name: University of Washington School of Medicine
+    degree: MD
+    type: public
+    application_system: AMCAS
+    program_type: wwami_lead
+    class_size: 280
+    seats_by_location:
+      seattle: 100
+      spokane: 60
+      wyoming: 20
+      alaska: 30
+      montana: 30
+      idaho: 40
+    acceptance_rates:
+      washington_overall: "15.5%"
+      seattle: "30.4%"
+      spokane: "52.2%"
+      wyoming: "50.0%"
+      alaska: "44.1%"
+      montana: "25.2%"
+      idaho: "27.0%"
+      out_of_region: "0.4%"
+    citizenship:
+      eligible:
+        - us_citizen
+        - permanent_resident
+        - daca  # If verified by state
+      ineligible:
+        - f1_visa
+        - j1_visa
+        - canadian_citizen  # Without green card
+        - other_nonimmigrant
+    out_of_region:
+      eligible_with_ties: true
+      requires_disadvantaged_or_service: true
+      ties_criteria:
+        - tribal_affiliation_wwami
+        - born_in_wwami
+        - hs_graduation_wwami
+        - family_in_wwami
+        - lived_1_year_wwami
+        - military_stationed_wwami
+        - pre_med_programs
+    notes:
+      - "MSTP (MD/PhD) is NOT restricted to WWAMI residents"
+      - "DACA recipients must be verified by state residency office"
+
+  - name: WSU Elson S. Floyd College of Medicine
+    degree: MD
+    type: public
+    application_system: AMCAS
+    program_type: state_only
+    class_size: 80
+    washington_only: true
+    regional_preference: rural_underserved
+    rural_background_percentage: 15.3
+    eligibility_pathways:
+      ties_to_washington:
+        criteria_needed: 3
+        criteria:
+          - born_in_washington
+          - childhood_address_washington
+          - hs_graduation_washington
+          - parent_lives_washington
+      legal_residency:
+        required_months: 12
+        deadline: january_1
+    secondary_question: "What experiences have you had with rural and/or underserved communities? What have you learned? (300 words)"
+    mission_focus: "Rural, underserved, historically marginalized, and vulnerable populations in Washington"
+    campus_locations: ["Everett", "Spokane", "Tri-Cities", "Vancouver"]
+    citizenship:
+      eligible:
+        - us_citizen
+        - permanent_resident
+      ineligible:
+        - f1_visa
+        - j1_visa
+        - daca  # Not mentioned as eligible
+        - other_nonimmigrant
+    notes:
+      - "100% of class from Washington or with significant ties"
+      - "DACA NOT explicitly included as eligible"
+      - "15.3% of students have childhood rural county backgrounds"
+      - "Community-based medical education model - students train in existing community clinics/hospitals"
+
+  # DO Schools
+  - name: Pacific Northwest University of Health Sciences (PNWU-COM)
+    degree: DO
+    type: private
+    application_system: AACOMAS
+    regional_preference:
+      states: [alaska, idaho, montana, oregon, washington]
+    notes:
+      - "Private school with regional preference for AK/ID/MT/OR/WA"
+      - "Counted in do: 1/0 (total/public) - has preference but is private"
+
+citizenship:
+  notes:
+    - "UW accepts DACA if verified by state"
+    - "WSU does NOT mention DACA as eligible"
+    - "Neither school accepts international or Canadian students"
+
+military:
+  active_duty_exempt: true
+  wa_national_guard_exempt: true
+  notes:
+    - "Active military stationed in WA qualifies for residency"
+    - "WA National Guard members qualify"
+
+deadlines:
+  uw_residency_establish_by: june_22  # For following year entry
+---
+
+# Washington Medical School Residency Research
+
+**Last Verified**: 2026-01-06 - verified via browser
 
 ## Sources Index
+
 | ID | Source | URL |
 |----|--------|-----|
 | [1] | UW Medicine WWAMI State Eligibility | https://www.uwmedicine.org/school-of-medicine/md-program/admissions/state-eligibility |
@@ -13,7 +162,10 @@
 | [5] | UW Medicine MD Admissions | https://www.uwmedicine.org/school-of-medicine/md-program/admissions |
 | [6] | UW Medicine Acceptance Statistics | https://www.uwmedicine.org/school-of-medicine/md-program/admissions/acceptance-statistics |
 
+---
+
 ## Policy Type
+
 **TWO DISTINCT MEDICAL SCHOOLS** with different eligibility rules:
 1. **University of Washington School of Medicine** - WWAMI regional program (5-state)
 2. **WSU Elson S. Floyd College of Medicine** - Washington-only program
@@ -29,39 +181,34 @@
 - **Class Size**: 280 total (E-2025), ~95% from WWAMI region — [6]
 - **Terminology**: Uses "out-of-region" not "out-of-state" — [1]
 
-## Residency Requirements for Washington Residents
+## Residency Requirements for Washington Residents — [2]
 
 ### The 12-Month Rule
-> — Source: [2]
 
 > "You must have maintained a primary residence in Washington for at least **12 consecutive months** immediately prior to your first admitted quarter." — [2]
 
-### Key Requirements
-> — Source: [2]
+### Key Requirements — [2]
 
 - Residence must be for purposes **other than postsecondary education** — [2]
 - For 2026 applicants: Must establish residence by **June 22, 2025** — [2]
 - If taking courses at WA college during prior 12 months: Cannot exceed 6 credits/term — [2]
 - If exceed 6 credits: Must prove residence for reasons other than education — [2]
 
-### Verification Process
-> — Source: [2]
+### Verification Process — [2]
 
 1. Must affirm US citizen or permanent resident status — [2]
 2. Submit affidavit if meeting standard requirements — [2]
 3. Submit Residence Questionnaire if not meeting standard requirements — [2]
 4. Financially dependent students can claim residency through parent/guardian — [2]
 
-## WWAMI State Eligibility
-> — Source: [1]
+## WWAMI State Eligibility — [1]
 
 ### How It Works
 - Legal state of residence in AMCAS determines WWAMI eligibility — [1]
 - WWAMI states (WY, AK, MT, ID) require **separate state certification** — [1]
 - Each WWAMI state has its own residency requirements (see individual state files)
 
-### WWAMI State Seat Allocation
-> — Source: [6]
+### WWAMI State Seat Allocation — [6]
 
 | State | Seats/Year | Foundation Site |
 |-------|------------|-----------------|
@@ -74,8 +221,7 @@
 
 **Note**: Approximately 10 of Seattle's seats per year are for MSTP (MD/PhD). — [6]
 
-### MSTP (MD/PhD) Exception
-> — Source: [5]
+### MSTP (MD/PhD) Exception — [5]
 
 **IMPORTANT**: The Medical Scientist Training Program (MSTP) is NOT restricted to WWAMI residents:
 > "Selection for this program is national in scope and is not restricted to residents of Washington, Wyoming, Alaska, Montana or Idaho." — [5]
@@ -83,10 +229,10 @@
 - MSTP applicants must be U.S. citizens or permanent residents — [5]
 - DACA recipients are only eligible for "MD only program" (not MSTP) — [5]
 
-## Out-of-Region Eligibility
-> — Source: [1][5]
+## Out-of-Region Eligibility — [1][5]
 
 ### Requirements (BOTH must be met)
+
 Out-of-region applicants are considered if they meet **BOTH** of the following: — [5]
 
 1. **Ties to WWAMI** (at least one): — [1]
@@ -103,14 +249,11 @@ Out-of-region applicants are considered if they meet **BOTH** of the following: 
    - Service record with underserved communities
    - From an economically or educationally disadvantaged background
 
-### Out-of-Region Acceptance Rate
-> — Source: [6]
-
+### Out-of-Region Acceptance Rate — [6]
 - **0.4%** (extremely competitive) — [6]
 - Based on 3-year average for MD program only
 
-### Acceptance Rates by State (E-2025, 3-year average)
-> — Source: [6]
+### Acceptance Rates by State (E-2025, 3-year average) — [6]
 
 | State/Region | Acceptance Rate |
 |--------------|-----------------|
@@ -123,10 +266,10 @@ Out-of-region applicants are considered if they meet **BOTH** of the following: 
 | Montana | 25.2% |
 | Out-of-Region | 0.4% |
 
-## Citizenship/Immigration Requirements
-> — Source: [5][6]
+## Citizenship/Immigration Requirements — [5][6]
 
 ### Eligible
+
 | Status | Eligible? |
 |--------|-----------|
 | US Citizens | YES — [5] |
@@ -134,6 +277,7 @@ Out-of-region applicants are considered if they meet **BOTH** of the following: 
 | DACA Recipients | YES, if reside in WWAMI state AND legally authorized by state's residency office — [5][6] |
 
 ### NOT Eligible
+
 | Status | Eligible? |
 |--------|-----------|
 | **International Students** | **NO** — [6] |
@@ -151,18 +295,17 @@ Out-of-region applicants are considered if they meet **BOTH** of the following: 
 
 # SCHOOL 2: WSU Elson S. Floyd College of Medicine
 
-## Overview
-> — Source: [3]
+## Overview — [3]
 
 - **Program Type**: Washington state-only (no regional partnership) — [3]
 - **Class Size**: 80 students from Washington — [3]
 - **Tuition**: Same for all admitted students — [3]
 - **100% of class** from Washington or with significant ties — [3]
 
-## Two Pathways to Eligibility
-> — Source: [3]
+## Two Pathways to Eligibility — [3]
 
 ### Pathway 1: "Ties to Washington" (3 of 4 Criteria)
+
 Must meet **at least 3 of these 4 criteria**: — [3]
 
 | # | Criterion |
@@ -176,8 +319,7 @@ Must meet **at least 3 of these 4 criteria**: — [3]
 
 > "Regardless of the identified state of residency on AMCAS, if you demonstrate that you are 'from Washington' by meeting at least 3 of these 4 ties to Washington, you meet this requirement." — [3]
 
-### Pathway 2: Legal Washington Residency
-> — Source: [3]
+### Pathway 2: Legal Washington Residency — [3]
 
 - Must meet WA "resident student" definition per RCW 28B.15.012(2) — [3]
 - Must be resident for **12-month period** leading to **January 1** of enrollment year — [3]
@@ -189,23 +331,23 @@ Options for resident student definition: — [3]
 - Active military stationed in WA or WA National Guard member
 - Member of federally recognized tribe with traditional boundaries in WA (with domicile in ID, MT, OR, or WA)
 
-### What Happens If You Don't Qualify
-> — Source: [3][4]
+### What Happens If You Don't Qualify — [3][4]
 
 > "Applicants who do not meet the definition of a Washington resident student or do not have 3 or more ties to Washington are **not eligible** for admission and will not receive a secondary application." — [3]
 
 > "If you do not meet any of these requirements, you will not be considered and will not receive a secondary application." — [4]
 
-## Citizenship Requirements
-> — Source: [3][4]
+## Citizenship Requirements — [3][4]
 
 ### Eligible
+
 | Status | Eligible? |
 |--------|-----------|
 | US Citizens | YES — [3] |
 | US Permanent Residents | YES — [3] |
 
 ### NOT Eligible
+
 | Status | Eligible? |
 |--------|-----------|
 | F-1 Visa | **NO** — [4] |
@@ -219,7 +361,9 @@ Options for resident student definition: — [3]
 
 **Note**: Unlike UW Medicine, WSU ESFCOM does NOT mention DACA as an eligible category. Their citizenship requirement explicitly states "U.S. citizen or permanent resident" without DACA exception. — [3][4]
 
-## Key Differences from UW
+---
+
+## Key Differences Between Schools
 
 | Factor | UW Medicine | WSU ESFCOM |
 |--------|-------------|------------|
@@ -267,99 +411,16 @@ If you meet 3 of 4, you're eligible. — [3]
 
 ---
 
-## Schema Fields Identified
+## Edge Cases to Investigate
 
-```yaml
-schools:
-  - name: "University of Washington School of Medicine"
-    type: wwami_lead
-    wwami_states:
-      - washington
-      - wyoming
-      - alaska
-      - montana
-      - idaho
-    class_size: 280  # Source: [6]
-    residency:
-      washington:
-        required_months: 12  # Source: [2]
-        school_counts: false_with_credit_limit
-        credit_limit_per_term: 6  # Source: [2]
-      wwami_states:
-        requires_state_certification: true  # Source: [1]
-    seats:  # Source: [6]
-      seattle: 100
-      spokane: 60
-      wyoming: 20
-      alaska: 30
-      montana: 30
-      idaho: 40
-    out_of_region:
-      eligible_with_ties: true
-      requires_disadvantaged_or_service: true  # Source: [5]
-      acceptance_rate: "0.4%"  # Source: [6]
-      ties_criteria:  # Source: [1]
-        - tribal_affiliation
-        - born_in_wwami
-        - hs_graduation_in_wwami
-        - family_in_wwami
-        - lived_1_year_in_wwami
-        - military_stationed
-        - pre_med_programs
-        - other
-    citizenship:  # Source: [5][6]
-      eligible:
-        - us_citizen
-        - permanent_resident
-        - daca_verified_by_state
-      ineligible:
-        - international
-        - canadian
-        - f1_visa
-        - j1_visa
-    acceptance_rates:  # Source: [6]
-      washington: "15.5%"
-      seattle: "30.4%"
-      spokane: "52.2%"
-      wyoming: "50.0%"
-      alaska: "44.1%"
-      montana: "25.2%"
-      idaho: "27.0%"
-      out_of_region: "0.4%"
-
-  - name: "WSU Elson S. Floyd College of Medicine"
-    type: state_only
-    class_size: 80  # Source: [3]
-    washington_only: true  # Source: [3]
-    eligibility:
-      pathway_1:  # Source: [3]
-        name: "ties_to_washington"
-        criteria_needed: 3
-        criteria:
-          - born_in_washington
-          - childhood_address_washington
-          - hs_graduation_washington
-          - parent_lives_washington
-      pathway_2:  # Source: [3]
-        name: "legal_resident"
-        required_months: 12
-        deadline: "january_1"
-    citizenship:  # Source: [3][4]
-      eligible:
-        - us_citizen
-        - permanent_resident
-      ineligible:
-        - f1_visa
-        - j1_visa
-        - international
-      daca: not_mentioned
-    tuition:
-      same_for_all: true  # Source: [3]
-```
+- [ ] What exactly counts as "childhood address" for WSU ties pathway?
+- [ ] How does WSU verify the 4 ties criteria?
+- [ ] Can military stationed in WA use ties pathway or only legal residency pathway?
+- [ ] What documentation does UW require for DACA verification?
 
 ---
 
-## Key Takeaways for Applicants
+## Key Takeaways
 
 ### For Washington Residents:
 1. **Apply to both schools** - They have different missions and may evaluate you differently

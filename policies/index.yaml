@@ -1,0 +1,268 @@
+# State ADMISSIONS Residency Index v2 (Scalable Format)
+# Compact routing index - always loaded by agent
+# Target: <3K tokens for 52 jurisdictions (50 states + DC + PR)
+#
+# SCOPE: Admissions classification only (which applicant pool you compete in)
+# NOT covered: Tuition residency (what you pay after admission)
+
+version: 2
+last_updated: 2026-01-06
+
+# =============================================================================
+# FLAG DEFINITIONS
+# Agent references these to understand what flags mean
+# =============================================================================
+flags:
+  # Residency establishment
+  no_school: "School attendance doesn't count toward residency"
+  grad_indep: "Grad/professional students presumed financially independent"
+  dep_inherit: "Dependents inherit parent's residency state"
+  credit_limit: "Credit limit while establishing residency"
+
+  # Pathways
+  marriage: "Marriage can transfer residency"
+  family_derive: "Can derive residency from extended family (siblings, etc.)"
+  ties_screen: "Uses subjective ties/criteria screening (not just duration)"
+  hs_pathway: "High school graduation pathway available"
+
+  # Citizenship/Immigration
+  daca_all: "DACA eligible at all public schools"
+  daca_some: "DACA eligibility varies by school"
+  daca_none: "DACA not eligible at any school"
+  f1_ban: "F-1 visa holders cannot apply (citizenship required)"
+  f1_no_res: "F-1 can apply but cannot establish residency"
+  canadian: "Canadian citizens/PRs eligible"
+  pacific_eq: "Pacific Island ties equivalent to in-state for admissions"
+  cofa: "COFA citizens treated as residents for admissions"
+
+  # Programs & Systems
+  centralized: "Centralized state application system"
+  service_req: "Mandatory service obligation"
+  service_opt: "Optional service-for-tuition program"
+  border_pref: "Bordering states get admission preference"
+
+  # School landscape
+  no_med_school: "No medical schools in state (regional program only)"
+  private_only: "Only private medical schools (no in-state admission preference)"
+  public_exists: "Has public medical school(s) with in-state admission preference"
+
+# =============================================================================
+# COMPLEXITY LEVELS
+# =============================================================================
+complexity:
+  l: "low - Simple rules, few exceptions"
+  m: "medium - Standard rules with some nuance"
+  h: "high - Complex rules or multiple pathways"
+  vh: "very_high - Highly complex, many exceptions, unique systems"
+
+# =============================================================================
+# STATES
+# Format: md=schools with preference (total/public), do=same for DO
+# Duration: d=days, m=months, y=years
+# ONLY counts schools that give residency-based admission preference
+# =============================================================================
+states:
+  california:
+    abbr: CA
+    dur: 366d
+    md: 6/5                # 5 UC public + CUSM (regional preference)
+    do: 0/0                # Private DO schools have no residency preference
+    cx: vh
+    f: [no_school, grad_indep, daca_all, f1_no_res]
+    prg: []
+
+  texas:
+    abbr: TX
+    dur: 12m
+    md: 13/11              # 11 public + Baylor (private) + TCU (private); 90% rule for TMDSAS
+    do: 2/2                # UNT TCOM, Sam Houston (TMDSAS); UIW uses AACOMAS (no preference)
+    cx: m
+    f: [dep_inherit, hs_pathway, marriage, daca_some, centralized]
+    prg: []
+    sys: TMDSAS
+
+  hawaii:
+    abbr: HI
+    dur: 365d
+    md: 1/1
+    do: 0/0
+    cx: h
+    f: [no_school, ties_screen, credit_limit, daca_all, pacific_eq, cofa]
+    prg: []
+    note: "F-1 can apply AND get resident classification via ties"
+
+  massachusetts:
+    abbr: MA
+    dur: 7y
+    md: 1/1                # Only UMass has residency preference
+    do: 0/0                # Private DO schools have no residency preference
+    cx: h
+    f: [no_school, family_derive, daca_all, f1_ban, canadian]
+    prg: []
+
+  wyoming:
+    abbr: WY
+    dur: 5y
+    md: 0/0                # WWAMI only (no in-state school)
+    do: 0/0
+    cx: m
+    f: [dep_inherit, no_med_school, f1_ban, service_req]
+    prg: [wwami]
+
+  washington:
+    abbr: WA
+    dur: 12m
+    md: 2/2                # UW, WSU Elson Floyd (both public)
+    do: 1/0                # PNWU-COM (private, regional preference for AK/ID/MT/OR/WA)
+    cx: h
+    f: [no_school, credit_limit, ties_screen, daca_some, f1_ban]
+    prg: [wwami]
+    note: "WWAMI lead state"
+
+  west_virginia:
+    abbr: WV
+    dur: 12m
+    md: 2/1                # WVU (public), Marshall (state-assisted)
+    do: 1/1                # WVSOM (public)
+    cx: m
+    f: [no_school, dep_inherit, daca_some, border_pref, service_opt]
+    prg: []
+
+  # ---------------------------------------------------------------------------
+  # PLACEHOLDER ENTRIES - To be researched
+  # States listed alphabetically with minimal routing info
+  # ---------------------------------------------------------------------------
+  alabama: {abbr: AL, status: pending}
+  alaska: {abbr: AK, prg: [wwami], status: pending}
+  arizona: {abbr: AZ, status: pending}
+  arkansas: {abbr: AR, status: pending}
+  colorado: {abbr: CO, status: pending}
+  connecticut: {abbr: CT, status: pending}
+  delaware: {abbr: DE, status: pending}
+  florida: {abbr: FL, status: pending}
+  georgia: {abbr: GA, status: pending}
+  idaho: {abbr: ID, prg: [wwami], status: pending}
+  illinois: {abbr: IL, status: pending}
+  indiana: {abbr: IN, status: pending}
+  iowa: {abbr: IA, status: pending}
+  kansas: {abbr: KS, status: pending}
+  kentucky: {abbr: KY, status: pending}
+  louisiana: {abbr: LA, status: pending}
+  maine: {abbr: ME, status: pending}
+  maryland: {abbr: MD, status: pending}
+  michigan: {abbr: MI, status: pending}
+  minnesota: {abbr: MN, status: pending}
+  mississippi: {abbr: MS, status: pending}
+  missouri: {abbr: MO, status: pending}
+  montana: {abbr: MT, prg: [wwami], status: pending}
+  nebraska: {abbr: NE, status: pending}
+  nevada: {abbr: NV, status: pending}
+  new_hampshire: {abbr: NH, status: pending}
+  new_jersey: {abbr: NJ, status: pending}
+  new_mexico: {abbr: NM, status: pending}
+  new_york: {abbr: NY, status: pending}
+  north_carolina: {abbr: NC, status: pending}
+  north_dakota: {abbr: ND, status: pending}
+  ohio: {abbr: OH, status: pending}
+  oklahoma: {abbr: OK, status: pending}
+  oregon: {abbr: OR, status: pending}
+  pennsylvania: {abbr: PA, status: pending}
+  puerto_rico: {abbr: PR, status: pending}
+  rhode_island: {abbr: RI, status: pending}
+  south_carolina: {abbr: SC, status: pending}
+  south_dakota: {abbr: SD, status: pending}
+  tennessee: {abbr: TN, status: pending}
+  utah: {abbr: UT, status: pending}
+  vermont: {abbr: VT, status: pending}
+  virginia: {abbr: VA, status: pending}
+  wisconsin: {abbr: WI, status: pending}
+  district_of_columbia: {abbr: DC, status: pending}
+
+# =============================================================================
+# REGIONAL PROGRAMS REFERENCE
+# Only programs that affect ADMISSIONS (not tuition-only programs)
+# =============================================================================
+regional_programs:
+  wwami:
+    name: "Washington-Wyoming-Alaska-Montana-Idaho"
+    file: regional_programs/wwami.yaml
+    lead: WA
+    members: [WA, WY, AK, MT, ID]
+    degree: MD
+    status: complete
+
+  sreb:
+    name: "Southern Regional Education Board - Regional Contract Program"
+    file: regional_programs/sreb.yaml
+    members: [AR, DE, GA, KY, LA, MS, SC]  # States that participate for DO
+    degree: DO                              # Does NOT cover MD programs
+    status: stub
+    note: "Reserved admission seats for osteopathic medicine only"
+
+# REMOVED: WICHE PSEP - tuition savings only, no admission impact
+
+# =============================================================================
+# RESEARCH PRIORITY
+# Ordered by applicant impact (population, school count, unique rules)
+# =============================================================================
+research_priority:
+  high:
+    - new_york      # Many schools, large applicant pool
+    - florida       # Large state, multiple schools
+    - pennsylvania  # Many schools
+    - illinois      # Multiple schools
+    - ohio          # Multiple schools
+    - michigan      # Multiple schools
+    - north_carolina # Multiple schools
+    - georgia       # Growing medical education
+
+  medium:
+    - arizona
+    - colorado
+    - virginia
+    - maryland
+    - new_jersey
+    - minnesota
+    - wisconsin
+    - indiana
+    - missouri
+    - tennessee
+    - louisiana
+    - kentucky
+    - south_carolina
+    - alabama
+    - oklahoma
+    - oregon
+    - iowa
+    - kansas
+    - arkansas
+    - mississippi
+    - nebraska
+    - utah
+    - nevada
+    - new_mexico
+    - connecticut
+
+  low:
+    - alaska        # WWAMI only
+    - montana       # WWAMI only
+    - idaho         # WWAMI only
+    - maine
+    - new_hampshire
+    - vermont
+    - rhode_island
+    - delaware
+    - north_dakota
+    - south_dakota
+    - district_of_columbia
+    - puerto_rico
+
+# =============================================================================
+# STATISTICS
+# =============================================================================
+stats:
+  total_jurisdictions: 52  # 50 states + DC + PR
+  states: 50
+  researched: 7
+  pending: 45
+  coverage: "13%"

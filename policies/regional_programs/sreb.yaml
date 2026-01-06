@@ -1,0 +1,90 @@
+# SREB Regional Contract Program
+# Southern Regional Education Board
+# STATUS: STUB - Requires detailed research per state
+#
+# IMPORTANT: This program affects ADMISSIONS, not just tuition
+# "Your home state contracts for a certain number of entering spaces"
+# "Qualified applicants from your state will be admitted"
+# Source: https://www.sreb.org/rcp-faqs
+
+meta:
+  last_verified: 2026-01-06
+  status: stub
+
+overview:
+  name: SREB Regional Contract Program
+  full_name: Southern Regional Education Board - Regional Contract Program
+  website: https://www.sreb.org/regional-contract-program
+
+  # CRITICAL: Does NOT cover allopathic medicine (MD)
+  # Only covers: Dentistry, Optometry, Osteopathic Medicine, Podiatric Medicine, Veterinary Medicine
+  programs_covered:
+    - osteopathic_medicine  # DO - relevant to this project
+    - dentistry
+    - optometry
+    - podiatric_medicine
+    - veterinary_medicine
+
+  programs_not_covered:
+    - allopathic_medicine   # MD programs are NOT covered
+
+admissions_impact:
+  type: reserved_seats
+  description: |
+    States contract for a specific number of entering spaces at participating
+    institutions. This creates reserved admission slots for certified residents.
+  note: |
+    "By virtue of your home state contracting for a certain number of entering
+    spaces, you can be assured that qualified applicants from your state will
+    be admitted." — SREB FAQ
+  competitive: true  # Institutions select "most qualified" from certified pool
+
+# States that PARTICIPATE in SREB RCP
+# These states fund their residents to attend out-of-state DO programs
+participating_states:
+  - arkansas
+  - delaware
+  - georgia
+  - kentucky
+  - louisiana
+  - mississippi
+  - south_carolina
+
+# States that DO NOT participate
+# (Are SREB members but don't fund RCP for medicine/osteopathy)
+non_participating_states:
+  - alabama
+  - florida
+  - maryland
+  - north_carolina
+  - oklahoma
+  - tennessee
+  - texas
+  - virginia
+  - west_virginia
+
+certification:
+  required: true
+  description: |
+    Students must be certified by their home state's RCP coordinator.
+    Certification confirms residency eligibility, not admission.
+  deadline: varies_by_state
+  contact: "Contact home state's SREB RCP coordinator"
+
+# Research needed per participating state:
+research_needed:
+  - Which DO schools accept SREB contract students?
+  - How many seats are contracted per state?
+  - What are the certification deadlines?
+  - Are there service obligations?
+  - What are the tuition benefits vs standard OOS?
+
+sources:
+  - id: 1
+    name: SREB Regional Contract Program
+    url: https://www.sreb.org/regional-contract-program
+    verified: 2026-01-06
+  - id: 2
+    name: SREB RCP FAQs
+    url: https://www.sreb.org/rcp-faqs
+    verified: 2026-01-06

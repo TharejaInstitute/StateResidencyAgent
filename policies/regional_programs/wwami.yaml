@@ -1,0 +1,175 @@
+# WWAMI Regional Medical Education Program
+# Centralized data for the Washington-Wyoming-Alaska-Montana-Idaho partnership
+
+meta:
+  last_verified: 2026-01-06
+  lead_school: University of Washington School of Medicine
+
+overview:
+  name: WWAMI
+  full_name: Washington, Wyoming, Alaska, Montana, Idaho
+  program_type: Regional Medical Education Partnership
+  degree_awarded: MD from University of Washington School of Medicine
+  total_class_size: 280
+
+member_states:
+  - state: washington
+    abbreviation: WA
+    role: lead
+    seats:
+      seattle: 100
+      spokane: 60
+    foundation_sites:
+      - name: Seattle
+        location: University of Washington, Seattle
+        seats: 100
+        notes: "~10 seats for MSTP (MD/PhD)"
+      - name: Spokane
+        location: Spokane, WA
+        seats: 60
+    acceptance_rate: "15.5%"
+    acceptance_rate_seattle: "30.4%"
+    acceptance_rate_spokane: "52.2%"
+    residency_requirement:
+      months: 12
+      credit_limit_while_establishing: 6
+
+  - state: wyoming
+    abbreviation: WY
+    role: member
+    seats: 20
+    foundation_site:
+      name: University of Wyoming
+      location: Laramie, WY
+    acceptance_rate: "50.0%"
+    residency_requirement:
+      years: 5
+      service_obligation:
+        years: 3
+        alternative: repay_plus_interest
+    certification:
+      office: Wyoming Certifying Office
+      deadline: october_15
+      email: certoff@uwyo.edu
+      phone: "307-766-6704"
+
+  - state: alaska
+    abbreviation: AK
+    role: member
+    seats: 30
+    foundation_site:
+      name: University of Alaska
+      location: Anchorage, AK
+    acceptance_rate: "44.1%"
+    certification:
+      required: true
+
+  - state: montana
+    abbreviation: MT
+    role: member
+    seats: 30
+    foundation_site:
+      name: Montana State University
+      location: Bozeman, MT
+    acceptance_rate: "25.2%"
+    certification:
+      required: true
+
+  - state: idaho
+    abbreviation: ID
+    role: member
+    seats: 40
+    foundation_site:
+      name: University of Idaho
+      location: Moscow, ID
+    acceptance_rate: "27.0%"
+    certification:
+      required: true
+
+class_statistics:
+  entering_class: 2025
+  total_class_size: 280
+  wwami_matriculants: 263
+  oor_matriculants: 17  # 13 MD + 4 MSTP
+  by_state:
+    washington: 143
+    wyoming: 20
+    alaska: 30
+    montana: 30
+    idaho: 40
+    out_of_region_md: 13
+    out_of_region_mstp: 4
+  wwami_percentage: 94%
+
+out_of_region:
+  acceptance_rate: "0.4%"
+  applicants_e2025: 3329
+  interviewed_e2025: 82
+  matriculated_e2025: 13
+  requirements:
+    ties_to_wwami:
+      minimum: 1
+      criteria:
+        - "Member of federally recognized tribe with traditional boundaries in WWAMI states"
+        - "Born in a WWAMI state"
+        - "Graduated from high school in a WWAMI state"
+        - "Have family members who currently live in a WWAMI state"
+        - "Currently live and/or have lived in a WWAMI state for at least one year"
+        - "Active military stationed in WWAMI region"
+        - "Participated in pre-med programs (SHPEP, SMDEP) or sponsored by WWAMI partner institutions"
+        - "Other ties (option available in application)"
+    additional_requirement:
+      at_least_one_of:
+        - "Service record with underserved communities"
+        - "From an economically or educationally disadvantaged background"
+
+citizenship:
+  eligible:
+    - us_citizen
+    - permanent_resident
+    - daca  # If verified by state residency office
+  ineligible:
+    - international
+    - canadian  # Without US green card
+    - f1_visa
+    - j1_visa
+  notes:
+    - "DACA recipients must reside in WWAMI state AND be legally authorized by state's residency office"
+    - "DACA eligible for MD only program, NOT MSTP"
+    - "International and Canadian applicants without green card will not be considered"
+
+exceptions:
+  mstp:
+    name: Medical Scientist Training Program (MD/PhD)
+    wwami_restricted: false
+    notes: "Selection is national in scope and NOT restricted to WWAMI residents"
+    citizenship_requirement: "US citizens or permanent residents only (no DACA for MSTP)"
+
+program_structure:
+  year_1:
+    name: Foundations Phase (18 months)
+    location: State foundation site
+    notes: "Students begin at their home state's foundation site"
+  year_2:
+    name: Complete Foundations + USMLE Step 1
+    location: State foundation site to clinical transition
+  years_3_4:
+    name: Clinical Clerkships
+    location: Throughout WWAMI region
+    notes: "Rotations may be in any WWAMI state"
+
+key_dates:
+  amcas_deadline: november  # Approximate
+  state_certification_deadline: varies_by_state  # WY is October 15
+  mcat_deadline: september_30
+
+sources:
+  - id: 1
+    name: UW Medicine WWAMI State Eligibility
+    url: https://www.uwmedicine.org/school-of-medicine/md-program/admissions/state-eligibility
+  - id: 2
+    name: UW Medicine Acceptance Statistics
+    url: https://www.uwmedicine.org/school-of-medicine/md-program/admissions/acceptance-statistics
+  - id: 3
+    name: UW Medicine MD Admissions
+    url: https://www.uwmedicine.org/school-of-medicine/md-program/admissions
