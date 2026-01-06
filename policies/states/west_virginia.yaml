@@ -21,86 +21,63 @@ sources:
     name: "WVU Tuition and Aid"
     url: "https://medicine.wvu.edu/md-admissions/tuition-and-aid/"
   - id: 5
-    name: "Choose WV Practice Program"
-    url: "https://health.wvu.edu/rural-health/financial-incentives/choose-west-virginia-practice-program/"
-  - id: 6
     name: "Marshall Class Profiles"
     url: "https://jcesom.marshall.edu/admissions/profile-of-entering-students/"
-  - id: 7
+  - id: 6
     name: "WVU BOG Residency Rule 2.4"
     url: "https://policies.wvu.edu/finalized-bog-rules/bog-academics-rule-2-4-residency-status-for-admission-tuition-and-fee-purposes"
-  - id: 8
+  - id: 7
     name: "College Tuition Compare (Federal IPEDS Data)"
     url: "https://www.collegetuitioncompare.com/medical-schools/joan-c-edwards-school-of-medicine-at-marshall-university/"
+  - id: 8
+    name: "WVSOM Application Requirements"
+    url: "https://www.wvsom.edu/admissions/do/application-requirements"
 
 admissions_residency:
   type: school_specific  # Marshall and WVU have different preferences
   required_months: 12
   education_counts: false
   continuous: true
-  sources: [7]
+  sources: [6]
 
 financial_independence:
   dependent_inherits_parent: true
-  sources: [7]
+  sources: [6]
 
 schools:
-  # MD Schools
   - name: Marshall University Joan C. Edwards School of Medicine
     degree: MD
     type: state_assisted
     application_system: AMCAS
     resident_percentage: 57.3
-    outstate_percentage: 42.7
-    class_stats:
-      mcat_average: 506
-      gpa_average: 3.81
-    application_fees:
-      instate: 75
-      outstate: 100
-      fee_waiver_honored: true
-    mission: "Community-based, VA-affiliated school for WV and Central Appalachia healthcare needs"
+    regional_preference: central_appalachia
+    mission_focus: "Community-based, VA-affiliated"
     citizenship:
       eligible: [us_citizen, permanent_resident]
-      ineligible: [f1_visa, j1_visa, daca, other_nonimmigrant]
-      notes:
-        - "All applicants must be US citizens or have permanent resident visas"
+      ineligible: [f1_visa, j1_visa, daca]
     preferences:
       - tier: 1
         criteria: "West Virginia residents"
-        secondary_auto_sent: true
       - tier: 2
-        criteria: "Bordering states"
+        criteria: "Bordering states (KY, MD, OH, PA, VA)"
         states: [kentucky, maryland, ohio, pennsylvania, virginia]
-        secondary_auto_sent: true
-        notes: "Strongly considered"
       - tier: 3
         criteria: "Non-bordering with competitive application"
-        secondary_auto_sent: conditional
-    mcat_exceptions:
-      - "Marshall University Early Assurance Program"
-      - "Marshall BS/MD Program"
-    deadlines:
-      mcat_validity: "Within 3 calendar years prior to matriculation"
-      letters_of_rec: december_15
-    notes:
-      - "WV and bordering state residents automatically receive secondary"
-      - "MD/PhD applicants receive secondary regardless of residency if requirements met"
-      - "MCAT minimums not publicly posted - PDF says 'see website' but not available"
-    sources: [1, 2, 6, 8]
+    special_programs:
+      - name: MD/PhD
+        residency_required: false
+    sources: [1, 2, 5, 7]
 
   - name: WVU School of Medicine
     degree: MD
     type: public
     application_system: AMCAS
-    outstate_percentage: 50  # "approximately half of each class"
+    resident_percentage: 50
+    regional_preference: statewide
     citizenship:
       eligible: [us_citizen, permanent_resident, daca, international]
-      ineligible: [international_coursework]
       notes:
-        - "Explicitly accepts DACA and international students"
-        - "Does not accept international coursework"
-        - "DACA/international students classified as out-of-state"
+        - "Accepts DACA and international (classified as out-of-state)"
     preferences:
       - tier: 1
         criteria: "West Virginia residents"
@@ -108,94 +85,52 @@ schools:
         criteria: "Pathway programs"
       - tier: 3
         criteria: "Strong ties or mission fit"
-        ties_examples:
-          - "Personally residing in West Virginia"
-          - "Having family members living in West Virginia"
+    advantage_factors:
+      - "Personal residence in WV"
+      - "Family in WV"
     notes:
       - "~50% out-of-state - more open than many state schools"
-      - "Having ties does not guarantee an interview"
-    sources: [3, 7]
+    sources: [3, 6]
 
-  # DO Schools
   - name: West Virginia School of Osteopathic Medicine (WVSOM)
     degree: DO
     type: public
     application_system: AACOMAS
-    regional_preference: rural_primary_care
-    screening_minimums:
-      science_gpa: 3.0
-      mcat: 490
-    competitive_stats:
-      science_gpa: 3.2
-      mcat: 495
+    resident_percentage: 21
+    regional_preference: rural_appalachia
+    mission_focus: "Rural primary care"
+    specialty_focus: [primary_care]
     citizenship:
       eligible: [us_citizen, permanent_resident]
-      notes:
-        - "DACA/international policy requires verification from WVSOM directly"
+      ineligible: [f1_visa, j1_visa, daca, international]
     preferences:
       - tier: 1
         criteria: "West Virginia residents"
       - tier: 2
         criteria: "Rural background or experience"
-    secondary_questions:
-      - text: "Describe your rural area experience (living, working, or visiting)"
-        focus: "Rural mission fit"
     advantage_factors:
       - "Rural community background"
-      - "Rural service/volunteer experience"
+      - "Rural service experience"
       - "Primary care interest"
       - "WV ties"
     notes:
-      - "Very mission-oriented - rural background gives significant advantage"
-      - "Secondary asks about rural area experience - key mission-fit question"
-      - "Applicants without WV ties or rural background may be at disadvantage"
+      - "Very mission-oriented - rural background significant advantage"
+    sources: [8]
 
 citizenship:
   notes:
     - "Marshall (MD): US citizens or permanent residents only"
     - "WVU (MD): Explicitly accepts DACA and international students"
-    - "WVU (MD): Does not accept international coursework"
-    - "WVSOM (DO): Verify citizenship policy directly with school"
+    - "WVSOM (DO): US citizens or permanent residents only - no DACA/international"
 
 military:
   veterans_gi_bill: true
-  notes:
-    - "Veterans using Chapter 30 or Chapter 33 VA benefits qualify for in-state status"
-  sources: [7]
-
-special_programs:
-  - name: Choose West Virginia Practice Program
-    description: "Tuition waiver for out-of-state students who commit to practicing in WV"
-    applies_to: [marshall, wvsom, wvu]
-    eligibility: out_of_state_only
-    when_to_apply: during_medical_school  # NOT before admission
-    preference: first_year_students
-    deadline: november_15
-    benefit:
-      annual: "~$30,000"
-      total_potential: "~$120,000 over 4 years"
-    obligation:
-      years_of_service: "Matches years of funding (max 4)"
-      timing: "Within 6 months of completing residency/fellowship"
-      locations: "Rural areas or shortage specialties (family practice, emergency medicine, psychiatry, pediatrics)"
-    penalty: "Repay funds plus 5% interest from training completion date"
-    notes:
-      - "NOT part of admissions application - apply after admitted"
-      - "Must be classified as out-of-state (not for in-state students)"
-      - "Must not be in default on previous student loans"
-    sources: [5]
+  sources: [6]
 
 notes:
-  - "Three schools: 2 MD (WVU, Marshall) + 1 DO (WVSOM)"
-  - "Different citizenship rules per school - check each individually"
-  - "Marshall gives bordering states (KY, MD, OH, PA, VA) strong preference"
-  - "12 months for residency - school attendance doesn't count"
+  - "Citizenship rules vary by school - check each individually"
 
 research_gaps:
   - "How strictly does Marshall enforce 'US citizens or permanent residents'? Any exceptions?"
   - "What exactly counts as 'strong ties' beyond family for WVU?"
-  - "How competitive is the Choose WV program? How many awards per year?"
-  - "Can you lose Choose WV funding if you change specialties?"
-  - "WVSOM: What is their DACA/international student policy?"
   - "WVSOM: Do they have bordering state preferences like Marshall?"
-  - "WVSOM: What is their class composition (in-state vs OOS)?"

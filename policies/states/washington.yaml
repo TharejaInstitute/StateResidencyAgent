@@ -42,10 +42,11 @@ regional_program:
   role: lead_state
   member_states: [washington, wyoming, alaska, montana, idaho]
   out_of_region_acceptance_rate: "0.4%"
-  notes:
-    - "Uses 'out-of-region' terminology, not 'out-of-state'"
-    - "Each WWAMI state requires separate state certification"
   sources: [1, 6]
+
+financial_independence:
+  dependent_inherits_parent: true
+  sources: [2]
 
 schools:
   # UW Medicine (WWAMI Lead)
@@ -53,9 +54,10 @@ schools:
     degree: MD
     type: public
     application_system: AMCAS
-    program_type: wwami_lead
     class_size: 280
-    wwami_region_percentage: 95
+    resident_percentage: 95
+    regional_preference: wwami_region
+    regional_program_role: lead
     seats_by_location:
       seattle: 100
       spokane: 60
@@ -66,10 +68,9 @@ schools:
     residency_requirements:
       required_months: 12
       education_counts: false
-      credit_limit_while_establishing: 6  # Per term max
-      deadline: june_22  # For following year entry
-      verification: "Affidavit or Residence Questionnaire"
-    acceptance_rates:
+      deadline: june_22
+    in_region_advantage: "37x"
+    wwami_acceptance_rates:
       washington_overall: "15.5%"
       seattle: "30.4%"
       spokane: "52.2%"
@@ -79,47 +80,27 @@ schools:
       idaho: "27.0%"
       out_of_region: "0.4%"
     citizenship:
-      eligible:
-        - us_citizen
-        - permanent_resident
-        - daca  # If verified by state residency office
-      ineligible:
-        - f1_visa
-        - j1_visa
-        - canadian_citizen  # Without green card
-        - other_nonimmigrant
-        - international
+      eligible: [us_citizen, permanent_resident, daca]
+      ineligible: [f1_visa, j1_visa, canadian_citizen, international]
       notes:
-        - "Applicants must have US citizenship or permanent residency (green card)"
-        - "International and Canadian applicants without green card will not be considered"
-        - "DACA eligible if in WWAMI state AND verified by state's residency office"
-        - "DACA eligible for MD only program, NOT for MSTP (MD/PhD)"
+        - "DACA eligible if in WWAMI state AND verified by state residency office"
+        - "DACA NOT eligible for MSTP (MD/PhD)"
     out_of_region_eligibility:
-      requires_both:
-        - ties_to_wwami
-        - disadvantaged_or_service
       ties_criteria:
-        - "Member of federally recognized tribe with traditional boundaries in WWAMI"
-        - "Born in a WWAMI state"
-        - "Graduated high school in a WWAMI state"
-        - "Have family members who currently live in a WWAMI state"
-        - "Currently live and/or have lived in WWAMI state for at least one year"
-        - "Active military stationed in WWAMI region"
-        - "Participated in pre-med programs (SHPEP, SMDEP) or sponsored by WWAMI partner"
-        - "Other ties (option in application)"
-      service_criteria:
-        - "Service record with underserved communities"
-        - "From economically or educationally disadvantaged background"
+        - "Federally recognized tribe with WWAMI traditional boundaries"
+        - "Born in WWAMI state"
+        - "Graduated HS in WWAMI state"
+        - "Family in WWAMI state"
+        - "Lived 1+ year in WWAMI state"
+        - "Active military in WWAMI"
+      additional_criteria:
+        - "Service with underserved communities OR disadvantaged background"
     special_programs:
       - name: MSTP (MD/PhD)
         residency_required: false
-        notes: "Selection is national in scope, not restricted to WWAMI residents"
-    financial_independence:
-      dependent_inherits_parent: true
     notes:
-      - "MSTP is NOT restricted to WWAMI residents"
-      - "~10 Seattle seats per year are for MSTP"
-      - "If taking courses during 12-month period, cannot exceed 6 credits/term"
+      - "~10 Seattle seats/year for MSTP (national scope)"
+      - "Max 6 credits/term while establishing residency"
     sources: [1, 2, 5, 6]
 
   # WSU Elson S. Floyd (Washington-only)
@@ -127,12 +108,10 @@ schools:
     degree: MD
     type: public
     application_system: AMCAS
-    program_type: state_only
     class_size: 80
-    washington_only: true
-    tuition_same_for_all: true  # No in-state/out-of-state differential
-    rural_background_percentage: 15.3
-    campus_locations: [Everett, Spokane, Tri-Cities, Vancouver]
+    resident_percentage: 100
+    regional_preference: rural_underserved
+    secondary_process: prescreened
     eligibility_pathways:
       - name: "Ties to Washington"
         description: "Meet 3 of 4 criteria"
@@ -142,40 +121,19 @@ schools:
           - childhood_address_washington
           - hs_graduation_washington
           - parent_lives_washington
-        notes: "Works regardless of AMCAS legal residence state"
       - name: "Legal Washington Residency"
-        description: "Meet WA resident student definition per RCW 28B.15.012(2)"
         required_months: 12
         deadline: january_1
-        options:
-          - "Financially independent with bona fide domicile for 1 year by January 1"
-          - "Financially dependent with parent/guardian with domicile for 1 year by January 1"
-          - "Active military stationed in WA or WA National Guard member"
-          - "Member of federally recognized tribe with traditional boundaries in WA (with domicile in ID, MT, OR, or WA)"
     citizenship:
-      eligible:
-        - us_citizen
-        - permanent_resident
-      ineligible:
-        - f1_visa
-        - j1_visa
-        - daca  # NOT mentioned as eligible
-        - other_nonimmigrant
-        - international
+      eligible: [us_citizen, permanent_resident]
+      ineligible: [f1_visa, j1_visa, daca, international]
       notes:
-        - "Only accepts US citizens and those with valid US permanent resident cards"
-        - "DACA NOT explicitly included as eligible - unlike UW Medicine"
-    regional_preference: rural_underserved
-    secondary_focus: "Rural/underserved community experience"
+        - "DACA NOT eligible (unlike UW Medicine)"
     advantage_factors:
       - "Rural community background"
       - "Underserved community experience"
-      - "Interest in serving vulnerable populations"
     notes:
-      - "100% of class from Washington or with significant ties"
-      - "15.3% of students have childhood rural county backgrounds"
-      - "Community-based medical education model"
-      - "Applicants without ties or residency will NOT receive secondary application"
+      - "Applicants without ties or residency will NOT receive secondary"
     sources: [3, 4]
 
   # DO School
@@ -184,23 +142,14 @@ schools:
     type: private
     application_system: AACOMAS
     class_size: 144
-    regional_preference:
-      states: [alaska, idaho, montana, oregon, washington]
-      focus: "Rural and medically underserved areas"
+    regional_preference: pacific_northwest
+    mission_focus: "Rural and medically underserved areas"
+    advantage_factors:
+      - "From AK, ID, MT, OR, or WA"
+      - "Rural background"
     citizenship:
-      eligible:
-        - us_citizen
-        - permanent_resident
-        - daca
-      ineligible:
-        - f1_visa
-        - j1_visa
-        - international
-      notes:
-        - "Must be US citizen, permanent resident, or DACA"
-    notes:
-      - "Private school with regional preference for AK/ID/MT/OR/WA"
-      - "Located in Yakima, WA - serves rural Pacific Northwest"
+      eligible: [us_citizen, permanent_resident, daca]
+      ineligible: [f1_visa, j1_visa, international]
     sources: [7]
 
 citizenship:
@@ -228,32 +177,7 @@ deadlines:
   sources: [2, 3]
 
 notes:
-  - "Two distinct MD schools with different eligibility rules"
-  - "UW Medicine is WWAMI lead (5 states), WSU is Washington-only"
-  - "DACA: Eligible at UW with verification, NOT eligible at WSU"
-  - "WSU ties pathway (3 of 4 criteria) works regardless of AMCAS legal residence"
-  - "Out-of-region very competitive at UW (0.4%)"
-  - "WSU has same tuition for all admitted students"
-
-key_differences:
-  - factor: "Regional vs State"
-    uw: "WWAMI (5 states)"
-    wsu: "Washington only"
-  - factor: "Out-of-state possible"
-    uw: "Yes (WWAMI + limited out-of-region)"
-    wsu: "NO"
-  - factor: "Ties pathway"
-    uw: "Yes (out-of-region, requires disadvantaged/service)"
-    wsu: "Yes (3 of 4 criteria, standalone)"
-  - factor: "Class size"
-    uw: 280
-    wsu: 80
-  - factor: "Tuition differential"
-    uw: "Yes (resident vs non)"
-    wsu: "No (all pay in-state)"
-  - factor: "DACA eligible"
-    uw: "YES (with state verification)"
-    wsu: "NO (not mentioned)"
+  - "WSU ties pathway works regardless of AMCAS legal residence state"
 
 research_gaps:
   - "What exactly counts as 'childhood address' for WSU ties pathway?"

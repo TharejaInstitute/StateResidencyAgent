@@ -43,9 +43,6 @@ regional_program:
   certification_required: true
   certification_deadline: october_15
   certification_office: wyoming_certifying_office
-  contact:
-    email: certoff@uwyo.edu
-    phone: "307-766-6704"
   seats_per_year: 20
   sources: [2, 3, 5]
 
@@ -54,30 +51,17 @@ schools:
     degree: MD
     type: public
     application_system: AMCAS
-    seats_per_year: 20
-    acceptance_rate: "50.0%"  # 3-year average for Wyoming applicants
-    interview_location: Laramie, WY
-    interview_format:
-      duration_minutes: 30-40
-      panel_size: 3
-    program_structure:
-      year_1: "Foundations curriculum at University of Wyoming in Laramie"
-      year_2: "Complete foundations + USMLE Step 1 at UWyo, then transition to clerkships"
-      years_3_4: "Clinical rotations throughout WWAMI region (WA, WY, AK, MT, ID)"
-    degree_awarded: "MD from University of Washington School of Medicine"
+    class_size: 20
+    regional_program_role: member
+    regional_preference: statewide
     wwami_acceptance_rates:
       wyoming: "50.0%"
+      seattle_wa: "30.4%"
       spokane_wa: "52.2%"
       alaska: "44.1%"
-      seattle_wa: "30.4%"
-      idaho: "27.0%"
       montana: "25.2%"
+      idaho: "27.0%"
       out_of_region: "0.4%"
-    notes:
-      - "Wyoming students start at University of Wyoming in Laramie"
-      - "MD degree from UW School of Medicine"
-      - "Not counted as Wyoming school - WWAMI partnership"
-      - "50% acceptance rate reflects dedicated seat allocation for Wyoming residents"
     sources: [2, 4]
 
 service_obligation:
@@ -86,16 +70,15 @@ service_obligation:
   location: wyoming
   alternative: repay_plus_interest
   legally_binding: true
-  return_rate: "62%"  # 162 of 262 graduates returned
   notes:
-    - "Must sign contract agreeing to return to Wyoming for 3 years OR repay subsidized tuition plus interest"
-    - "Wyoming subsidizes WWAMI tuition significantly"
+    - "Must sign contract agreeing to return to Wyoming for 3 years OR repay costs plus interest"
   sources: [1, 3]
 
 citizenship:
   eligible:
     - us_citizen
     - permanent_resident
+    - daca  # Eligible if verified by Wyoming certifying office
   ineligible:
     - f1_visa
     - j1_visa
@@ -103,7 +86,8 @@ citizenship:
     - international
   notes:
     - "UW School of Medicine does not accept international or Canadian students for WWAMI"
-  sources: [4]
+    - "DACA eligible if in Wyoming AND verified by state's certifying office"
+  sources: [4, 5]
 
 military:
   active_duty_qualifies: null  # Not addressed in sources
@@ -120,22 +104,17 @@ financial_independence:
 
 deadlines:
   certification: october_15  # Prior year - applications after generally rejected
-  amcas: november
-  mcat_latest: september_30
   notes:
     - "Certification is SEPARATE from admission - can complete either first"
     - "Applications received after October 15 deadline generally rejected"
   sources: [1, 3]
 
 notes:
-  - "Wyoming does NOT have its own medical school - WWAMI is only path for in-state medical education"
-  - "WWAMI = Washington, Wyoming, Alaska, Montana, Idaho partnership"
-  - "Students are official UW medical students but do early training in Wyoming"
-  - "20 seats per year contractually guaranteed by Wyoming-UW agreement"
+  - "No standalone medical school - WWAMI is only path for in-state medical education"
 
 research_gaps:
   - "What happens if parents divorce and only one remains in Wyoming?"
   - "Can military members stationed in Wyoming count toward 5-year requirement?"
   - "What if student establishes their own 5-year residency independent of parents?"
   - "How strictly is the service obligation enforced? What is the repayment amount?"
-  - "Can DACA recipients apply? (Not clearly addressed in sources)"
+  - "What documentation does Wyoming certifying office require for DACA verification?"

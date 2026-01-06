@@ -67,53 +67,194 @@ schools:
   description: "Medical schools in the state"
   format: array
   item_fields:
+    # =========================================================================
+    # REQUIRED - Core Identity (every school must have these)
+    # =========================================================================
     name: {type: string, required: true}
     degree: {type: enum, values: [MD, DO], required: true}
     type: {type: enum, values: [public, private, state_assisted], required: true}
-    application_system: {type: enum, values: [AMCAS, AACOMAS, TMDSAS]}
+    application_system: {type: enum, values: [AMCAS, AACOMAS, TMDSAS], required: true}
+
+    # =========================================================================
+    # CLASS COMPOSITION - Size and resident makeup
+    # =========================================================================
     class_size: {type: integer}
-    resident_percentage: {type: number}
-    regional_preference: {type: string, description: "none, statewide, or specific region name"}
-    acceptance_rates:
-      in_state: string
-      out_of_state: string
-    secondary_questions:
-      description: "Key secondary application questions"
-      format: array
-      item_fields:
-        text: {type: string, description: "Actual question text"}
-        max_chars: {type: integer, optional: true}
-    advantage_factors:
-      description: "What gives applicants an advantage"
-      format: array
-      item_type: string
-    special_programs:
-      format: array
-      item_fields:
-        name: string
-        focus: string
-        eligibility: string
-        benefit: string
-    preferences:
-      description: "Tiered admission preferences"
-      format: array
-      item_fields:
-        tier: integer
-        criteria: string
-        states: {type: array, optional: true}
-    citizenship:
-      description: "School-specific citizenship rules (overrides state default)"
+    resident_percentage:
+      type: number
+      description: "Percentage from in-state/region. Use this, NOT outstate_percentage or nonresident_percentage"
+    seats_reserved:
+      type: object
+      optional: true
+      description: "Fixed seat counts when known (e.g., JABSOM's 67 resident / 10 nonresident)"
       fields:
-        eligible: array
-        ineligible: array
-        daca_eligible: boolean
-        undocumented_eligible: boolean
-        notes: array
-    notes:
-      description: "Important school-specific information"
-      format: array
+        resident: integer
+        nonresident: integer
+
+    # =========================================================================
+    # ADMISSION STATISTICS - Acceptance rates and odds
+    # =========================================================================
+    acceptance_rates:
+      type: object
+      optional: true
+      fields:
+        overall: {type: string, optional: true}
+        in_state: {type: string}
+        out_of_state: {type: string}
+        international: {type: string, optional: true}
+    in_state_advantage:
+      type: string
+      optional: true
+      description: "How much more likely in-state applicants are admitted vs out-of-state (e.g., '4x')"
+      examples: ["4x", "2.7x", "2x"]
+    in_region_advantage:
+      type: string
+      optional: true
+      description: "How much more likely in-region applicants are admitted vs out-of-region (e.g., '37x')"
+      examples: ["37x"]
+      note: "Use for regional programs like WWAMI, SREB"
+    wwami_acceptance_rates:
+      type: object
+      optional: true
+      description: "WWAMI-specific rates by state/location"
+      example:
+        seattle: "30.4%"
+        spokane: "52.2%"
+        wyoming: "50.0%"
+        out_of_region: "0.4%"
+
+    # =========================================================================
+    # PREFERENCES - What gives admission advantage
+    # =========================================================================
+    regional_preference:
+      type: string
+      description: "Geographic preference. Use 'none' if none, otherwise region name"
+      values: [none, statewide, "{specific_region_name}"]
+      examples: [none, statewide, northern_central_california, rural_underserved, west_texas]
+    mission_focus:
+      type: string
+      optional: true
+      description: "Population/mission focus (separate from geography)"
+      examples: ["primary care", "rural health", "underserved communities", "physician shortage"]
+    specialty_focus:
+      type: array
+      optional: true
+      description: "Specific medical specialties prioritized"
+      examples: [primary_care, family_medicine, rural_medicine]
+    advantage_factors:
+      type: array
+      optional: true
+      description: "What gives applicants an advantage beyond residency"
       item_type: string
-    sources: {type: array, description: "Source IDs"}
+    preferences:
+      type: array
+      optional: true
+      description: "Tiered admission preferences (use when school has explicit tiers)"
+      item_fields:
+        tier: {type: integer, required: true}
+        criteria: {type: string, required: true}
+        states: {type: array, optional: true, description: "For multi-state tiers"}
+        percentage: {type: string, optional: true}
+        notes: {type: string, optional: true}
+
+    # =========================================================================
+    # SECONDARY APPLICATION SCREENING
+    # =========================================================================
+    secondary_process:
+      type: enum
+      values: [automatic, prescreened, conditional]
+      optional: true
+      description: |
+        automatic: All applicants receive secondary
+        prescreened: School screens before sending secondary
+        conditional: Some criteria trigger automatic secondary
+      note: "Screening INTENT should be captured in regional_preference, mission_focus, or advantage_factors - not question text"
+
+    # =========================================================================
+    # CITIZENSHIP - School-specific eligibility
+    # =========================================================================
+    citizenship:
+      type: object
+      optional: true
+      description: "School-specific rules (include only if differs from state default)"
+      fields:
+        eligible: {type: array, description: "List of eligible statuses"}
+        ineligible: {type: array, description: "List of ineligible statuses"}
+        notes: {type: array, optional: true}
+
+    # =========================================================================
+    # SPECIAL PROGRAMS - Named programs with specific eligibility
+    # =========================================================================
+    special_programs:
+      type: array
+      optional: true
+      item_fields:
+        name: {type: string, required: true}
+        eligibility: {type: string, optional: true}
+        focus: {type: string, optional: true, description: "Target population or specialty"}
+        service_obligation: {type: string, optional: true, description: "Required service commitment"}
+        residency_required: {type: boolean, optional: true, description: "false if open to all regardless of residency"}
+        notes: {type: string, optional: true}
+
+    # =========================================================================
+    # ELIGIBILITY PATHWAYS - Multiple routes to qualify
+    # =========================================================================
+    eligibility_pathways:
+      type: array
+      optional: true
+      description: "When school has distinct pathways to eligibility (e.g., WSU's ties vs residency)"
+      item_fields:
+        name: {type: string, required: true}
+        description: {type: string}
+        criteria: {type: array, optional: true, description: "List of criteria"}
+        criteria_needed: {type: integer, optional: true, description: "How many criteria must be met"}
+        required_months: {type: integer, optional: true}
+        deadline: {type: string, optional: true}
+
+    # =========================================================================
+    # SCHOOL-SPECIFIC RESIDENCY RULES - When school differs from state
+    # =========================================================================
+    residency_requirements:
+      type: object
+      optional: true
+      description: "School-specific residency rules (if different from state level)"
+      fields:
+        required_months: integer
+        education_counts: boolean
+        deadline: string
+
+    # =========================================================================
+    # REGIONAL PROGRAM INFO - WWAMI/SREB specific
+    # =========================================================================
+    regional_program_role:
+      type: enum
+      values: [lead, member, participant]
+      optional: true
+      description: "Role in regional program (WWAMI, SREB)"
+    seats_by_location:
+      type: object
+      optional: true
+      description: "For WWAMI lead - seats allocated by state/campus"
+
+    # =========================================================================
+    # OUT-OF-REGION ELIGIBILITY - Special rules for non-residents
+    # =========================================================================
+    out_of_region_eligibility:
+      type: object
+      optional: true
+      description: "How out-of-region applicants can qualify (e.g., UW WWAMI)"
+      fields:
+        ties_criteria: {type: array, description: "Ties that qualify"}
+        additional_criteria: {type: array, optional: true, description: "Other requirements"}
+
+    # =========================================================================
+    # METADATA - Notes and sources (always last)
+    # =========================================================================
+    notes:
+      type: array
+      optional: true
+      item_type: string
+      description: "Important school-specific information"
+    sources: {type: array, description: "Source IDs from sources section"}
 
 citizenship:
   description: "State-level citizenship defaults"
@@ -356,14 +497,19 @@ template: |
       degree: MD
       type: public
       application_system: AMCAS
+      class_size: 0
       resident_percentage: 0
       regional_preference: statewide
-      secondary_questions:
-        - text: "{Question text}"
+      mission_focus: "{Population/focus}"
+      acceptance_rates:
+        in_state: "0%"
+        out_of_state: "0%"
+      citizenship:
+        eligible: [us_citizen, permanent_resident]
+        ineligible: [f1_visa, j1_visa]
       advantage_factors:
         - "{Factor}"
-      notes:
-        - "{Important note}"
+      sources: [1]
 
   citizenship:
     eligible: [us_citizen, permanent_resident]

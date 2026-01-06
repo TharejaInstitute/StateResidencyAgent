@@ -51,72 +51,46 @@ family_derivation:
   sources: [3]
 
 schools:
-  # MD Schools with preference
   - name: UMass T.H. Chan School of Medicine
     degree: MD
     type: public
     application_system: AMCAS
-    class_size: 142
+    class_size: 200
     resident_percentage: 64
-    nonresident_percentage: 36
-    verification_method: "Residency Validation (RV) form in secondary application"
-    secondary_process: prescreened  # Not all applicants receive secondary
+    regional_preference: statewide
+    secondary_process: prescreened
+    mission_focus: "Health equity"
     citizenship:
-      eligible:
-        - us_citizen
-        - permanent_resident
-        - canadian_citizen
-        - canadian_permanent_resident
-        - daca
-        - refugee
-        - asylee
-      ineligible:
-        - f1_visa
-        - j1_visa
-        - other_nonimmigrant
+      eligible: [us_citizen, permanent_resident, canadian_citizen, canadian_permanent_resident, daca, refugee, asylee]
+      ineligible: [f1_visa, j1_visa]
       notes:
-        - "F-1/J-1 visa holders CANNOT APPLY to UMass Chan"
-        - "Canadian citizens and permanent residents ARE eligible"
-    secondary_questions:
-      - text: "Diversity contribution"
-      - text: "Competencies (leadership, teamwork, empathy, communication, inquiry)"
-      - text: "Why UMass Chan"
-      - text: "Health equity experience"
+        - "F-1/J-1 CANNOT APPLY"
+        - "Canadian citizens/PRs ARE eligible"
     special_programs:
       - name: MD-PhD Program
         residency_required: false
-        notes: "Out-of-state applicants evaluated equally for MD-PhD"
-    notes:
-      - "Pre-screens applicants before sending secondaries"
-      - "Rolling admissions - interviews Sept through March"
-      - "MD-PhD has no residency requirement"
-      - "64% in-state shows strong practical preference"
     sources: [1, 2, 4]
 
-  # Private MD schools - no residency preference (listed for reference)
   - name: Harvard Medical School
     degree: MD
     type: private
     application_system: AMCAS
-    residency_preference: none
-    notes:
-      - "Private - no state residency preference"
+    regional_preference: none
+    sources: []
 
   - name: Boston University Chobanian & Avedisian School of Medicine
     degree: MD
     type: private
     application_system: AMCAS
-    residency_preference: none
-    notes:
-      - "Private - no state residency preference"
+    regional_preference: none
+    sources: []
 
   - name: Tufts University School of Medicine
     degree: MD
     type: private
     application_system: AMCAS
-    residency_preference: none
-    notes:
-      - "Private - no state residency preference"
+    regional_preference: none
+    sources: []
 
 citizenship:
   admission_citizenship_required: true  # For UMass Chan
@@ -142,7 +116,6 @@ military:
   veterans_gi_bill: true
   notes:
     - "Federal Section 702 applies for GI Bill users"
-    - "Contact UMass Chan directly for current military policies"
 
 documentation:
   primary:
@@ -163,29 +136,7 @@ documentation:
   sources: [1]
 
 notes:
-  - "7 years is virtually impossible to establish from scratch before applying"
-  - "Family pathway is key - parent, spouse, child, or sibling with 7+ years qualifies you"
-  - "Sibling pathway is unique to Massachusetts - can qualify through brother/sister"
-  - "College attendance in MA does NOT count toward 7-year requirement"
-  - "Only UMass Chan has state preference - Harvard, BU, Tufts are private"
-
-examples:
-  - scenario: "4 years undergrad in MA"
-    situation: "Attended Boston College for undergrad, now applying to UMass Chan"
-    classification: "NON-RESIDENT"
-    reason: "School doesn't count, only 4 years anyway"
-  - scenario: "Parents in MA for 10 years"
-    situation: "Parents in MA 10 years, applicant went to college out of state"
-    classification: "RESIDENT"
-    reason: "Parents' 7+ years qualifies applicant via family derivation"
-  - scenario: "Sibling in MA for 8 years"
-    situation: "Sibling has lived in MA for 8 years, applicant has never lived there"
-    classification: "RESIDENT"
-    reason: "Sibling qualifies as immediate family under MA law"
-  - scenario: "F-1 visa student"
-    situation: "International student on F-1 visa"
-    classification: "CANNOT APPLY"
-    reason: "UMass Chan has citizenship requirement - F-1/J-1 ineligible"
+  - "Family derivation key - sibling pathway unusual"
 
 research_gaps:
   - "How strictly is the 7-year requirement enforced? Any discretion?"
