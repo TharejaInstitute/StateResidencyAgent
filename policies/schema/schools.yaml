@@ -1,0 +1,179 @@
+# School Field Definitions
+# Defines all fields for items in the schools[] array
+
+schools:
+  description: "Medical schools in the state"
+  format: array
+  item_fields:
+
+    # =========================================================================
+    # REQUIRED - Core Identity (every school must have these)
+    # =========================================================================
+    name:
+      type: string
+      required: true
+
+    degree:
+      type: enum
+      ref: "enums.yaml#degree"
+      required: true
+
+    type:
+      type: enum
+      ref: "enums.yaml#school_type"
+      required: true
+
+    application_system:
+      type: enum
+      ref: "enums.yaml#application_system"
+      required: true
+
+    # =========================================================================
+    # CLASS COMPOSITION - Size and resident makeup
+    # =========================================================================
+    number_of_students_in_entering_class:
+      type: integer
+
+    percentage_of_class_from_in_state:
+      type: number
+      description: "Historical/statistical percentage from in-state/region"
+      note: "Use for general statistics. Use seats_reserved_by_residency_status when school publishes fixed quotas."
+
+    seats_reserved_by_residency_status:
+      type: object
+      optional: true
+      description: "Fixed seat counts when school publishes explicit quotas (e.g., JABSOM's 67 resident / 10 nonresident)"
+      note: "Can coexist with percentage_of_class_from_in_state."
+      fields:
+        resident: integer
+        nonresident: integer
+
+    # =========================================================================
+    # ADMISSION STATISTICS - Acceptance rates
+    # =========================================================================
+    percentage_of_applicants_accepted:
+      type: object
+      optional: true
+      fields:
+        overall: {type: string, optional: true}
+        in_state: {type: string}
+        out_of_state: {type: string}
+        international: {type: string, optional: true}
+
+    # =========================================================================
+    # PREFERENCES - What gives admission advantage
+    # =========================================================================
+    geographic_area_giving_admission_preference:
+      type: enum
+      ref: "enums.yaml#geographic_preference"
+      description: "GEOGRAPHIC area preference only. Use population_school_aims_to_serve for population focus."
+
+    population_school_aims_to_serve:
+      type: string
+      optional: true
+      description: "Population/mission focus (separate from geography)"
+      examples: ["primary care", "rural health", "underserved communities"]
+
+    medical_specialties_school_prioritizes:
+      type: array
+      optional: true
+      description: "Specific medical specialties prioritized"
+      examples: [primary_care, family_medicine, rural_medicine]
+
+    factors_improving_admission_odds:
+      type: array
+      optional: true
+      description: "Unranked list of advantageous attributes - use when no explicit tier ranking"
+      item_type: string
+
+    tiered_priorities_for_admission:
+      type: array
+      optional: true
+      description: "Use ONLY when school has explicit numbered tiers (1st, 2nd, 3rd priority)"
+      item_fields:
+        tier: {type: integer, required: true}
+        criteria: {type: string, required: true}
+        states: {type: array, optional: true, description: "For multi-state tiers"}
+        percentage: {type: string, optional: true}
+
+    # =========================================================================
+    # SECONDARY APPLICATION SCREENING
+    # =========================================================================
+    how_secondary_applications_are_handled:
+      type: enum
+      ref: "enums.yaml#secondary_handling"
+      optional: true
+      note: "Screening INTENT should be captured in geographic preference or factors fields"
+
+    # =========================================================================
+    # CITIZENSHIP - School-specific eligibility
+    # =========================================================================
+    citizenship:
+      type: object
+      optional: true
+      description: "School-specific rules (include only if differs from state default)"
+      fields:
+        eligible: {type: array, required: true, description: "List of eligible statuses"}
+        ineligible: {type: array, required: true, description: "List of ineligible statuses"}
+
+    # =========================================================================
+    # SPECIAL PROGRAMS - Named programs with specific eligibility
+    # =========================================================================
+    programs_with_special_eligibility_rules:
+      type: array
+      optional: true
+      item_fields:
+        name: {type: string, required: true}
+        focus: {type: string, optional: true, description: "Target population or specialty"}
+        service_obligation: {type: string, optional: true, description: "Required service commitment"}
+        residency_required: {type: boolean, optional: true, description: "false if open to all regardless of residency"}
+        selection_scope: {type: string, optional: true, description: "e.g., 'national' if not restricted to residents"}
+
+    # =========================================================================
+    # QUALIFICATION PATHWAYS - Multiple routes to qualify for THIS school
+    # =========================================================================
+    routes_to_qualify_for_school:
+      type: array
+      optional: true
+      description: "School-specific pathways to qualify for THIS school only"
+      guidance: |
+        Use routes_to_qualify_for_school when:
+        - A specific school has qualification routes other schools don't recognize
+        - Example: WSU's ties pathway (3 of 4 criteria) only applies to WSU
+
+        Use pathways_to_establish_residency (state-level) when:
+        - The state has multiple ways to establish residency that ALL schools recognize
+      item_fields:
+        name: {type: string, required: true}
+        criteria: {type: array, optional: true, description: "List of criteria"}
+        minimum_required: {type: integer, optional: true, description: "How many criteria must be met"}
+        months_of_residency_required: {type: integer, optional: true}
+        deadline: {type: string, optional: true}
+
+    # =========================================================================
+    # SCHOOL-SPECIFIC RESIDENCY RULES - When school differs from state
+    # =========================================================================
+    school_specific_residency_rules:
+      type: object
+      optional: true
+      description: "School-specific residency rules (REPLACES state-level rules for this school)"
+      fields:
+        months_of_residency_required: integer
+        school_time_counts_toward_residency: boolean
+        deadline: string
+
+    # =========================================================================
+    # REGIONAL PROGRAM INFO
+    # =========================================================================
+    role_in_regional_program:
+      type: enum
+      ref: "enums.yaml#regional_role"
+      optional: true
+      description: "Role in regional program (WWAMI, SREB)"
+
+    # =========================================================================
+    # METADATA - Sources (always last)
+    # =========================================================================
+    sources:
+      type: array
+      description: "Source IDs from sources section"

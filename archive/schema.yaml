@@ -1,0 +1,15 @@
+# Schema for State Policy Files
+# MOVED: Schema has been split into policies/schema/ directory
+#
+# See:
+#   policies/schema/_index.yaml   - Overview and hierarchy
+#   policies/schema/core.yaml     - Required sections (meta, sources, rules, schools)
+#   policies/schema/schools.yaml  - School field definitions
+#   policies/schema/optional.yaml - Optional state-level sections
+#   policies/schema/enums.yaml    - All enum definitions
+#   policies/schema/validation.yaml - Validation rules and templates
+#
+# This file is retained for backwards compatibility.
+# The validation script loads from policies/schema/ by default.
+
+_redirect: "policies/schema/"

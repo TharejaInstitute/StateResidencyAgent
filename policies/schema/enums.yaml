@@ -1,0 +1,161 @@
+# Consolidated Enum Definitions
+# All enum values used across schema files
+
+# =============================================================================
+# STATE-LEVEL ENUMS
+# =============================================================================
+
+complexity:
+  description: "State policy complexity level"
+  values: [low, medium, high, very_high]
+
+residency_type:
+  description: "How residency is determined"
+  values: [state_level, school_specific, domicile_based, ties_screening, hybrid]
+  descriptions:
+    state_level: "Single state office/board determines residency for all schools"
+    school_specific: "Each school has its own residency determination rules"
+    domicile_based: "Standard duration-based residency (e.g., 12 months continuous)"
+    ties_screening: "Criteria-based screening (ties to state) rather than duration"
+    hybrid: "Combines duration AND ties criteria"
+
+entity_determines:
+  description: "Who determines residency status"
+  values: [state, school, system, varies_by_school]
+
+enforced_by:
+  description: "How legal limits are enforced"
+  values: [law, policy]
+
+burden_of_proof:
+  description: "Who must prove residency"
+  values: [applicant, school]
+
+evaluation_method:
+  description: "How residency is evaluated"
+  values: [case_by_case, automatic, checklist]
+
+# =============================================================================
+# SCHOOL-LEVEL ENUMS
+# =============================================================================
+
+degree:
+  description: "Medical degree type"
+  values: [MD, DO]
+
+school_type:
+  description: "School funding/ownership type"
+  values: [public, private, state_assisted]
+  descriptions:
+    public: "Fully state-funded school with strong residency preference"
+    private: "Private school (may have no residency preference)"
+    state_assisted: "Private school receiving public funding (e.g., Marshall in WV)"
+
+application_system:
+  description: "Application system used"
+  values: [AMCAS, AACOMAS, TMDSAS]
+
+secondary_handling:
+  description: "How secondary applications are handled"
+  values: [automatic, prescreened, conditional]
+  descriptions:
+    automatic: "All applicants receive secondary"
+    prescreened: "School screens before sending secondary"
+    conditional: "Some criteria trigger automatic secondary"
+
+regional_role:
+  description: "Role in regional program"
+  values: [lead, member, participant]
+
+# =============================================================================
+# GEOGRAPHIC PREFERENCES
+# =============================================================================
+
+geographic_preference:
+  description: "Geographic area giving admission preference"
+  note: "Do NOT use program names like 'wwami_region' - use role_in_regional_program. Enum is extensible."
+  values:
+    - none               # No regional preference
+    - statewide          # Prefers in-state broadly
+    # Texas regions
+    - west_texas
+    - se_texas_houston
+    - east_texas
+    - central_texas
+    - south_texas
+    - rio_grande_valley
+    - us_mexico_border
+    - galveston_gulf_coast
+    - eastern_texas
+    # California regions
+    - northern_central_california
+    - inland_southern_california
+    - inland_empire
+    # Hawaii/Pacific
+    - hawaii_pacific
+    # Appalachia
+    - central_appalachia
+    - rural_appalachia
+    # Pacific Northwest
+    - pacific_northwest
+
+# =============================================================================
+# CITIZENSHIP STATUS VALUES
+# =============================================================================
+
+citizenship_status:
+  description: "Known citizenship/immigration status values"
+  note: "Reference list. Only include statuses relevant to the state. Not all values need to be used."
+  values:
+    # US Citizens and Residents
+    - us_citizen
+    - permanent_resident
+    - conditional_permanent_resident
+    - pending_i485
+    # DACA and Undocumented
+    - daca
+    - daca_ab540
+    - undocumented
+    # Humanitarian
+    - refugee
+    - asylee
+    - parolee
+    - temporary_protected_status
+    # Canadian
+    - canadian_citizen
+    - canadian_permanent_resident
+    # Pacific
+    - cofa_citizen
+    # Student/Exchange Visas (typically ineligible)
+    - f1_visa
+    - f2_visa
+    - j1_visa
+    - j2_visa
+    - m_visa
+    # Work Visas
+    - h1b_visa
+    - h2_visa
+    - h3_visa
+    - h4_visa
+    - l_visa
+    - o1_visa
+    - o3_visa
+    - tn_visa
+    - td_visa
+    - e_visa
+    # Other Visas
+    - a_visa
+    - b1_visa
+    - b2_visa
+    - g_visa
+    - i_visa
+    - k_visa
+    - n_visa
+    - nato_visa
+    - r_visa
+    - t_visa
+    - u_visa
+    - v_visa
+    # Catch-all
+    - international
+    - other_nonimmigrant

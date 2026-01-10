@@ -23,7 +23,7 @@ member_states:
       - name: Seattle
         location: University of Washington, Seattle
         seats: 100
-        notes: "~10 seats for MSTP (MD/PhD)"
+        mstp_seats: 10
       - name: Spokane
         location: Spokane, WA
         seats: 60
@@ -133,30 +133,28 @@ citizenship:
     - canadian  # Without US green card
     - f1_visa
     - j1_visa
-  notes:
-    - "DACA recipients must reside in WWAMI state AND be legally authorized by state's residency office"
-    - "DACA eligible for MD only program, NOT MSTP"
-    - "International and Canadian applicants without green card will not be considered"
+  daca_restrictions:
+    - md_program: eligible
+    - mstp: ineligible
 
 exceptions:
   mstp:
     name: Medical Scientist Training Program (MD/PhD)
     wwami_restricted: false
-    notes: "Selection is national in scope and NOT restricted to WWAMI residents"
-    citizenship_requirement: "US citizens or permanent residents only (no DACA for MSTP)"
+    selection_scope: national
+    seats_per_year: 10
+    citizenship_eligible: [us_citizen, permanent_resident]
 
 program_structure:
   year_1:
     name: Foundations Phase (18 months)
     location: State foundation site
-    notes: "Students begin at their home state's foundation site"
   year_2:
     name: Complete Foundations + USMLE Step 1
     location: State foundation site to clinical transition
   years_3_4:
     name: Clinical Clerkships
     location: Throughout WWAMI region
-    notes: "Rotations may be in any WWAMI state"
 
 key_dates:
   amcas_deadline: november  # Approximate

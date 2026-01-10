@@ -1,0 +1,112 @@
+# Core Required Sections
+# These sections are REQUIRED in every state file
+
+# =============================================================================
+# META - Basic state information
+# =============================================================================
+
+meta:
+  description: "Basic state information"
+  fields:
+    state: {type: string, description: "Full state name (lowercase)"}
+    abbreviation: {type: string, description: "Two-letter code"}
+    last_verified: {type: date, description: "YYYY-MM-DD format"}
+    complexity: {type: enum, ref: "enums.yaml#complexity"}
+  guidance:
+    - "School counts are in index.yaml (SSOT) - do not duplicate here"
+    - "School details are in the schools: array"
+
+# =============================================================================
+# SOURCES - Provenance tracking
+# =============================================================================
+
+sources:
+  description: "Source URLs for provenance"
+  format: array
+  item_fields:
+    id: {type: integer, description: "Reference ID for citations"}
+    name: {type: string, description: "Source name"}
+    url: {type: string, description: "Source URL"}
+  example:
+    - id: 1
+      name: "UCSF Registrar - California Residency"
+      url: "https://registrar.ucsf.edu/registration/residency"
+
+# =============================================================================
+# RULES FOR DETERMINING RESIDENCY STATUS - Core residency rules
+# =============================================================================
+
+rules_for_determining_residency_status:
+  description: "Core residency rules"
+  fields:
+    type:
+      type: enum
+      ref: "enums.yaml#residency_type"
+      # See enums.yaml for values and descriptions
+      # TYPE-CONDITIONAL FIELD REQUIREMENTS documented in validation.yaml
+
+    entity_that_determines_residency_status:
+      type: enum
+      ref: "enums.yaml#entity_determines"
+      description: "Who determines residency status"
+      examples:
+        state: "A state board or office (e.g., California system-wide)"
+        school: "Each school determines individually (e.g., JABSOM for Hawaii)"
+        system: "A centralized application system (use with centralized_system field)"
+        varies_by_school: "Different schools use different methods"
+
+    centralized_system:
+      type: string
+      optional: true
+      description: "System name if centralized (e.g., TMDSAS)"
+
+    months_of_residency_required:
+      type: integer
+      description: "Duration requirement in months"
+
+    school_time_counts_toward_residency:
+      type: boolean
+      description: "Does educational presence count toward requirement?"
+
+    must_residency_be_continuous:
+      type: boolean
+      description: "Must be continuous?"
+
+    date_residency_must_be_established_by:
+      type: string
+      optional: true
+      description: "Deadline by which residency must be established"
+      format: "Use lowercase_month_day format (e.g., june_22, january_1)"
+
+    months_of_permanent_residency_required_before_enrollment:
+      type: integer
+      optional: true
+      description: "Months of demonstrated permanent residency before enrollment"
+
+    sources:
+      type: array
+      description: "Source IDs that support this rule"
+
+    legal_basis:
+      type: string
+      optional: true
+      description: "Statutory or legal authority for residency rules"
+      example: "Massachusetts General Laws Chapter 75, Section 34A"
+
+    pathways_to_establish_residency:
+      type: array
+      optional: true
+      description: "Multiple routes to establish residency (use when state has distinct pathways)"
+      item_fields:
+        name: {type: string, required: true}
+        criteria: {type: array, optional: true}
+        minimum_required: {type: integer, optional: true}
+        months_of_residency_required: {type: integer, optional: true}
+        methods_to_establish_domicile:
+          type: array
+          optional: true
+          description: "Methods to establish domicile (e.g., employment, property)"
+        outcome_of_meeting_pathway:
+          type: string
+          optional: true
+          description: "Outcome of meeting this pathway (e.g., automatic_resident)"

@@ -1,0 +1,216 @@
+# Optional State-Level Sections
+# These sections are optional - include only when applicable
+
+# =============================================================================
+# CITIZENSHIP - State-level defaults
+# =============================================================================
+
+eligible_citizenship_and_immigration_statuses:
+  description: "State-level citizenship defaults"
+  guidance: |
+    When to use state-level vs school-level citizenship:
+    - Include state-level arrays if most schools share the same rules
+    - If schools differ significantly, use school.citizenship blocks to override
+    - School-level citizenship REPLACES (not merges with) state-level for that school
+  fields:
+    eligible:
+      type: array
+      required: false
+      description: "Eligible statuses (required if schools share rules)"
+    ineligible:
+      type: array
+      required: false
+      description: "Ineligible statuses (required if schools share rules)"
+    admission_citizenship_required:
+      type: boolean
+      optional: true
+    requirements_for_ab540_eligibility:
+      type: array
+      optional: true
+      description: "Requirements for AB540 eligibility (California)"
+    documentation_required_for_daca_applicants:
+      type: array
+      optional: true
+      description: "Documentation required for DACA applicants"
+    sources:
+      type: array
+      optional: true
+
+# =============================================================================
+# MILITARY BENEFITS
+# =============================================================================
+
+military_residency_exemptions_and_benefits:
+  description: "Military exemptions and benefits"
+  fields:
+    active_duty_qualifies: {type: boolean, optional: true}
+    spouse_qualifies: {type: boolean, optional: true}
+    dependents_qualify: {type: boolean, optional: true}
+    veterans_gi_bill: {type: boolean, optional: true}
+    national_guard_qualifies: {type: boolean, optional: true}
+    reserves_qualifies: {type: boolean, optional: true}
+    military_absence_preserves_residency:
+      type: boolean
+      optional: true
+      description: "Military absence doesn't affect domicile status"
+    federal_section_702_applies:
+      type: boolean
+      optional: true
+      description: "Federal Section 702 in-state tuition for GI Bill users"
+    sources: {type: array, optional: true}
+
+# =============================================================================
+# DEPENDENT VS INDEPENDENT STUDENTS
+# =============================================================================
+
+rules_for_dependent_vs_independent_students:
+  description: "Rules for dependent vs independent students"
+  optional: true
+  fields:
+    grad_students_presumed_independent: {type: boolean, optional: true}
+    dependent_inherits_parent_residency: {type: boolean, optional: true}
+    can_establish_own_while_dependent: {type: boolean, optional: true}
+    derivation_source:
+      type: string
+      optional: true
+      description: "Who dependents derive residency from (e.g., 'parent_or_guardian')"
+    sources: {type: array, optional: true}
+
+# =============================================================================
+# MARRIAGE TRANSFER
+# =============================================================================
+
+rules_for_transferring_residency_via_marriage:
+  description: "Residency transfer through marriage"
+  optional: true
+  fields:
+    enabled: boolean
+    spouse_domicile_required_months: integer
+    marriage_duration_required_months: integer
+    spouse_must_maintain_domicile:
+      type: boolean
+      optional: true
+      description: "Spouse must maintain domicile through deadline"
+    documentation_required_for_marriage_transfer:
+      type: string
+      optional: true
+      description: "Required marriage documentation"
+    sources: {type: array, optional: true}
+
+# =============================================================================
+# TIES/CRITERIA SCREENING
+# =============================================================================
+
+criteria_used_for_residency_classification:
+  description: "Criteria-based classification (not duration-based)"
+  optional: true
+  note: "REQUIRED when rules_for_determining_residency_status.type = ties_screening"
+  fields:
+    description:
+      type: string
+      optional: true
+      description: "Prose explanation of the screening system"
+    criteria:
+      type: array
+      description: "List of criteria names"
+    minimum_required:
+      type: integer
+      description: "How many must be met"
+    equivalent_regions_enabled:
+      type: boolean
+      optional: true
+      description: "Whether geographic regions outside the state are treated as equivalent"
+    equivalent_regions_list:
+      type: array
+      optional: true
+      description: "Geographic areas treated identically to in-state"
+      example: "Hawaii treats Pacific Island nations as equivalent for JABSOM ties screening"
+    sources: {type: array, optional: true}
+
+# =============================================================================
+# FAMILY DERIVATION
+# =============================================================================
+
+rules_for_deriving_residency_from_family:
+  description: "Extended family eligibility"
+  optional: true
+  fields:
+    enabled: boolean
+    eligible_relationships:
+      type: array
+      description: "e.g., [parent, spouse, sibling]"
+    required_duration_years: integer
+    applicant_residence_required:
+      type: boolean
+      default: true
+      description: "Whether applicant must have lived in state themselves"
+    sources: {type: array, optional: true}
+
+# =============================================================================
+# SERVICE REQUIREMENTS
+# =============================================================================
+
+required_service_after_graduation:
+  description: "Mandatory or optional practice commitment"
+  optional: true
+  fields:
+    required: boolean
+    years: integer
+    location: string
+    alternative: string
+    legally_binding: boolean
+    penalty_interest_rate: number
+
+# =============================================================================
+# LEGAL LIMITS
+# =============================================================================
+
+legal_limit_on_nonresident_admissions:
+  description: "Legal cap on non-resident admissions"
+  optional: true
+  fields:
+    percentage: integer
+    enforced_by:
+      type: enum
+      ref: "enums.yaml#enforced_by"
+    seats_reserved_for_residents_percentage:
+      type: integer
+      optional: true
+      description: "Inverse of nonresident limit (e.g., 90 if nonresident is 10)"
+    sources: {type: array, optional: true}
+
+# =============================================================================
+# DOCUMENTATION
+# =============================================================================
+
+documents_required_for_residency_verification:
+  description: "Required documentation for verification"
+  optional: true
+  fields:
+    primary: array
+    supporting: array
+    years_of_records_required:
+      type: integer
+      optional: true
+      description: "How many years of records needed"
+    burden_of_proof:
+      type: enum
+      ref: "enums.yaml#burden_of_proof"
+      optional: true
+    evaluation_method:
+      type: enum
+      ref: "enums.yaml#evaluation_method"
+      optional: true
+    sources: {type: array, optional: true}
+
+# =============================================================================
+# RESEARCH GAPS
+# =============================================================================
+
+questions_requiring_further_research:
+  description: "Unresolved questions requiring further research"
+  format: array
+  item_type: string
+  example:
+    - "Does part-time enrollment count as educational presence?"
+    - "How strictly is the 1-year intent timing enforced?"

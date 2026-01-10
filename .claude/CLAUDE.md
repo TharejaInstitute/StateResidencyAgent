@@ -20,7 +20,13 @@ AI agent helping medical school applicants understand **admissions residency** -
 ```
 policies/
 ├── index.yaml                    # Compact routing index (always loaded, <3K tokens)
-├── schema.yaml                   # Documents YAML schema for state files
+├── schema/                       # Schema documentation (split for maintainability)
+│   ├── _index.yaml               # Overview, hierarchy, file references
+│   ├── core.yaml                 # Required: meta, sources, rules, schools
+│   ├── schools.yaml              # School field definitions
+│   ├── optional.yaml             # Optional state-level sections
+│   ├── enums.yaml                # All enum definitions
+│   └── validation.yaml           # Rules, conditionals, templates
 ├── states/
 │   └── {state}.yaml              # Pure YAML - all decision-relevant facts
 └── regional_programs/
@@ -43,7 +49,7 @@ Each piece of information lives in exactly one place. Do not duplicate content a
 | Flag definitions | `index.yaml` → `flags:` | Reference, not copy |
 | State data | `index.yaml` → `states:` | Reference, not copy |
 | Statistics | `index.yaml` → `stats:` | Reference, not copy |
-| Schema/format | `schema.yaml` | Reference, not copy |
+| Schema/format | `schema/` directory | Reference, not copy |
 | State policies | `states/{state}.yaml` | Not duplicated elsewhere |
 | Regional programs | `regional_programs/*.yaml` | Not duplicated elsewhere |
 
@@ -66,8 +72,8 @@ Perform ripple analysis after:
 ### Analysis Checklist
 
 1. **Cross-references**: Does any other file reference what I just changed?
-   - `index.yaml` → referenced by CLAUDE.md, schema.yaml, state files
-   - `schema.yaml` → defines structure used by all state files
+   - `index.yaml` → referenced by CLAUDE.md, schema files, state files
+   - `schema/` directory → defines structure used by all state files
    - Flag definitions → used across all state entries
    - Statistics → must match actual file counts
 
@@ -75,9 +81,9 @@ Perform ripple analysis after:
    - Check if the same term/value exists in other files
    - Ensure consistent naming (e.g., "states" vs "jurisdictions")
 
-3. **Schema compliance**: If I edited a state file, does it still match schema.yaml?
-   - Are all sections I used documented in the schema?
-   - If I added a new section type, did I add it to schema.yaml?
+3. **Schema compliance**: If I edited a state file, does it still match schema?
+   - Are all sections I used documented in `schema/`?
+   - If I added a new section type, did I add it to the appropriate schema file?
 
 4. **Comments and documentation**: Do comments still reflect reality?
    - YAML comments (`# like this`) can become stale
@@ -88,10 +94,10 @@ Perform ripple analysis after:
 ```
 Files to cross-reference after edits:
 ├── index.yaml        ← stats, flags, state entries
-├── schema.yaml       ← field definitions, enums, validation rules
+├── schema/           ← field definitions, enums, validation rules
 ├── CLAUDE.md         ← references to other files, process docs
 ├── states/*.yaml     ← must comply with schema, match index counts
-└── regional_programs/*.yaml ← member lists must match index
+└── regional_programs/*.yaml ← source of truth for program details
 ```
 
 **If you find inconsistencies, fix them in the same session.** Do not leave the project in an inconsistent state.
@@ -100,10 +106,13 @@ Files to cross-reference after edits:
 
 ## Schema & Format Documentation
 
-**See `policies/schema.yaml`** for complete schema documentation including:
-- Field definitions and validation rules
-- Format examples for state files
-- Enum values for all fields
+**See `policies/schema/`** directory for complete schema documentation:
+- `_index.yaml` - Overview and hierarchy
+- `core.yaml` - Required section definitions
+- `schools.yaml` - School field definitions
+- `optional.yaml` - Optional section definitions
+- `enums.yaml` - All enum values
+- `validation.yaml` - Validation rules and templates
 
 **See `policies/index.yaml`** for:
 - Flag definitions (the authoritative source)
@@ -119,9 +128,9 @@ When adding or updating state files, verify:
 1. **Counts match**: `md: X/Y` in index must match schools in state file's `schools:` array
 2. **Schools documented**: Every school counted in index has a `schools:` entry with `degree` field
 3. **Flags defined**: Only use flags from `index.yaml` → `flags:`
-4. **Regional programs**: If `prg: [wwami]`, include `regional_program:` section
+4. **Regional programs**: If `prg: [wwami]`, details are in `regional_programs/*.yaml` (not duplicated in state file)
 
-**See `policies/schema.yaml` → Validation Rules** for complete validation requirements.
+**See `policies/schema/validation.yaml`** for complete validation requirements.
 
 ---
 
@@ -182,7 +191,7 @@ sources:
     url: "https://..."
 
 # In relevant sections:
-admissions_residency:
+rules_for_determining_residency_status:
   sources: [1]  # References source id
 ```
 
@@ -222,16 +231,12 @@ Each state file must be **self-contained** without cross-state comparisons.
 
 ### File Format
 
-All state files are pure YAML containing:
-- `meta:` - state info, complexity, school counts
-- `sources:` - provenance URLs with IDs
-- `admissions_residency:` - core residency rules
-- `schools:` - array of schools with preferences, citizenship, secondary questions
-- `citizenship:` - state-level defaults
-- `military:` - military exemptions
-- `research_gaps:` - unresolved questions
-- `examples:` - common scenarios (optional)
-- `notes:` - key takeaways
+**See `policies/schema/`** for the authoritative list of sections and fields.
+
+State files are pure YAML. The schema defines:
+- Required sections (meta, sources, rules, schools)
+- Optional sections (citizenship, military, regional programs, etc.)
+- Field types, enums, and validation rules
 
 ---
 

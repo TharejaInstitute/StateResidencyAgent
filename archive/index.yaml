@@ -204,7 +204,6 @@ regional_programs:
   sreb:
     name: "Southern Regional Education Board - Regional Contract Program"
     file: regional_programs/sreb.yaml
-    members: [AR, DE, GA, KY, LA, MS, SC]  # States that participate for DO
     degree: DO                              # Does NOT cover MD programs
     status: stub
     note: "Reserved admission seats for osteopathic medicine only"

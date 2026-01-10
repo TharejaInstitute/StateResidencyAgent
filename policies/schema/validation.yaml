@@ -1,0 +1,296 @@
+# Validation Rules, Conditionals, and Templates
+
+# =============================================================================
+# TYPE-CONDITIONAL FIELD REQUIREMENTS
+# =============================================================================
+# Different residency types require different fields
+
+type_conditional_requirements:
+  domicile_based:
+    required:
+      - months_of_residency_required
+      - school_time_counts_toward_residency
+    optional: []
+    guidance: "Standard duration-based residency"
+
+  ties_screening:
+    required: []
+    forbidden:
+      - months_of_residency_required  # Don't use at state level
+    requires_section:
+      - criteria_used_for_residency_classification
+    guidance: "Use criteria section instead of duration"
+    example: "See Hawaii"
+
+  school_specific:
+    required: []
+    optional:
+      - months_of_residency_required
+    guidance: "Schools define rules via school_specific_residency_rules"
+    example: "See Washington"
+
+  hybrid:
+    required:
+      - months_of_residency_required
+    optional:
+      - criteria fields
+    guidance: "Combines duration AND ties criteria"
+
+  state_level:
+    required:
+      - months_of_residency_required
+    optional:
+      - entity_that_determines_residency_status
+    guidance: "Single state office determines for all schools"
+
+# =============================================================================
+# FIELD STANDARDIZATION
+# =============================================================================
+
+standardization:
+  duration:
+    description: "Always use months_of_residency_required"
+    format: "months_of_residency_required: 12"
+    note: "Convert days to months (366 days = 12 months)"
+
+  education_rule:
+    description: "Always include school_time_counts_toward_residency field"
+    format: "school_time_counts_toward_residency: false"
+    note: "true = school attendance counts, false = it doesn't"
+
+  tiered_priorities:
+    description: "Tiered array format for admission preferences"
+    format: |
+      tiered_priorities_for_admission:
+        - tier: 1
+          criteria: "West Virginia residents"
+        - tier: 2
+          criteria: "Bordering states"
+          states: [ky, md, oh, pa, va]
+
+  military:
+    description: "Standardized military field names"
+    format: |
+      military_residency_exemptions_and_benefits:
+        active_duty_qualifies: true
+        spouse_qualifies: true
+        dependents_qualify: true
+        veterans_gi_bill: true
+
+# =============================================================================
+# CONDITIONAL REQUIREMENTS
+# =============================================================================
+# Some sections become required based on other values in the file
+
+conditional_requirements:
+  - condition: "type = ties_screening"
+    requires: "criteria_used_for_residency_classification section"
+    reason: "Ties-based systems need the screening criteria documented"
+
+  - condition: "Schools have different citizenship rules"
+    requires: "citizenship block on each school with different rules"
+    reason: "Override semantics: school-level replaces state-level"
+
+# =============================================================================
+# VALIDATION RULES
+# =============================================================================
+
+validation:
+  index_sync:
+    description: "How school counts work between index.yaml and state files"
+    rules:
+      - "md: X/Y counts schools that give measurable in-state admission advantage"
+      - "Private schools without documented preference are excluded from count"
+      - "State file may list MORE schools than index (extras are schools without preference)"
+      - "State file should NOT list FEWER schools than index"
+      - "index.yaml is SSOT for counts - do not duplicate in state files"
+    example: |
+      Index says: md: 2/1 (2 total with preference, 1 public)
+      State file has: 3 MD schools (2 with preference + 1 private without)
+      This is correct - the extra private school has no residency preference
+
+  school_entries:
+    required: [name, degree, type]
+    recommended: [application_system]
+    conditional: "citizenship if differs from state default"
+
+  sources:
+    - "Every source in sources[] must have unique id"
+    - "IDs should be sequential (1, 2, 3...)"
+
+  flags:
+    - "Only use flags defined in index.yaml"
+    - "Add new flag definitions to index.yaml first"
+
+  regional_programs:
+    - "Regional program details live in regional_programs/*.yaml (SSOT)"
+    - "State files should NOT duplicate regional program data"
+
+  citizenship:
+    - "All citizenship blocks must have both eligible and ineligible arrays"
+    - "Use empty array [] if none in a category"
+
+# =============================================================================
+# TEMPLATES
+# =============================================================================
+
+templates:
+  standard:
+    description: "Standard domicile-based state template"
+    content: |
+      # policies/states/{state}.yaml
+
+      meta:
+        state: {state_name}
+        abbreviation: {XX}
+        last_verified: {YYYY-MM-DD}
+        complexity: {level}
+
+      sources:
+        - id: 1
+          name: "{Source Name}"
+          url: "{URL}"
+
+      rules_for_determining_residency_status:
+        type: domicile_based
+        entity_that_determines_residency_status: school
+        months_of_residency_required: 12
+        school_time_counts_toward_residency: false
+        must_residency_be_continuous: true
+        sources: [1]
+
+      schools:
+        - name: "{School Name}"
+          degree: MD
+          type: public
+          application_system: AMCAS
+          number_of_students_in_entering_class: {CLASS_SIZE}
+          percentage_of_class_from_in_state: {PERCENTAGE}
+          geographic_area_giving_admission_preference: statewide
+          sources: [1]
+
+      eligible_citizenship_and_immigration_statuses:
+        eligible: [us_citizen, permanent_resident]
+        ineligible: [f1_visa, j1_visa]
+
+      military_residency_exemptions_and_benefits:
+        active_duty_qualifies: true
+        spouse_qualifies: true
+        dependents_qualify: true
+        veterans_gi_bill: true
+
+      questions_requiring_further_research:
+        - "{Unresolved question}"
+
+  ties_screening:
+    description: "Ties-based screening template (like Hawaii)"
+    content: |
+      # policies/states/{state}.yaml
+
+      meta:
+        state: {state_name}
+        abbreviation: {XX}
+        last_verified: {YYYY-MM-DD}
+        complexity: high
+
+      sources:
+        - id: 1
+          name: "{Source Name}"
+          url: "{URL}"
+
+      # NOTE: No months_of_residency_required - ties-based systems don't use duration
+      rules_for_determining_residency_status:
+        type: ties_screening
+        entity_that_determines_residency_status: school
+        sources: [1]
+
+      # REQUIRED for ties_screening type
+      criteria_used_for_residency_classification:
+        description: "Meet X of Y criteria for resident classification"
+        criteria:
+          - applicant_legal_residence
+          - parent_legal_residence
+          - birthplace
+          - high_school_location
+          - college_location
+        minimum_required: 2
+        sources: [1]
+
+      schools:
+        - name: "{School Name}"
+          degree: MD
+          type: public
+          application_system: AMCAS
+          number_of_students_in_entering_class: {CLASS_SIZE}
+          percentage_of_class_from_in_state: {PERCENTAGE}
+          geographic_area_giving_admission_preference: statewide
+          tiered_priorities_for_admission:
+            - tier: 1
+              criteria: "Resident classification (meets ties criteria)"
+            - tier: 2
+              criteria: "Nonresident with strong ties"
+          sources: [1]
+
+      eligible_citizenship_and_immigration_statuses:
+        eligible: [us_citizen, permanent_resident]
+        ineligible: []
+
+      questions_requiring_further_research:
+        - "How are split criteria evaluated?"
+
+  school_specific:
+    description: "School-specific rules template (like Washington)"
+    content: |
+      # policies/states/{state}.yaml
+
+      meta:
+        state: {state_name}
+        abbreviation: {XX}
+        last_verified: {YYYY-MM-DD}
+        complexity: high
+
+      sources:
+        - id: 1
+          name: "{School A Source}"
+          url: "{URL}"
+        - id: 2
+          name: "{School B Source}"
+          url: "{URL}"
+
+      rules_for_determining_residency_status:
+        type: school_specific
+
+      schools:
+        # School A - standard domicile-based
+        - name: "{School A Name}"
+          degree: MD
+          type: public
+          application_system: AMCAS
+          school_specific_residency_rules:
+            months_of_residency_required: 12
+            school_time_counts_toward_residency: false
+            deadline: june_22
+          sources: [1]
+
+        # School B - ties-based pathway
+        - name: "{School B Name}"
+          degree: MD
+          type: public
+          application_system: AMCAS
+          citizenship:
+            eligible: [us_citizen, permanent_resident]
+            ineligible: [daca]
+          routes_to_qualify_for_school:
+            - name: "Ties to State"
+              minimum_required: 3
+              criteria:
+                - born_in_state
+                - childhood_address_in_state
+                - hs_graduation_in_state
+                - parent_lives_in_state
+            - name: "Legal Residency"
+              months_of_residency_required: 12
+          sources: [2]
+
+      questions_requiring_further_research:
+        - "How strictly does School B verify ties?"

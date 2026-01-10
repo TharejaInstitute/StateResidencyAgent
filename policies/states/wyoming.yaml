@@ -24,57 +24,32 @@ sources:
     name: "UW Medicine WWAMI State Eligibility"
     url: "https://www.uwmedicine.org/school-of-medicine/md-program/admissions/state-eligibility"
 
-admissions_residency:
+rules_for_determining_residency_status:
   type: state_level
-  determination_by: wyoming_certifying_office
-  required_months: 60  # 5 years continuous
-  education_counts: null  # Not explicitly stated in sources
-  continuous: true
-  can_derive_from:
-    - parent
-    - legal_guardian
+  entity_that_determines_residency_status: state
+  months_of_residency_required: 60  # 5 years continuous
+  must_residency_be_continuous: true
   sources: [1, 3]
-
-regional_program:
-  name: wwami
-  role: member
-  lead_state: washington
-  member_states: [washington, wyoming, alaska, montana, idaho]
-  certification_required: true
-  certification_deadline: october_15
-  certification_office: wyoming_certifying_office
-  seats_per_year: 20
-  sources: [2, 3, 5]
 
 schools:
   - name: University of Washington School of Medicine (via WWAMI)
     degree: MD
     type: public
     application_system: AMCAS
-    class_size: 20
-    regional_program_role: member
-    regional_preference: statewide
-    wwami_acceptance_rates:
-      wyoming: "50.0%"
-      seattle_wa: "30.4%"
-      spokane_wa: "52.2%"
-      alaska: "44.1%"
-      montana: "25.2%"
-      idaho: "27.0%"
-      out_of_region: "0.4%"
+    number_of_students_in_entering_class: 20
+    role_in_regional_program: member
+    geographic_area_giving_admission_preference: statewide
     sources: [2, 4]
 
-service_obligation:
+required_service_after_graduation:
   required: true
   years: 3
   location: wyoming
   alternative: repay_plus_interest
   legally_binding: true
-  notes:
-    - "Must sign contract agreeing to return to Wyoming for 3 years OR repay costs plus interest"
   sources: [1, 3]
 
-citizenship:
+eligible_citizenship_and_immigration_statuses:
   eligible:
     - us_citizen
     - permanent_resident
@@ -84,37 +59,17 @@ citizenship:
     - j1_visa
     - canadian_citizen  # Explicitly excluded
     - international
-  notes:
-    - "UW School of Medicine does not accept international or Canadian students for WWAMI"
-    - "DACA eligible if in Wyoming AND verified by state's certifying office"
   sources: [4, 5]
 
-military:
-  active_duty_qualifies: null  # Not addressed in sources
-  spouse_qualifies: null
-  dependents_qualify: null
-  veterans_gi_bill: null
-  notes:
-    - "Military service credit toward 5-year requirement not explicitly addressed in sources"
-
-financial_independence:
-  dependent_inherits_parent: true
-  can_derive_from: [parent, legal_guardian]
+rules_for_dependent_vs_independent_students:
+  dependent_inherits_parent_residency: true
+  derivation_source: parent_or_guardian
   sources: [1, 3]
 
-deadlines:
-  certification: october_15  # Prior year - applications after generally rejected
-  notes:
-    - "Certification is SEPARATE from admission - can complete either first"
-    - "Applications received after October 15 deadline generally rejected"
-  sources: [1, 3]
-
-notes:
-  - "No standalone medical school - WWAMI is only path for in-state medical education"
-
-research_gaps:
+questions_requiring_further_research:
   - "What happens if parents divorce and only one remains in Wyoming?"
   - "Can military members stationed in Wyoming count toward 5-year requirement?"
   - "What if student establishes their own 5-year residency independent of parents?"
   - "How strictly is the service obligation enforced? What is the repayment amount?"
   - "What documentation does Wyoming certifying office require for DACA verification?"
+  - "Military service credit toward 5-year requirement not explicitly addressed"

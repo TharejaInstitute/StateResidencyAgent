@@ -33,15 +33,15 @@ sources:
     name: "WVSOM Application Requirements"
     url: "https://www.wvsom.edu/admissions/do/application-requirements"
 
-admissions_residency:
-  type: school_specific  # Marshall and WVU have different preferences
-  required_months: 12
-  education_counts: false
-  continuous: true
+rules_for_determining_residency_status:
+  type: school_specific
+  months_of_residency_required: 12
+  school_time_counts_toward_residency: false
+  must_residency_be_continuous: true
   sources: [6]
 
-financial_independence:
-  dependent_inherits_parent: true
+rules_for_dependent_vs_independent_students:
+  dependent_inherits_parent_residency: true
   sources: [6]
 
 schools:
@@ -49,13 +49,13 @@ schools:
     degree: MD
     type: state_assisted
     application_system: AMCAS
-    resident_percentage: 57.3
-    regional_preference: central_appalachia
-    mission_focus: "Community-based, VA-affiliated"
+    percentage_of_class_from_in_state: 57.3
+    geographic_area_giving_admission_preference: central_appalachia
+    population_school_aims_to_serve: "Community-based, VA-affiliated"
     citizenship:
       eligible: [us_citizen, permanent_resident]
       ineligible: [f1_visa, j1_visa, daca]
-    preferences:
+    tiered_priorities_for_admission:
       - tier: 1
         criteria: "West Virginia residents"
       - tier: 2
@@ -63,7 +63,7 @@ schools:
         states: [kentucky, maryland, ohio, pennsylvania, virginia]
       - tier: 3
         criteria: "Non-bordering with competitive application"
-    special_programs:
+    programs_with_special_eligibility_rules:
       - name: MD/PhD
         residency_required: false
     sources: [1, 2, 5, 7]
@@ -72,65 +72,51 @@ schools:
     degree: MD
     type: public
     application_system: AMCAS
-    resident_percentage: 50
-    regional_preference: statewide
+    percentage_of_class_from_in_state: 50
+    geographic_area_giving_admission_preference: statewide
     citizenship:
       eligible: [us_citizen, permanent_resident, daca, international]
-      notes:
-        - "Accepts DACA and international (classified as out-of-state)"
-    preferences:
+      ineligible: []
+    tiered_priorities_for_admission:
       - tier: 1
         criteria: "West Virginia residents"
       - tier: 2
         criteria: "Pathway programs"
       - tier: 3
         criteria: "Strong ties or mission fit"
-    advantage_factors:
+    factors_improving_admission_odds:
       - "Personal residence in WV"
       - "Family in WV"
-    notes:
-      - "~50% out-of-state - more open than many state schools"
     sources: [3, 6]
 
   - name: West Virginia School of Osteopathic Medicine (WVSOM)
     degree: DO
     type: public
     application_system: AACOMAS
-    resident_percentage: 21
-    regional_preference: rural_appalachia
-    mission_focus: "Rural primary care"
-    specialty_focus: [primary_care]
+    percentage_of_class_from_in_state: 21
+    geographic_area_giving_admission_preference: rural_appalachia
+    population_school_aims_to_serve: "Rural primary care"
+    medical_specialties_school_prioritizes: [primary_care]
     citizenship:
       eligible: [us_citizen, permanent_resident]
       ineligible: [f1_visa, j1_visa, daca, international]
-    preferences:
+    tiered_priorities_for_admission:
       - tier: 1
         criteria: "West Virginia residents"
       - tier: 2
         criteria: "Rural background or experience"
-    advantage_factors:
+    factors_improving_admission_odds:
       - "Rural community background"
       - "Rural service experience"
       - "Primary care interest"
       - "WV ties"
-    notes:
-      - "Very mission-oriented - rural background significant advantage"
     sources: [8]
 
-citizenship:
-  notes:
-    - "Marshall (MD): US citizens or permanent residents only"
-    - "WVU (MD): Explicitly accepts DACA and international students"
-    - "WVSOM (DO): US citizens or permanent residents only - no DACA/international"
-
-military:
+military_residency_exemptions_and_benefits:
   veterans_gi_bill: true
   sources: [6]
 
-notes:
-  - "Citizenship rules vary by school - check each individually"
-
-research_gaps:
+questions_requiring_further_research:
   - "How strictly does Marshall enforce 'US citizens or permanent residents'? Any exceptions?"
   - "What exactly counts as 'strong ties' beyond family for WVU?"
   - "WVSOM: Do they have bordering state preferences like Marshall?"

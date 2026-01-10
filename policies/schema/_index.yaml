@@ -1,0 +1,83 @@
+# Schema Index for State Policy Files
+# Split schema for better maintainability
+# Main entry point for schema documentation
+
+description: |
+  This schema defines the structure for state residency policy files.
+  Focus: Admissions classification - how applicants are classified as resident/nonresident.
+  NOT covered: Tuition classification (what you pay after admission).
+
+# Schema files in this directory
+files:
+  _index.yaml: "This file - overview and hierarchy"
+  core.yaml: "Required sections: meta, sources, rules_for_determining_residency_status"
+  schools.yaml: "School field definitions (schools[] array)"
+  optional.yaml: "Optional state-level sections"
+  enums.yaml: "All enum definitions consolidated"
+  validation.yaml: "Validation rules, conditionals, templates"
+
+# Project structure
+file_structure:
+  policies:
+    - index.yaml               # Compact routing index (always loaded)
+    - schema/                  # Schema documentation (this directory)
+    - states/*.yaml            # State policy files (pure YAML)
+    - regional_programs/*.yaml # Regional program data
+
+# =============================================================================
+# HIERARCHY & INHERITANCE
+# =============================================================================
+#
+# Data flows from STATE level → SCHOOL level, with clear override rules.
+#
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │ LEVEL 1: STATE CONTEXT (background facts about the state)                   │
+# │                                                                             │
+# │   These sections describe the state's general approach. They provide        │
+# │   context but can be overridden at school level when schools differ.        │
+# │                                                                             │
+# │   - rules_for_determining_residency_status    How residency is determined   │
+# │   - criteria_used_for_residency_classification  Ties criteria (if used)     │
+# │   - required_service_after_graduation         State practice requirements   │
+# │   - legal_limit_on_nonresident_admissions     Legal caps on non-residents   │
+# │   - rules_for_deriving_residency_from_family  Family-based qualification    │
+# │   - rules_for_transferring_residency_via_marriage  Spouse-based residency   │
+# └─────────────────────────────────────────────────────────────────────────────┘
+#
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │ LEVEL 2: STATE DEFAULTS (apply unless school overrides)                     │
+# │                                                                             │
+# │   These are defaults that apply to all schools UNLESS a school has its      │
+# │   own override. School-level overrides REPLACE (not merge with) state.      │
+# │                                                                             │
+# │   - eligible_citizenship_and_immigration_statuses → school.citizenship      │
+# │   - rules_for_determining_residency_status → school.school_specific_...     │
+# │   - military_residency_exemptions_and_benefits                              │
+# │   - rules_for_dependent_vs_independent_students                             │
+# │   - documents_required_for_residency_verification                           │
+# └─────────────────────────────────────────────────────────────────────────────┘
+#
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │ LEVEL 3: SCHOOL-SPECIFIC (in schools[] array)                               │
+# │                                                                             │
+# │   Each school entry. Overrides REPLACE state defaults for that school.      │
+# │                                                                             │
+# │   Core: name, degree, type, application_system                              │
+# │   Stats: number_of_students_in_entering_class, percentage_of_class_...      │
+# │   Preferences: geographic_area_giving_admission_preference, etc.            │
+# │   OVERRIDES:                                                                │
+# │     - citizenship (REPLACES state-level citizenship for this school)        │
+# │     - school_specific_residency_rules (REPLACES state residency rules)      │
+# │     - routes_to_qualify_for_school (school-only qualification paths)        │
+# │   Regional: role_in_regional_program                                        │
+# └─────────────────────────────────────────────────────────────────────────────┘
+#
+# KEY DISTINCTION: pathways_to_establish_residency vs routes_to_qualify_for_school
+#
+#   pathways_to_establish_residency (STATE level):
+#     Multiple routes to establish residency that ALL schools in the state recognize.
+#     Example: A state allows residency via employment OR property ownership.
+#
+#   routes_to_qualify_for_school (SCHOOL level):
+#     Qualification routes that ONLY this specific school recognizes.
+#     Example: WSU's "3 of 4 ties criteria" only applies to WSU, not other WA schools.

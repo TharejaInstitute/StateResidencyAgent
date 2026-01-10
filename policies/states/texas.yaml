@@ -73,55 +73,54 @@ sources:
     url: "https://osteopathic-medicine.uiw.edu/admissions/doctor-of-osteopathic-medicine/"
 
 # Texas uses TMDSAS for centralized ADMISSIONS residency determination
-admissions_residency:
+rules_for_determining_residency_status:
   type: domicile_based
-  determination_by: TMDSAS
+  entity_that_determines_residency_status: system
   centralized_system: TMDSAS
-  required_months: 12
-  education_counts: false  # Must establish domicile via employment/property/business/marriage
-  continuous: true
-  pathways:
-    - type: high_school_graduation
-      description: "Graduate from Texas HS or obtain GED in Texas"
-      requirements:
-        texas_hs_graduation_or_ged: true
-        months_in_texas_before_graduation: 36
-        months_in_texas_by_deadline: 12
-    - type: domicile_establishment
-      description: "Establish domicile through gainful employment, property, business, or marriage"
-      required_months: 12
-      domicile_methods:
+  months_of_residency_required: 12
+  school_time_counts_toward_residency: false  # Must establish domicile via employment/property/business/marriage
+  must_residency_be_continuous: true
+  pathways_to_establish_residency:
+    - name: high_school_graduation
+      criteria:
+        - texas_hs_graduation_or_ged
+        - 36_months_in_texas_before_graduation
+        - 12_months_in_texas_by_deadline
+    - name: domicile_establishment
+      months_of_residency_required: 12
+      methods_to_establish_domicile:
         - gainful_employment
         - property_ownership
         - business_ownership
         - marriage_to_resident
-  deadline: october_1
+    - name: military_home_of_record
+      criteria:
+        - home_of_record_texas
+      outcome_of_meeting_pathway: automatic_resident
+    - name: military_claimed_texas
+      criteria:
+        - claimed_texas_12_months
+        - les_proof
+      outcome_of_meeting_pathway: resident
   sources: [1, 2, 3]
 
-financial_independence:
-  dependent_inherits_parent: true
+rules_for_dependent_vs_independent_students:
+  dependent_inherits_parent_residency: true
   can_establish_own_while_dependent: false
-  notes:
-    - "Dependent student's residency based on parent's or legal guardian's residency"
-    - "If parents claim you and live in another state, you cannot establish residency while claimed as dependent"
   sources: [1]
 
-marriage_transfer:
+rules_for_transferring_residency_via_marriage:
   enabled: true
   spouse_domicile_required_months: 12
   marriage_duration_required_months: 12
-  documentation: "Texas Marriage Certificate or Declaration of Registration of Informal Marriage"
-  notes:
-    - "Spouse must have established AND maintained domicile in Texas for 12 months prior to deadline"
-    - "Must have been married for at least 12 months"
+  spouse_must_maintain_domicile: true
+  documentation_required_for_marriage_transfer: "Texas Marriage Certificate or Declaration of Registration of Informal Marriage"
   sources: [1, 2]
 
-nonresident_cap:
+legal_limit_on_nonresident_admissions:
   percentage: 10
   enforced_by: law
-  notes:
-    - "Texas law limits non-residents to maximum 10% of entering class"
-    - "90% of seats reserved for Texas residents"
+  seats_reserved_for_residents_percentage: 90
   sources: [2]
 
 schools:
@@ -130,40 +129,40 @@ schools:
     degree: MD
     type: private
     application_system: TMDSAS
-    regional_preference: none
-    acceptance_rates:
+    geographic_area_giving_admission_preference: none
+    percentage_of_applicants_accepted:
       in_state: "4.9%"
       out_of_state: "1.8%"
-    in_state_advantage: "2.7x"
     sources: [4]
 
   - name: McGovern Medical School at UTHealth Houston
     degree: MD
     type: public
     application_system: TMDSAS
-    regional_preference: none
+    geographic_area_giving_admission_preference: none
     sources: [8]
 
   - name: Texas A&M School of Medicine
     degree: MD
     type: public
     application_system: TMDSAS
-    regional_preference: rural_underserved
-    mission_focus: "Rural and underserved communities"
-    specialty_focus: [primary_care]
+    geographic_area_giving_admission_preference: statewide
+    population_school_aims_to_serve: "Rural and underserved communities"
+    medical_specialties_school_prioritizes: [primary_care]
     citizenship:
       eligible: [us_citizen, permanent_resident, daca]
-    special_programs:
+      ineligible: []
+    programs_with_special_eligibility_rules:
       - name: RUP2M
-        eligibility: "Reside in HRSA-designated rural, underserved, or shortage area"
+        focus: "Rural, underserved, and shortage areas"
     sources: [7]
 
   - name: Texas Tech University Health Sciences Center (Lubbock)
     degree: MD
     type: public
     application_system: TMDSAS
-    regional_preference: west_texas
-    advantage_factors:
+    geographic_area_giving_admission_preference: west_texas
+    factors_improving_admission_odds:
       - "West Texas ties"
       - "Rural health interest"
     sources: [9]
@@ -172,9 +171,9 @@ schools:
     degree: MD
     type: public
     application_system: TMDSAS
-    class_size: 138
-    regional_preference: us_mexico_border
-    advantage_factors:
+    number_of_students_in_entering_class: 138
+    geographic_area_giving_admission_preference: us_mexico_border
+    factors_improving_admission_odds:
       - "Hispanic population experience"
       - "Border health interest"
     sources: [10]
@@ -183,11 +182,11 @@ schools:
     degree: MD
     type: public
     application_system: TMDSAS
-    class_size: 60
-    regional_preference: se_texas_houston
-    secondary_process: prescreened
-    mission_focus: "Primary care"
-    advantage_factors:
+    number_of_students_in_entering_class: 60
+    geographic_area_giving_admission_preference: se_texas_houston
+    how_secondary_applications_are_handled: prescreened
+    population_school_aims_to_serve: "Primary care"
+    factors_improving_admission_odds:
       - "Primary care commitment"
       - "Underserved area experience"
       - "SE Texas service interest"
@@ -197,8 +196,8 @@ schools:
     degree: MD
     type: public
     application_system: TMDSAS
-    class_size: 230
-    regional_preference: none
+    number_of_students_in_entering_class: 230
+    geographic_area_giving_admission_preference: none
     citizenship:
       eligible: [us_citizen, permanent_resident]
       ineligible: [international, f1_visa, j1_visa]
@@ -208,9 +207,9 @@ schools:
     degree: MD
     type: public
     application_system: TMDSAS
-    class_size: 230
-    regional_preference: galveston_gulf_coast
-    advantage_factors:
+    number_of_students_in_entering_class: 230
+    geographic_area_giving_admission_preference: galveston_gulf_coast
+    factors_improving_admission_odds:
       - "Galveston area interest"
     sources: [12]
 
@@ -218,9 +217,9 @@ schools:
     degree: MD
     type: public
     application_system: TMDSAS
-    resident_percentage: 96
-    regional_preference: rio_grande_valley
-    advantage_factors:
+    percentage_of_class_from_in_state: 96
+    geographic_area_giving_admission_preference: rio_grande_valley
+    factors_improving_admission_odds:
       - "Rio Grande Valley connection"
     sources: [13]
 
@@ -228,11 +227,12 @@ schools:
     degree: MD
     type: public
     application_system: TMDSAS
-    class_size: 227
-    regional_preference: south_texas
+    number_of_students_in_entering_class: 227
+    geographic_area_giving_admission_preference: south_texas
     citizenship:
       eligible: [us_citizen, permanent_resident, daca]
-    advantage_factors:
+      ineligible: []
+    factors_improving_admission_odds:
       - "South Texas connection"
     sources: [16]
 
@@ -240,12 +240,12 @@ schools:
     degree: MD
     type: public
     application_system: TMDSAS
-    class_size: 50
-    regional_preference: central_texas
+    number_of_students_in_entering_class: 50
+    geographic_area_giving_admission_preference: central_texas
     citizenship:
       eligible: [us_citizen, permanent_resident]
       ineligible: [international]
-    advantage_factors:
+    factors_improving_admission_odds:
       - "Central Texas ties"
     sources: [14]
 
@@ -253,9 +253,9 @@ schools:
     degree: MD
     type: public
     application_system: TMDSAS
-    class_size: 40
-    regional_preference: east_texas
-    preferences:
+    number_of_students_in_entering_class: 40
+    geographic_area_giving_admission_preference: east_texas
+    tiered_priorities_for_admission:
       - tier: 1
         criteria: "Direct ties - born, graduated HS, attended college"
       - tier: 2
@@ -268,16 +268,15 @@ schools:
         criteria: "No ties"
     citizenship:
       eligible: [us_citizen, permanent_resident]
+      ineligible: []
     sources: [17]
 
   - name: TCU Burnett School of Medicine
     degree: MD
     type: private
     application_system: AMCAS
-    class_size: 60
-    regional_preference: none
-    notes:
-      - "Uses AMCAS - not subject to 90% Texas resident rule"
+    number_of_students_in_entering_class: 60
+    geographic_area_giving_admission_preference: none
     sources: [18]
 
   # DO Schools
@@ -285,8 +284,8 @@ schools:
     degree: DO
     type: public
     application_system: TMDSAS
-    class_size: 231
-    regional_preference: none
+    number_of_students_in_entering_class: 231
+    geographic_area_giving_admission_preference: none
     citizenship:
       eligible: [us_citizen, permanent_resident]
       ineligible: [international]
@@ -296,34 +295,31 @@ schools:
     degree: DO
     type: public
     application_system: TMDSAS
-    class_size: 162
-    regional_preference: eastern_texas
-    mission_focus: "Primary care workforce"
+    number_of_students_in_entering_class: 162
+    geographic_area_giving_admission_preference: eastern_texas
+    population_school_aims_to_serve: "Primary care workforce"
     citizenship:
       eligible: [us_citizen, permanent_resident, daca]
-    advantage_factors:
+      ineligible: []
+    factors_improving_admission_odds:
       - "From underserved or shortage area"
       - "Eastern Texas connection"
       - "Primary care/rural practice interest"
-    notes:
-      - "Selection considers physician availability in applicant's region"
     sources: [20]
 
   - name: University of the Incarnate Word School of Osteopathic Medicine
     degree: DO
     type: private
     application_system: AACOMAS
-    class_size: 159
-    regional_preference: south_texas
-    advantage_factors:
+    number_of_students_in_entering_class: 159
+    geographic_area_giving_admission_preference: south_texas
+    factors_improving_admission_odds:
       - "South Texas connection"
       - "Bilingual (Spanish)"
       - "Underserved community interest"
-    notes:
-      - "Uses AACOMAS - not subject to 90% Texas resident rule"
     sources: [21]
 
-citizenship:
+eligible_citizenship_and_immigration_statuses:
   eligible:
     - us_citizen
     - permanent_resident
@@ -357,38 +353,19 @@ citizenship:
     - j2_visa
     - tn_visa
     - td_visa
-  daca_required_documentation:
+  documentation_required_for_daca_applicants:
     - valid_texas_drivers_license
     - ead_card
     - dhs_documentation
-  notes:
-    - "F-1/J-1 visa holders cannot establish permanent domicile"
-    - "H-4 dependents eligible with proper documentation"
-    - "DACA acceptance varies by school (only 3 of 15 accept)"
   sources: [1, 5, 6]
 
-military:
-  home_of_record_texas: automatic_resident
-  claimed_texas_12_months: "resident_with_les_proof"
+military_residency_exemptions_and_benefits:
   spouse_qualifies: true
   dependents_qualify: true
-  temporary_absence_protected: true
-  notes:
-    - "Home of Record = Texas: Presumed Texas resident automatically"
-    - "Home of Record ≠ Texas but claimed Texas: Provide LES showing 12 months claimed Texas"
-    - "Temporary absence for military service does NOT affect domicile status"
-    - "Applies to: US Armed Forces, Public Health Service, DoD, US Department of State"
+  military_absence_preserves_residency: true
   sources: [1, 3]
 
-deadlines:
-  application: october_1
-  residency_period_start: october_1_prior_year
-  notes:
-    - "All residency requirements must be met by October 1"
-    - "12-month period runs from October 1 of prior year to October 1 of application year"
-  sources: [1, 2]
-
-documentation:
+documents_required_for_residency_verification:
   primary:
     - texas_drivers_license_12_months
     - texas_voter_registration
@@ -402,10 +379,7 @@ documentation:
     - ead_card_daca
   sources: [1]
 
-notes:
-  - "DACA acceptance varies by school (only 3 of 15 accept)"
-
-research_gaps:
+questions_requiring_further_research:
   - "What qualifies as 'gainful employment'? Part-time? How many hours?"
   - "Can online business ownership count for domicile?"
   - "What if parents are divorced and one lives in Texas, one out of state?"

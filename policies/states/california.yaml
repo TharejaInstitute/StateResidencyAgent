@@ -34,35 +34,20 @@ sources:
     url: "https://cusm.edu/academics/md/requirements-for-admission/index.php"
 
 # California uses 366-day domicile rule for classification
-admissions_residency:
+rules_for_determining_residency_status:
   type: domicile_based
-  determination_by: school  # Each UC school handles residency
-  required_months: 12  # 366 days
-  education_counts: false  # Educational presence does NOT count
-  continuous: true
-  timing: "Intent actions must be completed more than 1 year before enrollment"
+  entity_that_determines_residency_status: school  # Each UC school handles residency
+  months_of_residency_required: 12  # 366 days
+  school_time_counts_toward_residency: false  # Educational presence does NOT count
+  must_residency_be_continuous: true
+  months_of_permanent_residency_required_before_enrollment: 12
   sources: [1, 2]
 
-financial_independence:
+rules_for_dependent_vs_independent_students:
   grad_students_presumed_independent: true
-  dependent_inherits_parent: false  # Unlike undergrads
-  notes:
-    - "Graduate/professional students are evaluated on THEIR residency, not parents'"
-    - "Parent's CA residence does not automatically transfer to grad students"
+  dependent_inherits_parent_residency: false  # Unlike undergrads
+  derivation_source: "self"  # Graduate students evaluated on their own residency
   sources: [2]
-
-intent:
-  timing: "more_than_one_year_before"
-  required_docs:
-    - drivers_license
-    - voter_registration
-    - vehicle_registration
-  supporting_docs:
-    - state_tax_returns
-    - bank_accounts
-    - lease_or_property
-  relinquish_other_state_license: true
-  sources: [1, 2]
 
 schools:
   # UC Schools (5 public with preference)
@@ -70,14 +55,13 @@ schools:
     degree: MD
     type: public
     application_system: AMCAS
-    class_size: 161
-    resident_percentage: 77
-    regional_preference: statewide
-    acceptance_rates:
+    number_of_students_in_entering_class: 161
+    percentage_of_class_from_in_state: 77
+    geographic_area_giving_admission_preference: statewide
+    percentage_of_applicants_accepted:
       in_state: "3.1-3.2%"
       out_of_state: "0.77%"
-    in_state_advantage: "4x"
-    mission_focus: "Health equity, underserved populations"
+    population_school_aims_to_serve: "Health equity, underserved populations"
     citizenship:
       eligible: [us_citizen, permanent_resident, daca]
       ineligible: [f1_visa, j1_visa, international]
@@ -87,86 +71,80 @@ schools:
     degree: MD
     type: public
     application_system: AMCAS
-    class_size: 175
-    resident_percentage: 59.4
-    regional_preference: none
-    acceptance_rates:
+    number_of_students_in_entering_class: 175
+    percentage_of_class_from_in_state: 59.4
+    geographic_area_giving_admission_preference: none
+    percentage_of_applicants_accepted:
       in_state: "2.17%"
       out_of_state: "1.03%"
       international: "1.86%"
-    in_state_advantage: "2x"
     citizenship:
-      eligible: [us_citizen, permanent_resident, daca, california_resident]
-      ineligible: [f1_visa, j1_visa, international]
-      notes:
-        - "CA residency is alternative eligibility if not citizen/PR/DACA"
-        - "International eligible ONLY if CA residents"
+      eligible: [us_citizen, permanent_resident, daca, international]
+      ineligible: [f1_visa, j1_visa]
     sources: [6]
 
   - name: UC Davis School of Medicine
     degree: MD
     type: public
     application_system: AMCAS
-    class_size: 139
-    resident_percentage: 96
-    regional_preference: northern_central_california
-    secondary_process: prescreened
-    advantage_factors:
+    number_of_students_in_entering_class: 139
+    percentage_of_class_from_in_state: 96
+    geographic_area_giving_admission_preference: northern_central_california
+    how_secondary_applications_are_handled: prescreened
+    factors_improving_admission_odds:
       - "Northern/Central California ties"
       - "Rural or medically underserved area origin"
       - "Sacramento area ties"
-    special_programs:
+    programs_with_special_eligibility_rules:
       - name: Rural-PRIME
         focus: "Rural California communities"
     citizenship:
       eligible: [us_citizen, permanent_resident, daca, undocumented]
-    notes:
-      - "Out-of-state may not receive secondary"
+      ineligible: []
     sources: [4]
 
   - name: UC Irvine School of Medicine
     degree: MD
     type: public
     application_system: AMCAS
-    class_size: 114
-    resident_percentage: 88.6
-    regional_preference: none
-    mission_focus: "Multicultural communities"
+    number_of_students_in_entering_class: 114
+    percentage_of_class_from_in_state: 88.6
+    geographic_area_giving_admission_preference: none
+    population_school_aims_to_serve: "Multicultural communities"
     sources: [7]
 
   - name: UC Riverside School of Medicine
     degree: MD
     type: public
     application_system: AMCAS
-    class_size: 90
-    resident_percentage: 97
-    regional_preference: inland_southern_california
-    mission_focus: "Medically underserved communities"
-    special_programs:
+    number_of_students_in_entering_class: 90
+    percentage_of_class_from_in_state: 97
+    geographic_area_giving_admission_preference: inland_southern_california
+    population_school_aims_to_serve: "Medically underserved communities"
+    programs_with_special_eligibility_rules:
       - name: Thomas Haider Program
-        eligibility: "Deep local ties to Inland Empire"
+        focus: "Inland Empire communities"
         service_obligation: "5-year Inland Empire practice commitment"
     citizenship:
       eligible: [us_citizen, permanent_resident, daca, undocumented]
-    notes:
-      - "Only considers out-of-state with significant CA relationship"
+      ineligible: []
     sources: [3]
 
   - name: California University of Science and Medicine (CUSM)
     degree: MD
     type: private
     application_system: AMCAS
-    class_size: 130
-    resident_percentage: 97.7
-    regional_preference: inland_empire
-    mission_focus: "Primary care physician shortage"
-    specialty_focus: [primary_care]
+    number_of_students_in_entering_class: 130
+    percentage_of_class_from_in_state: 97.7
+    geographic_area_giving_admission_preference: inland_empire
+    population_school_aims_to_serve: "Primary care physician shortage"
+    medical_specialties_school_prioritizes: [primary_care]
     citizenship:
       eligible: [us_citizen, permanent_resident, daca]
       ineligible: [f1_visa, j1_visa, international, canadian_citizen]
     sources: [8]
 
-citizenship:
+eligible_citizenship_and_immigration_statuses:
   eligible:
     - us_citizen
     - permanent_resident
@@ -185,28 +163,22 @@ citizenship:
     - m_visa
     - tn_visa
     - td_visa
-  ab540_requirements:
+  requirements_for_ab540_eligibility:
     - "Attended California high school for 3+ years"
     - "Graduated from California high school or obtained GED in California"
     - "Filed affidavit stating intent to legalize status when eligible"
-  notes:
-    - "F-1/J-1 cannot establish domicile"
-    - "F-1/J-1 CAN apply but cannot establish CA residency"
-    - "AB540 provides exemption for qualifying undocumented students"
-    - "UC schools explicitly welcome DACA/undocumented students"
+  documentation_required_for_daca_applicants:
+    - "AB540 affidavit if claiming California residency exemption"
   sources: [1, 3, 4]
 
-military:
+military_residency_exemptions_and_benefits:
   active_duty_qualifies: true
   spouse_qualifies: true
   dependents_qualify: true
   veterans_gi_bill: true
   sources: [2]
 
-notes:
-  - "DACA/undocumented welcome at UC schools"
-
-research_gaps:
+questions_requiring_further_research:
   - "Does part-time enrollment count as educational presence?"
   - "How strictly is the 1-year intent timing enforced?"
   - "What happens if intent documentation is completed exactly 1 year before?"

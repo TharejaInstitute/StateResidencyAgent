@@ -19,15 +19,12 @@ sources:
     url: "https://admissions.jabsom.hawaii.edu/application-process/2025-incoming-class-profile.html"
 
 # Hawaii uses TIES SCREENING - subjective criteria-based system (not days of residency)
-admissions_residency:
+rules_for_determining_residency_status:
   type: ties_screening
-  determination_by: school  # JABSOM determines, not state
-  required_months: null  # Not applicable - ties-based, not duration-based
-  education_counts: null  # Not applicable
-  continuous: null  # Not applicable
+  entity_that_determines_residency_status: school  # JABSOM determines, not state
   sources: [1]
 
-ties_screening:
+criteria_used_for_residency_classification:
   description: "Subjective ties-based screening - meet 2 of 5 criteria for resident classification"
   criteria:
     - applicant_legal_residence
@@ -36,8 +33,8 @@ ties_screening:
     - high_school_location
     - college_location
   minimum_required: 2
-  pacific_islands_equivalent: true
-  pacific_islands:
+  equivalent_regions_enabled: true
+  equivalent_regions_list:
     - american_samoa
     - cnmi
     - cook_islands
@@ -63,35 +60,27 @@ schools:
     degree: MD
     type: public
     application_system: AMCAS
-    class_size: 77
-    resident_percentage: 87
-    seats_reserved:
+    number_of_students_in_entering_class: 77
+    percentage_of_class_from_in_state: 87
+    seats_reserved_by_residency_status:
       resident: 67
       nonresident: 10
-    regional_preference: hawaii_pacific
-    mission_focus: "Physicians for Hawaii and Pacific Islands"
-    citizenship:
-      eligible: [us_citizen, permanent_resident, daca, undocumented, cofa_citizen, f1_visa, j1_visa, international]
-      notes:
-        - "Citizenship-blind - no citizenship requirement"
-        - "F-1/international with 2+ ties compete for resident seats"
-    preferences:
+    geographic_area_giving_admission_preference: hawaii_pacific
+    population_school_aims_to_serve: "Physicians for Hawaii and Pacific Islands"
+    tiered_priorities_for_admission:
       - tier: 1
         criteria: "Resident classification (2+ ties met)"
         percentage: "87%"
       - tier: 2
         criteria: "Nonresident - highly ranked, some ties preferred"
         percentage: "13%"
-    advantage_factors:
+    factors_improving_admission_odds:
       - "Hawaii ties (any of 5 criteria)"
       - "Pacific Island ties (equivalent to Hawaii)"
       - "Mission alignment"
-    notes:
-      - "Ties-based system, not days of residency"
-      - "Pacific Island ties = Hawaii ties"
     sources: [1, 2, 3]
 
-citizenship:
+eligible_citizenship_and_immigration_statuses:
   eligible:
     - us_citizen
     - permanent_resident
@@ -105,18 +94,15 @@ citizenship:
   admission_citizenship_required: false
   sources: [2]
 
-military:
+military_residency_exemptions_and_benefits:
   active_duty_qualifies: true
   spouse_qualifies: true
   dependents_qualify: true
   national_guard_qualifies: true
-  reserves_hawaii_based_qualifies: true
+  reserves_qualifies: true
   sources: [1]
 
-notes:
-  - "Ties-based classification, not duration-based residency"
-
-research_gaps:
+questions_requiring_further_research:
   - "Can applicants appeal ties screening classification?"
   - "How are split criteria evaluated (e.g., multiple high schools)?"
   - "What documentation is required to verify Pacific Island ties?"
